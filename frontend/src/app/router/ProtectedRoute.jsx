@@ -1,0 +1,28 @@
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { Loader2 } from 'lucide-react';
+
+export default function ProtectedRoute({ children, requireAdmin = false }) {
+  const { user, isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center">
+        <Loader2 className="w-8 h-8 text-brand-600 animate-spin mb-4" />
+        <p className="text-sm text-slate-500">Checking authentication session...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (requireAdmin && !user?.is_staff) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+}
