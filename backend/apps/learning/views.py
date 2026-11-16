@@ -4,17 +4,26 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.exceptions import PermissionDenied, NotFound
 from drf_spectacular.utils import extend_schema
 
-from apps.learning.models import Roadmap, RoadmapTopicReference
+from apps.learning.models import (
+    Roadmap,
+    RoadmapTopicReference,
+    RoadmapPracticeTask,
+)
 from apps.content.models import TopicContent
 from apps.learning.serializers import (
     RoadmapCreateSerializer,
     RoadmapDetailSerializer,
     TopicProgressUpdateSerializer,
+    PracticeTaskProgressUpdateSerializer,
+    PracticeTaskDetailSerializer,
     TopicContentSerializer,
 )
 from apps.learning.services.catalog_service import get_catalog_data
 from apps.learning.services.roadmap_generator import generate_student_roadmap
-from apps.learning.services.progress_service import update_topic_progress
+from apps.learning.services.progress_service import (
+    update_topic_progress,
+    update_practice_progress,
+)
 
 
 def _enforce_verified_student(user):
@@ -40,14 +49,19 @@ class ActiveRoadmapView(APIView):
 
     @extend_schema(
         summary="Get Active Roadmap",
-        description="Retrieve the authenticated student's active roadmap with all phases, weeks, topics, and completion states.",
+        description="Retrieve the authenticated student's active roadmap with all phases, weeks, learning topics, and hands-on practice tasks.",
         responses={200: dict},
     )
     def get(self, request):
         _enforce_verified_student(request.user)
         roadmap = (
             Roadmap.objects.filter(user=request.user, is_active=True)
-            .prefetch_related("phases__weeks__topics", "topic_progresses")
+            .prefetch_related(
+                "phases__weeks__topics",
+                "phases__weeks__practice_tasks__related_topic",
+                "topic_progresses",
+                "practice_progresses",
+            )
             .first()
         )
         if not roadmap:
@@ -55,6 +69,35 @@ class ActiveRoadmapView(APIView):
 
         serializer = RoadmapDetailSerializer(roadmap)
         return Response({"status": "success", "data": serializer.data})
+
+
+class RoadmapStatusView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="Get Roadmap Generation Status",
+        description="Retrieve generation status, preparation state, or errors for the student's active roadmap.",
+        responses={200: dict},
+    )
+    def get(self, request):
+        _enforce_verified_student(request.user)
+        roadmap = Roadmap.objects.filter(user=request.user, is_active=True).first()
+        if not roadmap:
+            return Response({
+                "status": "success",
+                "data": {"has_active_roadmap": False, "status": None},
+            })
+
+        return Response({
+            "status": "success",
+            "data": {
+                "has_active_roadmap": True,
+                "roadmap_id": str(roadmap.id),
+                "status": roadmap.status,
+                "is_ready": roadmap.status == Roadmap.STATUS_READY,
+                "generation_error": roadmap.generation_error,
+            },
+        })
 
 
 class RoadmapCreateView(APIView):
@@ -124,7 +167,7 @@ class TopicProgressUpdateView(APIView):
 
     @extend_schema(
         summary="Update Topic Progress",
-        description="Mark a topic as completed, not started, or skipped (Not Verified).",
+        description="Mark a learning topic as completed, not started, or skipped (Not Verified).",
         request=TopicProgressUpdateSerializer,
         responses={200: dict},
     )
@@ -159,7 +202,6 @@ class TopicContentView(APIView):
         except (RoadmapTopicReference.DoesNotExist, ValueError):
             raise NotFound("Topic not found.")
 
-        # Ensure topic belongs to active roadmap owned by this student
         roadmap = topic_ref.week.phase.roadmap
         if roadmap.user_id != request.user.id or not roadmap.is_active:
             raise PermissionDenied("You do not have access to this topic.")
@@ -171,7 +213,6 @@ class TopicContentView(APIView):
         )
 
         if not content:
-            # Fallback dynamic structured content if exact slug isn't found
             data = {
                 "id": str(topic_ref.id),
                 "slug": topic_ref.topic_slug,
@@ -202,3 +243,53 @@ class TopicContentView(APIView):
 
         serializer = TopicContentSerializer(content)
         return Response({"status": "success", "data": serializer.data})
+
+
+class PracticeTaskDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="Get Practice Task Details",
+        description="Retrieve hands-on practice task objective, problem statement, requirements, constraints, sample I/O, starter code, and hints.",
+        responses={200: dict},
+    )
+    def get(self, request, task_id):
+        _enforce_verified_student(request.user)
+        try:
+            task = (
+                RoadmapPracticeTask.objects.select_related("week__phase__roadmap", "related_topic")
+                .prefetch_related("progress_records")
+                .get(id=task_id)
+            )
+        except (RoadmapPracticeTask.DoesNotExist, ValueError):
+            raise NotFound("Practice task not found.")
+
+        roadmap = task.week.phase.roadmap
+        if roadmap.user_id != request.user.id or not roadmap.is_active:
+            raise PermissionDenied("You do not have access to this practice task.")
+
+        serializer = PracticeTaskDetailSerializer(task, context={"user": request.user})
+        return Response({"status": "success", "data": serializer.data})
+
+
+class PracticeTaskProgressUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="Update Practice Task Progress",
+        description="Update progress state of a practice task (not_started, in_progress, completed) and save optional submission notes.",
+        request=PracticeTaskProgressUpdateSerializer,
+        responses={200: dict},
+    )
+    def patch(self, request, task_id):
+        _enforce_verified_student(request.user)
+        serializer = PracticeTaskProgressUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        result = update_practice_progress(
+            user=request.user,
+            task_id=task_id,
+            new_status=serializer.validated_data["status"],
+            submission_notes=serializer.validated_data.get("submission_notes"),
+        )
+        return Response({"status": "success", "data": result})

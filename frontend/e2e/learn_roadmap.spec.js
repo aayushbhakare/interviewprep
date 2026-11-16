@@ -93,7 +93,29 @@ test.describe('Phase 3 — Learn Module & Personalized Roadmap', () => {
     await phase2Btn.click();
     await expect(page.getByText(/Phase 2/i).first()).toBeVisible();
 
-    // 7. Test Replace Roadmap Modal Cancel
+    // 7. Test Hands-on Practice Roadmap Mode
+    await page.getByRole('button', { name: /Practice Roadmap/i }).click();
+    await expect(page.getByText('Overall Hands-on Practice Mastery')).toBeVisible();
+    await expect(page.getByText(/Build Rate-Limiting & Audit Request/i)).toBeVisible();
+
+    // Update Practice Task Progress to In Progress
+    const inProgressBtn = page.getByRole('button', { name: 'In Progress' }).first();
+    await inProgressBtn.click();
+    await expect(page.getByText(/1 In Progress/i)).toBeVisible();
+
+    // Open Practice Task Modal
+    const viewTaskBtn = page.getByRole('button', { name: /View Task & Starter Code/i }).first();
+    await viewTaskBtn.click();
+    await expect(page.getByRole('heading', { name: 'Task Objective' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Acceptance Criteria & Requirements' })).toBeVisible();
+    await expect(page.getByText('Starter Code Skeleton')).toBeVisible();
+    await page.getByRole('button', { name: 'Close' }).last().click();
+
+    // Switch back to Learning Roadmap and verify independent progress
+    await page.getByRole('button', { name: /Learning Roadmap/i }).click();
+    await expect(page.getByText('Overall Roadmap Mastery')).toBeVisible();
+
+    // 8. Test Replace Roadmap Modal Cancel
     await page.getByRole('button', { name: 'Replace Roadmap' }).click();
     await expect(page.getByRole('heading', { name: 'Replace Active Roadmap' })).toBeVisible();
     await page.getByRole('button', { name: 'Cancel & Keep Roadmap' }).click();

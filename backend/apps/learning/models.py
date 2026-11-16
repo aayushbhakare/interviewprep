@@ -29,6 +29,8 @@ class Roadmap(TimeStampedModel):
         max_length=20, choices=STATUS_CHOICES, default=STATUS_PREPARING
     )
     is_active = models.BooleanField(default=True)
+    generation_error = models.TextField(blank=True, null=True)
+    generation_job_id = models.UUIDField(null=True, blank=True)
 
     class Meta:
         ordering = ["-created_at"]
@@ -137,3 +139,71 @@ class TopicProgress(models.Model):
 
     def __str__(self):
         return f"{self.roadmap_id} - {self.topic.title}: {self.status}"
+
+
+class RoadmapPracticeTask(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    week = models.ForeignKey(
+        RoadmapWeek, on_delete=models.CASCADE, related_name="practice_tasks"
+    )
+    related_topic = models.ForeignKey(
+        RoadmapTopicReference,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="practice_tasks",
+    )
+    title = models.CharField(max_length=255)
+    task_type = models.CharField(max_length=50, default="coding_exercise")
+    difficulty = models.CharField(max_length=30, default="Medium")
+    estimated_minutes = models.PositiveIntegerField(default=45)
+    order = models.PositiveIntegerField(default=1)
+    objective = models.TextField()
+    problem_statement = models.TextField()
+    requirements = models.JSONField(default=list, blank=True)
+    constraints = models.JSONField(default=list, blank=True)
+    sample_io = models.JSONField(default=list, blank=True)
+    expected_deliverable = models.TextField(blank=True)
+    starter_code = models.TextField(blank=True)
+    hints = models.JSONField(default=list, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"Task {self.order}: {self.title} ({self.difficulty})"
+
+
+class PracticeTaskProgress(models.Model):
+    STATUS_NOT_STARTED = "not_started"
+    STATUS_IN_PROGRESS = "in_progress"
+    STATUS_COMPLETED = "completed"
+
+    STATUS_CHOICES = [
+        (STATUS_NOT_STARTED, "Not Started"),
+        (STATUS_IN_PROGRESS, "In Progress"),
+        (STATUS_COMPLETED, "Completed"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    roadmap = models.ForeignKey(
+        Roadmap, on_delete=models.CASCADE, related_name="practice_progresses"
+    )
+    task = models.ForeignKey(
+        RoadmapPracticeTask, on_delete=models.CASCADE, related_name="progress_records"
+    )
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default=STATUS_NOT_STARTED
+    )
+    submission_notes = models.TextField(blank=True, null=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("roadmap", "task")
+        ordering = ["task__order"]
+
+    def __str__(self):
+        return f"{self.roadmap_id} - Task {self.task.title}: {self.status}"
+

@@ -22,7 +22,7 @@ graph TD
 ## Domain Apps (Backend)
 
 1. **`accounts`**: Custom User model (email login), UserProfile, authentication tokens (SimpleJWT), verification codes, password reset, and admin 2FA.
-2. **`learning`**: Active roadmap, roadmap configuration snapshots, phases, weeks, topic progress tracking, and transactional replacement.
+2. **`learning`**: Active roadmap, roadmap configuration snapshots, phases, weeks, topic progress tracking, hands-on practice roadmap, practice task progress, and transactional replacement.
 3. **`content`**: Versioned topic content, concept explanations, and practical exercises.
 4. **`questions`**: Shared question bank, versioning, AI validation records, reports, and exposure tracking.
 5. **`quizzes`**: Weekly quiz assignments (45 questions), timer enforcement, immutable attempt snapshots, answers, and evaluations.

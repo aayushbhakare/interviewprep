@@ -17,12 +17,14 @@ PostgreSQL is the permanent source of truth for the platform. Schema changes are
 - `UserResumeVersion`: `user` (ForeignKey), `version_number`, `storage_path`, `original_filename`, `file_size_bytes`, `uploaded_at`.
 
 ### 2. `learning` (Phase 3 Verified)
-- `Roadmap`: `user` (ForeignKey), `role`, `experience_level`, `target_salary`, `language`, `framework`, `database`, `custom_role_text`, `status` (preparing, ready, failed), `is_active`, `created_at`, `updated_at`.
+- `Roadmap`: `user` (ForeignKey), `role`, `experience_level`, `target_salary`, `language`, `framework`, `database`, `custom_role_text`, `status` (preparing, ready, failed), `is_active`, `generation_error`, `generation_job_id`, `created_at`, `updated_at`.
 - `RoadmapConfigurationSnapshot`: `roadmap` (OneToOne), `role`, `custom_role_text`, `experience_level`, `target_salary`, `language`, `framework`, `database`, `created_at`.
 - `RoadmapPhase`: `roadmap` (ForeignKey), `phase_number`, `title`, `description`, `created_at`. Unique on `(roadmap, phase_number)`.
 - `RoadmapWeek`: `phase` (ForeignKey), `week_number`, `title`, `goal`, `created_at`. Unique on `(phase, week_number)`.
 - `RoadmapTopicReference`: `week` (ForeignKey), `topic_content` (ForeignKey to `content.TopicContent`, null=True), `slug`, `title`, `order`, `estimated_minutes`, `required_level`, `created_at`. Unique on `(week, order)`.
 - `TopicProgress`: `user` (ForeignKey), `topic` (ForeignKey to `RoadmapTopicReference`), `status` (`not_started`, `completed`, `skipped`), `completed_at`, `updated_at`. Unique on `(user, topic)`.
+- `RoadmapPracticeTask`: `week` (ForeignKey to `RoadmapWeek`), `related_topic` (ForeignKey to `RoadmapTopicReference`, null=True), `title`, `task_type` (`coding_exercise`, `sql_query`, `debugging`, `implementation`, `mini_project`, `system_scenario`, `portfolio_project`), `difficulty` (`Easy`, `Medium`, `Hard`), `estimated_minutes`, `order`, `objective`, `problem_statement`, `requirements` (JSON), `constraints` (JSON), `sample_io` (JSON), `expected_deliverable`, `starter_code`, `hints` (JSON), `created_at`.
+- `PracticeTaskProgress`: `roadmap` (ForeignKey to `Roadmap`), `task` (ForeignKey to `RoadmapPracticeTask`), `status` (`not_started`, `in_progress`, `completed`), `submission_notes`, `completed_at`, `updated_at`. Unique on `(roadmap, task)`.
 
 ### 3. `content` (Initial Schema)
 - `TopicContent`: `slug`, `topic_name`, `technology`, `version`, `learning_objectives`, `concept_explanation`, `how_it_works`, `examples`, `practical_implementation`, `interview_perspective`, `key_takeaways`, `is_published`.

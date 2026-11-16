@@ -29,3 +29,7 @@ This log records architecture and technical decisions made during implementation
 ### TD-006: External Service Provider Adapters
 - **Decision:** All AI, email, and storage services are accessed via abstract interfaces in backend services, with automatic fallbacks for local offline development.
 - **Rationale:** Ensures zero unintentional billing, protects against provider outages, and decouples business logic from vendor SDKs.
+
+### TD-007: Dual Connected Roadmaps with Independent Progress Tracking
+- **Decision:** Generate both a conceptual Learning Roadmap and a hands-on Practice Roadmap (coding exercises, SQL query problems, debugging tasks, and mini-projects) connected by week and topic references, while maintaining separate progress tracking without auto-completion coupling.
+- **Rationale:** Ensures students genuinely write code and solve engineering problems rather than passively reading explanations; prevents false completion metrics.

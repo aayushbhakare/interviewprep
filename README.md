@@ -1,6 +1,6 @@
 # Interview Preparation Platform (InterviewPrep)
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-44%2F44%20passing-brightgreen)](backend/apps/accounts/tests/)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-49%2F49%20passing-brightgreen)](backend/apps/accounts/tests/)
 [![Frontend Tests](https://img.shields.io/badge/e2e%20tests-14%2F14%20passing-brightgreen)](frontend/e2e/)
 [![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.1%2B-darkgreen)](https://www.djangoproject.com/)
@@ -199,6 +199,12 @@ interviewprep/
 ### Live Student Personalized Roadmap (Verified Phase 3)
 ![Personalized Roadmap](documentation/screenshots/roadmap.png)
 
+### Live Hands-on Practice Roadmap (Verified Phase 3)
+![Hands-on Practice Roadmap](documentation/screenshots/practice-roadmap.png)
+
+### Live Practice Task Details & Starter Code (Verified Phase 3)
+![Practice Task Details](documentation/screenshots/practice-task-modal.png)
+
 ### Live Topic Study Content (Verified Phase 3)
 ![Topic Study Content](documentation/screenshots/topic-study.png)
 
@@ -316,7 +322,7 @@ cd backend
 source .venv/bin/activate
 pytest -v
 ```
-*Current test suite: **44 / 44 passed**.*
+*Current test suite: **49 / 49 passed**.*
 
 ### Backend Linter & System Check
 ```bash

@@ -41,13 +41,15 @@ This document defines the sequential execution plan across all phases of the Int
 3. "Recent Activity" and experience drafts quick-access.
 4. Responsive navigation shell with role-based route guards.
 
-### Phase 3: Learn Module Foundation
+### Phase 3: Learn Module & Personalized Roadmap (Completed & Verified)
 1. Step-by-step setup wizard (Role, Experience, optional Salary range, Language, Framework, Database).
-2. Language-to-framework compatibility validation.
-3. Active roadmap generation and persistent configuration snapshot.
-4. Phases, weeks, and topic structures; unrestricted self-paced navigation.
-5. Topic completion tracking and "Not Verified" skip logic.
-6. Roadmap replacement confirmation and transactional protection.
+2. Language-to-framework compatibility matrix validation with dynamic frontend auto-clearing.
+3. Background AI generation architecture (`roadmap_ai_service.py`) supporting Google Gemini API with seamless fallback to deterministic curriculum engine.
+4. Deterministic active roadmap generation and persistent configuration snapshot (`RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`).
+5. Connected Hands-on Practice Roadmap generation (`RoadmapPracticeTask`, `PracticeTaskProgress`) with coding exercises, SQL tasks, and portfolio projects.
+6. Independent progress tracking for learning topics (Not Started, Completed, Not Verified/Skipped) and practice tasks (Not Started, In Progress, Completed).
+7. Topic content and practice task detail modals with starter code, constraints, requirements, and work log notes.
+8. Roadmap replacement confirmation and atomic database transactional protection.
 
 ### Phase 4: Learning Content and Topic Exercises
 1. Versioned topic content structure (objectives, explanations, internals, examples, practical code, interview perspective).

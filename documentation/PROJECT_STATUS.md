@@ -28,17 +28,19 @@
 
 ## Phase 3 Milestones: Complete & Verified
 
-- [x] Implemented salary-tier aligned roadmap data models (`RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`, `TopicProgress`).
-- [x] Generated database migration `0002_alter_roadmap_database_alter_roadmap_framework_and_more.py` with zero data loss.
+- [x] Implemented salary-tier aligned roadmap data models (`RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`, `TopicProgress`, `RoadmapPracticeTask`, `PracticeTaskProgress`).
+- [x] Generated database migrations `0002_...` and `0003_roadmap_generation_error_roadmap_generation_job_id_and_more.py` with zero data loss.
 - [x] Implemented dynamic catalog service supporting 9 primary software engineering roles (+ Other with custom title), 5 experience tiers, 6 salary bands (+ Skip), 14 programming languages, and 10 production databases.
 - [x] Built Language/Framework compatibility matrix enforcing valid technology pairings with dynamic automatic clearing on mismatch.
-- [x] Created deterministic roadmap generator producing 5 structured phases, 10–12 milestone weeks, and 30+ salary-adapted topics.
+- [x] AI-Powered Roadmap Generation Architecture (`apps/ai_services/roadmap_ai_service.py`): Integrates Google Gemini background generation with seamless fallback to deterministic curriculum engine; records `AIUsageRecord` for cost & latency auditability.
+- [x] Connected Hands-on Practice Roadmap: Generates coding exercises, SQL query problems, debugging tasks, implementation refactoring, and portfolio projects connected directly to corresponding learning weeks.
+- [x] Independent Progress Tracking: Distinct progress lifecycles for learning topics (Not Started, Completed, Not Verified/Skipped) and practice tasks (Not Started, In Progress, Completed). Neither locks or auto-completes the other.
+- [x] Hands-on Practice Task Detail Modal (`PracticeTaskModal.jsx`): Renders task objective, problem statement, acceptance criteria, constraints, sample I/O, deliverable, starter code with copy button, hints accordion, and work log notes.
 - [x] Built transactional roadmap replacement flow (`POST /api/v1/learning/roadmaps/replace/`) safely archiving previous roadmaps under `@transaction.atomic`.
-- [x] Implemented topic completion checkbox and Honest Skip ("Not Verified") functionality with live server-side progress calculation (`completed_topics / total_topics`).
-- [x] Integrated technical topic content viewer modal (`GET /api/v1/learning/topics/<uuid:topic_id>/content/`) with learning objectives, runtime mechanics, code examples, and interview perspectives.
+- [x] Topic Content Modal: Detailed technical view with learning objectives, runtime mechanics, code examples, and recruitment interview perspectives.
 - [x] Integrated real-time roadmap metrics into the student dashboard summary (`GET /api/v1/dashboard/student/`).
-- [x] Added 10 comprehensive backend pytest tests across catalog, generation, progress updates, validation, and permissions (44/44 total backend tests passing).
-- [x] Added automated Playwright E2E test specs for guest intro, multi-step wizard, topic status toggling, study content modal, and replacement modal (14/14 total E2E tests passing).
+- [x] Added 15 comprehensive backend pytest tests across catalog, generation, practice tasks, independent progress updates, validation, and permissions (49/49 total backend tests passing).
+- [x] Added automated Playwright E2E test specs for guest intro, multi-step wizard, topic status toggling, practice roadmap mode, practice task modal, and replacement modal (14/14 total E2E tests passing).
 - [x] Clean, professional, human-style code without AI decorative comments or over-engineered abstractions.
 
 ---

@@ -17,26 +17,32 @@ This log tracks granular progress across every feature, component, API, and mile
 ## Milestone Progress Log
 
 ### Phase 3: Learn Module & Personalized Roadmap (Completed & Verified)
-- [x] Defined models for salary-wise preparation: `RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`, and `TopicProgress`.
+- [x] Defined models for salary-wise preparation: `RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`, `TopicProgress`, `RoadmapPracticeTask`, and `PracticeTaskProgress`.
+- [x] Applied migrations `0002_...` and `0003_roadmap_generation_error_roadmap_generation_job_id_and_more.py`.
 - [x] Implemented `catalog_service.py` with 9 target roles, 5 experience bands, 6 salary bands, 14 languages, and 10 databases.
 - [x] Built `LANGUAGE_FRAMEWORK_MATRIX` with server-side validation and dynamic frontend auto-clearing.
-- [x] Implemented `roadmap_generator.py` generating 5 phases, weeks, and salary-tier tailored topics with atomic replacement.
-- [x] Implemented `progress_service.py` calculating completed, skipped, total topics, and progress percentage.
+- [x] Implemented background AI generation architecture (`roadmap_ai_service.py`) supporting Google Gemini with seamless fallback to deterministic curriculum engine and audit logging via `AIUsageRecord`.
+- [x] Implemented `roadmap_generator.py` generating 5 phases, weekly milestones, salary-tier tailored topics, and connected hands-on practice tasks with atomic replacement.
+- [x] Implemented `progress_service.py` managing independent progress for learning topics (Not Started, Completed, Skipped) and hands-on practice tasks (Not Started, In Progress, Completed).
 - [x] Built API endpoints:
   - `GET /api/v1/learning/catalog/`
   - `GET /api/v1/learning/roadmaps/active/`
+  - `GET /api/v1/learning/roadmaps/status/`
   - `POST /api/v1/learning/roadmaps/`
   - `POST /api/v1/learning/roadmaps/replace/`
   - `PATCH /api/v1/learning/topics/<uuid:topic_id>/progress/`
   - `GET /api/v1/learning/topics/<uuid:topic_id>/content/`
+  - `GET /api/v1/learning/practice-tasks/<uuid:task_id>/`
+  - `PATCH /api/v1/learning/practice-tasks/<uuid:task_id>/progress/`
 - [x] Built frontend components:
   - `RoadmapWizard.jsx`: 6-step setup flow with dynamic validation and preview review.
-  - `RoadmapViewer.jsx`: Header with salary badge, progress bar, phases/weeks sidebar, topic list with honest skip and completed states.
+  - `RoadmapViewer.jsx`: Mode switcher between Learning Roadmap and Practice Roadmap, independent progress bars, phase/week navigation, and action buttons.
   - `TopicContentModal.jsx`: Learning objectives, concept overview, runtime mechanics, code examples, interview perspectives.
+  - `PracticeTaskModal.jsx`: Problem statement, requirements, constraints, sample I/O, deliverable, starter code with copy, hints, and work log notes.
   - `RoadmapReplaceModal.jsx`: Safe replacement confirmation dialog.
   - `RoadmapIntro.jsx`: Salary-wise introductory hero and feature cards.
-  - `LearnPage.jsx`: State orchestrator for guests and authenticated students.
-- [x] Authored and executed 10 backend tests in `apps/learning/tests/test_learning.py` (44/44 total backend tests passing).
+  - `LearnPage.jsx`: State orchestrator for guest visitors, preparing states, error recovery, and authenticated students.
+- [x] Authored and executed 15 backend tests in `apps/learning/tests/test_learning.py` (49/49 total backend tests passing).
 - [x] Authored and executed Playwright E2E tests in `e2e/learn_roadmap.spec.js` (14/14 total E2E tests passing).
 
 ### Phase 2: Main Dashboard and Navigation Shell (Completed & Verified)
