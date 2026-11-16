@@ -13,12 +13,29 @@ This report records automated and manual test runs, pass/fail results, and verif
 | Student Dashboard API Tests (Phase 2) | pytest-django | 3 | 3 | 0 | 0 | **PASSED** | 2026-11-16 |
 | Learn Module & Roadmap Tests (Phase 3) | pytest-django | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
 | Shared Question Bank & Weekly Quizzes (Phase 4) | pytest-django | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
-| **Total Backend Test Suite** | **pytest-django** | **61** | **61** | **0** | **0** | **PASSED** | **2026-11-16** |
-| Python Linting & Formatting | Ruff | 76 files | 76 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend ESLint Code Quality | ESLint | 35 files | 35 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend Production Build | Vite | 1664 modules | 1664 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Playwright E2E Tests (Phases 1, 2, 3 & 4) | Playwright (Chrome) | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
-| OpenAPI Schema Validation | drf-spectacular | 44 endpoints | 44 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Aptitude Practice Module (Phase 5) | pytest-django | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
+| **Total Backend Test Suite** | **pytest-django** | **73** | **73** | **0** | **0** | **PASSED** | **2026-11-16** |
+| Python Linting & Formatting | Ruff | 83 files | 83 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend ESLint Code Quality | ESLint | 44 files | 44 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend Production Build | Vite | 1673 modules | 1673 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Playwright E2E Tests (Phases 1, 2, 3, 4 & 5) | Playwright (Chrome) | 17 | 17 | 0 | 0 | **PASSED** | 2026-11-16 |
+| OpenAPI Schema Validation | drf-spectacular | 62 endpoints | 62 | 0 | 0 | **PASSED** | 2026-11-16 |
+
+---
+
+## Acceptance Criteria Verification Log
+
+### Phase 5: Aptitude Practice Module
+- [x] **TCS NQT Pattern Research & Configuration:** Standardized on official TCS iON Cognitive Foundation reference pattern (45 MCQs: 15 Quantitative Aptitude, 15 Logical Reasoning, 15 Verbal Ability in 60 minutes with 0 negative marking).
+- [x] **Strict 4-Option Multiple Choice Format:** All aptitude items are 4-option MCQs (A, B, C, D) with single correct answers and step-by-step mathematical reasoning.
+- [x] **Fresher Experience Eligibility Restriction:** Restricted to freshers and entry-level candidates (`"Fresher"`, `"Less than 1 year"`). Experienced candidates (`"1–3 years"`, `"3–5 years"`, `"5+ years"`) blocked with 403 Forbidden.
+- [x] **Daily Attempt Quota:** 5 submitted sessions per calendar day. Abandoned sessions discard answers and do not consume attempt quota.
+- [x] **Test Taking Interface (`AptitudeTestPage.jsx`):** 60-minute server countdown timer, 45-button question palette, 4 options (A-D), debounced autosave, leave modal, and submit modal with unanswered question counter.
+- [x] **Objective Evaluation & Scorecard (`AptitudeResultsPage.jsx`):** Deterministic evaluation (`is_correct = (selected == correct)`). Standalone practice **never** displays PASS/FAIL verdicts. Section breakdown and step-by-step mathematical reasoning for every question.
+- [x] **Mixed Stage Exemption:** Phase 6 Mixed recruitment simulations do not consume standalone daily quota and evaluate against configurable qualifying cutoff (`mixed_qualifying_cutoff`, default 60% = PASS/FAIL).
+- [x] **Admin Aptitude Management (`AdminAptitudePage.jsx`):** Search, filtering, manual question creation, version publishing, question activation/suspension, student report resolution, and platform configuration updates.
+- [x] **Automated Tests:** 12 new backend pytest tests passed (73/73 total passed); 2 new Playwright E2E tests passed (17/17 total passed).
+- [x] **Visual Inspection:** Captured 8 high-fidelity evidence screenshots under `phase5_evidence/` validating Hub, test taking, palette, modals, scorecard, and admin management.
 
 ---
 

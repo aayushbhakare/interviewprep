@@ -45,6 +45,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp ../.env.example .env
 python manage.py migrate
+python manage.py shell -c "from apps.aptitude.services.seed_data import seed_initial_aptitude_bank; seed_initial_aptitude_bank()"
+python manage.py shell -c "from apps.questions.services.seed_data import seed_initial_question_bank; seed_initial_question_bank()"
 ```
 
 ### Initial Administrator Bootstrap

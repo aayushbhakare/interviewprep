@@ -65,13 +65,19 @@ This document defines the sequential execution plan across all phases of the Int
 6. Maximum 5 submitted attempts per weekly quiz, abandonment without consuming attempt limit, and milestone increment (+1 on roadmap week upon quiz submission).
 7. Admin Question Bank catalog with search, filtering, question CRUD, version publishing, suspension/activation, and student report resolution.
 
-### Phase 6: Aptitude Practice
-1. Shared aptitude question bank aligned with current TCS NQT pattern.
-2. Standalone aptitude tests with daily 5 submitted-session limit.
-3. Immediate results, score review, and answer explanations.
-4. Mixed recruitment aptitude qualifying stage integration (default 60% threshold, separate attempt counter).
+### Phase 5: Aptitude Practice (Completed & Verified)
+1. Shared aptitude question bank across Quantitative, Logical, and Verbal tracks with 4-option MCQs.
+2. Official TCS iON Cognitive Foundation reference pattern research & test config (45 MCQs: 15 Quant, 15 Logical, 15 Verbal in 60 mins).
+3. AI question generator with schema validation, 3-attempt automated revision loop, and deterministic fallback synthesis.
+4. Fresher experience eligibility enforcement (`"Fresher"`, `"Less than 1 year"` eligible; experienced rejected with 403 Forbidden).
+5. Standalone practice tests with 5 submitted sessions per calendar day limit (abandoned sessions strictly exempted).
+6. 60-minute countdown timer, 45-button question palette, debounced autosave, leave modal, and submit modal with unanswered count.
+7. Objective deterministic evaluation (`is_correct = (selected == correct)`), question review, step-by-step mathematical reasoning.
+8. Standalone practice tests never issue PASS/FAIL verdicts; qualifying PASS/FAIL strictly reserved for Phase 6 Mixed Stage simulation.
+9. Admin Aptitude Management portal with search/filter, question CRUD, version publishing, suspension/activation, student report resolution, and platform configuration updates.
+10. Full backend (73 passing tests) and Playwright E2E coverage (17 passing tests) with browser visual inspection.
 
-### Phase 7: AI Interview Simulation
+### Phase 6: Share Interview Experience
 1. Real-time voice architecture evaluation and proof of concept.
 2. Technical, HR, and sequential Mixed recruitment interviews.
 3. Voice UI states (Listening, Thinking, Speaking), manual interruption, and Done Speaking backup.

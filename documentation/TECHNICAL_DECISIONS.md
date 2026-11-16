@@ -49,3 +49,19 @@ This log records architecture and technical decisions made during implementation
 ### TD-011: Question Version Snapshotting & Safe Attempt Abandonment
 - **Decision:** Assignments link to frozen `QuestionVersion` records rather than mutable `Question` records. Abandoning an in-progress quiz deletes attempt answers without consuming one of the 5 allowed submission attempts.
 - **Rationale:** Guarantees historical score integrity even if a question is revised in the bank, and permits students to step away without being unfairly penalized.
+
+### TD-012: MCQ Architecture for Aptitude Practice
+- **Decision:** While technical weekly quizzes strictly prohibit multiple-choice questions (MCQs), aptitude practice standardizes on 4-option MCQs (A, B, C, D) with exactly one valid option.
+- **Rationale:** Standard cognitive campus hiring assessments (e.g. TCS iON NQT, Infosys, Wipro, Cognizant) evaluate speed, mental math, and elimination strategies strictly via timed MCQs.
+
+### TD-013: Official TCS iON Cognitive Foundation Pattern Reference
+- **Decision:** Research official TCS iON NQT Cognitive Foundation structure (65 questions, 75 mins: 20 Quant, 20 Logical, 25 Verbal, checked 2026-11-16) and configure platform practice sessions to 45 questions in 60 minutes (15 Quantitative, 15 Logical, 15 Verbal) with 0 negative marking, dynamically configurable by administrators in `AptitudeTestConfig`.
+- **Rationale:** Provides realistic, balanced 60-minute training sessions with equal emphasis across all three cognitive pillars while matching the exact problem types and difficulty distributions of campus tests.
+
+### TD-014: Fresher Experience Eligibility Restriction
+- **Decision:** Restrict standalone aptitude practice strictly to students with profile or active roadmap experience levels of `"Fresher"` or `"Less than 1 year"`. Experienced candidates (`"1–3 years"`, `"3–5 years"`, `"5+ years"`) are blocked on the backend with 403 Forbidden.
+- **Rationale:** Experienced industry recruitment evaluates system design, project impact, and live coding, whereas aptitude screening tests are uniquely required for campus/entry-level freshers.
+
+### TD-015: No PASS/FAIL Verdicts for Standalone Practice Sessions
+- **Decision:** Standalone aptitude practice tests **never** issue recruitment PASS/FAIL verdicts. They display overall percentage, accuracy, section breakdowns, and detailed mathematical solutions. PASS/FAIL qualification is strictly reserved for Phase 6 Mixed recruitment simulations using `mixed_qualifying_cutoff`.
+- **Rationale:** Standalone practice is a formative self-paced learning tool; imposing recruitment pass/fail verdicts on self-study runs creates unnecessary stress and distorts diagnostic progress.

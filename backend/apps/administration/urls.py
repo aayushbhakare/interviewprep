@@ -17,6 +17,15 @@ from apps.administration.views_questions import (
     AdminQuestionReportsListView,
     AdminQuestionReportDetailView,
 )
+from apps.administration.views_aptitude import (
+    AdminAptitudeQuestionListView,
+    AdminAptitudeQuestionDetailView,
+    AdminAptitudeQuestionNewVersionView,
+    AdminAptitudeQuestionStatusView,
+    AdminAptitudeReportsListView,
+    AdminAptitudeReportResolveView,
+    AdminAptitudeConfigView,
+)
 
 
 class AdminPlaceholderView(APIView):
@@ -65,5 +74,41 @@ urlpatterns = [
         "questions/<uuid:question_id>/status/",
         AdminQuestionStatusView.as_view(),
         name="admin-question-status",
+    ),
+    # Admin Aptitude Management
+    path(
+        "aptitude/questions/",
+        AdminAptitudeQuestionListView.as_view(),
+        name="admin-aptitude-questions-list",
+    ),
+    path(
+        "aptitude/questions/<uuid:question_id>/",
+        AdminAptitudeQuestionDetailView.as_view(),
+        name="admin-aptitude-question-detail",
+    ),
+    path(
+        "aptitude/questions/<uuid:question_id>/version/",
+        AdminAptitudeQuestionNewVersionView.as_view(),
+        name="admin-aptitude-question-new-version",
+    ),
+    path(
+        "aptitude/questions/<uuid:question_id>/status/",
+        AdminAptitudeQuestionStatusView.as_view(),
+        name="admin-aptitude-question-status",
+    ),
+    path(
+        "aptitude/reports/",
+        AdminAptitudeReportsListView.as_view(),
+        name="admin-aptitude-reports-list",
+    ),
+    path(
+        "aptitude/reports/<uuid:report_id>/resolve/",
+        AdminAptitudeReportResolveView.as_view(),
+        name="admin-aptitude-report-resolve",
+    ),
+    path(
+        "aptitude/config/",
+        AdminAptitudeConfigView.as_view(),
+        name="admin-aptitude-config",
     ),
 ]

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { BookOpen, Target, Share2, User, LogOut, Menu, X, LayoutDashboard } from 'lucide-react';
+import { BookOpen, Target, Share2, User, LogOut, Menu, X, LayoutDashboard, Database, Settings } from 'lucide-react';
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -61,16 +61,30 @@ export default function Navbar() {
             {isAuthenticated ? (
               <>
                 {user?.is_staff && (
-                  <Link
-                    to="/admin/question-bank"
-                    className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
-                      location.pathname === '/admin/question-bank'
-                        ? 'bg-purple-50 text-purple-700 border-purple-300'
-                        : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                    }`}
-                  >
-                    Question Bank
-                  </Link>
+                  <div className="flex items-center space-x-2">
+                    <Link
+                      to="/admin/question-bank"
+                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
+                        location.pathname === '/admin/question-bank'
+                          ? 'bg-purple-50 text-purple-700 border-purple-300'
+                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                      }`}
+                    >
+                      <Database className="w-3.5 h-3.5 mr-1 text-purple-600" />
+                      Tech Bank
+                    </Link>
+                    <Link
+                      to="/admin/aptitude"
+                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
+                        location.pathname === '/admin/aptitude'
+                          ? 'bg-indigo-50 text-indigo-700 border-indigo-300'
+                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                      }`}
+                    >
+                      <Settings className="w-3.5 h-3.5 mr-1 text-indigo-600" />
+                      Aptitude Admin
+                    </Link>
+                  </div>
                 )}
                 <Link
                   to="/profile"
@@ -152,6 +166,26 @@ export default function Navbar() {
           <div className="pt-3 border-t border-slate-100 mt-2 space-y-1">
             {isAuthenticated ? (
               <>
+                {user?.is_staff && (
+                  <>
+                    <Link
+                      to="/admin/question-bank"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-purple-700 hover:bg-purple-50"
+                    >
+                      <Database className="w-5 h-5 mr-3 text-purple-600" />
+                      Tech Question Bank
+                    </Link>
+                    <Link
+                      to="/admin/aptitude"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-indigo-700 hover:bg-indigo-50"
+                    >
+                      <Settings className="w-5 h-5 mr-3 text-indigo-600" />
+                      Aptitude Administration
+                    </Link>
+                  </>
+                )}
                 <Link
                   to="/profile"
                   onClick={() => setMobileMenuOpen(false)}

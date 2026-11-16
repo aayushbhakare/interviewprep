@@ -101,6 +101,7 @@ export default function AdminLoginPage() {
                   </div>
                   <input
                     type="email"
+                    name="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
@@ -118,6 +119,7 @@ export default function AdminLoginPage() {
                   </div>
                   <input
                     type="password"
+                    name="password"
                     required
                     value={formData.password}
                     onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}

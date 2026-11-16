@@ -15,6 +15,10 @@ import ExperiencesPage from '../../features/experiences/ExperiencesPage';
 import QuizTakingPage from '../../features/quizzes/QuizTakingPage';
 import QuizResultsPage from '../../features/quizzes/QuizResultsPage';
 import AdminQuestionBankPage from '../../features/admin/AdminQuestionBankPage';
+import AptitudePracticePage from '../../features/aptitude/AptitudePracticePage';
+import AptitudeTestPage from '../../features/aptitude/AptitudeTestPage';
+import AptitudeResultsPage from '../../features/aptitude/AptitudeResultsPage';
+import AdminAptitudePage from '../../features/admin/AdminAptitudePage';
 
 export default function AppRouter() {
   return (
@@ -59,7 +63,7 @@ export default function AppRouter() {
         }
       />
 
-      {/* Admin Question Bank Route */}
+      {/* Admin Management Routes */}
       <Route
         path="/admin/question-bank"
         element={
@@ -68,8 +72,42 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/aptitude"
+        element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminAptitudePage />
+          </ProtectedRoute>
+        }
+      />
 
+      {/* Practice Module & Aptitude Routes */}
       <Route path="/practice" element={<PracticePage />} />
+      <Route
+        path="/practice/aptitude"
+        element={
+          <ProtectedRoute>
+            <AptitudePracticePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/aptitude/:sessionId/take"
+        element={
+          <ProtectedRoute>
+            <AptitudeTestPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/aptitude/:sessionId/results"
+        element={
+          <ProtectedRoute>
+            <AptitudeResultsPage />
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="/experiences" element={<ExperiencesPage />} />
 
       {/* Catch-all Fallback */}

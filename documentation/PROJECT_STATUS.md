@@ -2,8 +2,8 @@
 
 **Repository:** [https://github.com/aayushbhakare/interviewprep](https://github.com/aayushbhakare/interviewprep)  
 **Primary Branch:** `main`  
-**Current Phase:** Phase 4 — Shared Question Bank & Weekly Quiz System  
-**Overall Status:** Phase 0, Phase 1, Phase 2, Phase 3 & Phase 4 Complete & Verified  
+**Current Phase:** Phase 5 — Aptitude Practice  
+**Overall Status:** Phase 0, Phase 1, Phase 2, Phase 3, Phase 4 & Phase 5 Complete & Verified  
 **Last Updated:** 2026-11-16  
 
 ---
@@ -17,11 +17,27 @@
 | **Phase 2** | Main Dashboard & Navigation Shell | **Verified** | 2026-11-16 |
 | **Phase 3** | Learn Module & Personalized Roadmap | **Verified** | 2026-11-16 |
 | **Phase 4** | Shared Question Bank & Weekly Quiz System | **Verified** | 2026-11-16 |
-| **Phase 5** | Aptitude Practice | Not Started | — |
+| **Phase 5** | Aptitude Practice | **Verified** | 2026-11-16 |
 | **Phase 6** | Share Interview Experience | Not Started | — |
 | **Phase 7** | AI Interview Practice (Voice Simulation) | Not Started | — |
 | **Phase 8** | Admin Panel & Platform Operations | Not Started | — |
 | **Phase 9** | Integration, Hardening & End-to-End Testing | Not Started | — |
+
+---
+
+## Phase 5 Milestones: Complete & Verified
+
+- [x] Shared Aptitude Question Bank Architecture (`apps/aptitude`): Multi-tier MCQ bank across Quantitative Aptitude, Logical Reasoning, and Verbal Ability independent of salary bands, programming languages, or tech stacks.
+- [x] Schema & Relational Data Models: `AptitudeQuestion`, `AptitudeQuestionVersion`, `AptitudeQuestionReport`, `AptitudeValidationHistory`, `AptitudeTestConfig`, `AptitudeSession`, `AptitudeSessionQuestion`, `AptitudeSessionAnswer` migrated with PostgreSQL index optimizations.
+- [x] TCS NQT Pattern Test Configuration: Researched official TCS iON Cognitive Foundation reference pattern (65 questions, 75 mins: 20 Quant, 20 Logical, 25 Verbal, checked 2026-11-16). Standardized practice configuration: 45 MCQs (15 Quant, 15 Logical, 15 Verbal) in 60 minutes with 0 negative marking, fully admin-configurable.
+- [x] Question Generation & Revision Engine (`apps/aptitude/services/question_generator.py`): Structured validation with initial check and up to 3 automated AI revisions; failed questions recorded in `AptitudeValidationHistory` as `Suspended – Review Failed`. Deterministic offline fallback engine guarantees zero-cost operation and predictable test suite execution.
+- [x] Fresher Eligibility Enforcement: Restricted to freshers and entry-level candidates (`"Fresher"`, `"Less than 1 year"`). Experienced candidates (`1–3 years`, `3–5 years`, `5+ years`) denied standalone aptitude with 403 Forbidden.
+- [x] Daily Standalone Practice Limit: Enforces strict 5 submitted sessions per calendar day. Abandoned sessions and Phase 6 Mixed recruitment simulation stages strictly exempted. Resets automatically at 00:00 UTC.
+- [x] Test Taking Experience (`AptitudeTestPage.jsx`): 60-minute server-enforced live timer, 45-button question palette (Answered, Unanswered, Current), 4-option radio buttons (A, B, C, D), debounced autosave persistence, leave modal (abandonment clears answers without consuming attempt limit), and submit modal with unanswered question count indicator.
+- [x] Objective Evaluation & Scorecard (`AptitudeResultsPage.jsx`): Deterministic MCQ evaluation (`is_correct = (selected == correct)`). Standalone practice **never** shows PASS/FAIL verdicts (practice activity, not recruitment decision). Question-by-question review with expected option and step-by-step mathematical/logical explanation.
+- [x] Admin Aptitude Management (`AdminAptitudePage.jsx` & `views_aptitude.py`): Search/filter catalog, manual MCQ creation, immutable version publishing, suspension/activation, student report resolution, and platform configuration updates.
+- [x] Comprehensive Testing: 12 new backend pytest tests for aptitude (73/73 total backend tests passing in 43.8s); full Playwright suite (17/17 tests passing); comprehensive visual inspection with all 8 state screenshots captured.
+- [x] Zero API cost, human-style code without AI decorative comments, clean separation between frontend presentation and backend business logic.
 
 ---
 

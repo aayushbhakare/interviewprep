@@ -26,3 +26,11 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 5. Deterministic Fallback for AI Question Generation
 - **Detail:** Real-time AI question generation via external LLM APIs can be subject to rate limits or network unavailability.
 - **Resolution:** A local deterministic curriculum synthesis engine generates structured, schema-compliant questions across all categories and difficulties when API calls fail or offline mode is active, ensuring ₹0 operational cost.
+
+### 6. Aptitude Timer & Network Grace Buffer
+- **Detail:** In high-latency networks, student autosave requests and final submit calls near the 60-minute mark could experience transit delay.
+- **Resolution:** Backend session endpoints compute remaining duration dynamically from server `started_at` timestamp and allow a 60-second grace buffer past the nominal 3,600s mark to avoid false rejections.
+
+### 7. Aptitude Deterministic Offline Synthesis Engine
+- **Detail:** Real-time AI question replenishment via Gemini API can be subject to external rate limits or API key quotas.
+- **Resolution:** `AptitudeQuestionGenerator` synthesizes mathematically accurate TCS NQT pattern questions offline with complete step-by-step arithmetic explanations, ensuring ₹0 operational cost and continuous test suite reliability.

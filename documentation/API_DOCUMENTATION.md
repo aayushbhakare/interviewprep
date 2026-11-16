@@ -112,9 +112,34 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Implemented Aptitude Practice Endpoints (`apps/aptitude`) (Phase 5 Verified)
+
+### Student Aptitude Endpoints (`/api/v1/aptitude/`)
+- `GET /api/v1/aptitude/config/` — Retrieve active aptitude test configuration (duration, total questions, section distribution), student fresher eligibility status, and daily attempt quota usage (used/limit/remaining).
+- `POST /api/v1/aptitude/sessions/start/` — Start a new aptitude session or resume an active in-progress session. Enforces fresher eligibility and the 5 submitted attempts/day limit for standalone tests.
+- `GET /api/v1/aptitude/sessions/{session_id}/` — Retrieve active test taking state (server-computed countdown timer, 45 questions without revealing correct answers, and currently saved selections).
+- `POST /api/v1/aptitude/sessions/{session_id}/autosave/` — Autosave student MCQ selections. Validates timer cutoff with a 60-second network latency buffer.
+- `POST /api/v1/aptitude/sessions/{session_id}/abandon/` — Abandon in-progress session. Discards answers and does NOT consume the daily 5-attempt limit.
+- `POST /api/v1/aptitude/sessions/{session_id}/submit/` — Submit session for deterministic objective evaluation. Evaluates `(selected == correct)`, updates statistics, and locks answers.
+- `GET /api/v1/aptitude/sessions/{session_id}/results/` — Retrieve completed scorecard and comprehensive question review with options, correct answer keys, and step-by-step mathematical reasoning. Never displays PASS/FAIL for standalone practice.
+- `GET /api/v1/aptitude/history/` — Retrieve chronological history of past submitted aptitude sessions for the authenticated student.
+- `POST /api/v1/aptitude/questions/report/` — Report an issue or typo with an aptitude question. Automatically groups duplicates and suspends questions exceeding report threshold.
+
+### Admin Aptitude Operations (`/api/v1/admin-panel/aptitude/`)
+- `GET /api/v1/admin-panel/aptitude/questions/` — List and search aptitude MCQs with multi-faceted filtering (category, difficulty, status, search).
+- `POST /api/v1/admin-panel/aptitude/questions/` — Manually create a new aptitude MCQ (category, topic, difficulty, question text, 4 options, correct option index, step-by-step explanation).
+- `GET /api/v1/admin-panel/aptitude/questions/{id}/` — Retrieve aptitude question detail, immutable version history, and validation audit log.
+- `POST /api/v1/admin-panel/aptitude/questions/{id}/version/` — Publish an immutable version increment with changelog.
+- `PATCH /api/v1/admin-panel/aptitude/questions/{id}/status/` — Update operational status (`approved`, `suspended`, `inactive`).
+- `GET /api/v1/admin-panel/aptitude/reports/` — View student question issue report queue.
+- `POST /api/v1/admin-panel/aptitude/reports/{id}/resolve/` — Resolve or dismiss student report with resolution action and audit notes.
+- `GET /api/v1/admin-panel/aptitude/config/` — Retrieve active platform test configuration and rules.
+- `PATCH /api/v1/admin-panel/aptitude/config/` — Update platform rules (daily limit, duration, total question count, section distribution, Phase 6 Mixed qualifying threshold).
+
+---
+
 ## Planned Domain Endpoints
 
-- **Aptitude (`/api/v1/aptitude/`):** Standalone & Mixed sessions, question palette, scoring, daily limit.
 - **Interviews (`/api/v1/interviews/`):** Voice interview simulation, round progression, PASS/FAIL outcomes, cooling period.
 - **Experiences (`/api/v1/experiences/`):** Submission, draft saving, moderation, search, filtering.
 - **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, moderation queues, activity logs.
