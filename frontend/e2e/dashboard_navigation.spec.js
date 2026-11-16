@@ -22,13 +22,12 @@ test.describe('Phase 2 — Dashboard and Navigation Shell', () => {
     await expect(page.getByRole('heading', { name: 'Quick Shortcuts' })).toBeVisible();
   });
 
-  test('Learn module entry page renders correctly with Phase 3 status and wizard preview', async ({ page }) => {
+  test('Learn module entry page renders correctly with salary-first roadmap intro', async ({ page }) => {
     await page.goto('/learn');
-    await expect(page.locator('h1')).toContainText('Learn — Personalized Technical Roadmaps');
-    await expect(page.getByText('Module Status: Phase 3 Foundation In Progress')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Roadmap Setup Wizard (Preview)' })).toBeVisible();
-    await expect(page.getByText('Step 1')).toBeVisible();
-    await expect(page.getByText('Step 5')).toBeVisible();
+    await expect(page.locator('h1')).toContainText('Master the engineering standards of your target salary range.');
+    await expect(page.getByText('Salary-Wise Technical Roadmaps')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Targeted by Salary Tier' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sign In to Continue' })).toBeVisible();
   });
 
   test('Practice module entry page renders with Phase 6 & 7 status and 2 core tracks', async ({ page }) => {

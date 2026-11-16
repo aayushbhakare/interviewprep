@@ -20,6 +20,14 @@ class StudentDashboardView(APIView):
 
         roadmap_data = None
         if active_roadmap:
+            total_topics = active_roadmap.topic_progresses.count()
+            completed_topics = active_roadmap.topic_progresses.filter(
+                status="completed"
+            ).count()
+            progress_pct = (
+                int((completed_topics / total_topics) * 100) if total_topics > 0 else 0
+            )
+
             roadmap_data = {
                 "id": str(active_roadmap.id),
                 "role": active_roadmap.role,
@@ -29,9 +37,9 @@ class StudentDashboardView(APIView):
                 "framework": active_roadmap.framework,
                 "database": active_roadmap.database,
                 "status": active_roadmap.status,
-                "progress_percentage": 0,
-                "completed_topics": 0,
-                "total_topics": 0,
+                "progress_percentage": progress_pct,
+                "completed_topics": completed_topics,
+                "total_topics": total_topics,
                 "weekly_quiz_status": (
                     "Preparing" if active_roadmap.status == Roadmap.STATUS_PREPARING else "Available"
                 ),

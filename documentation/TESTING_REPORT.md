@@ -11,15 +11,28 @@ This report records automated and manual test runs, pass/fail results, and verif
 | Backend Foundation Unit & API Tests | pytest-django | 2 | 2 | 0 | 0 | **PASSED** | 2026-11-15 |
 | Authentication & User Management (Phase 1) | pytest-django | 29 | 29 | 0 | 0 | **PASSED** | 2026-11-15 |
 | Student Dashboard API Tests (Phase 2) | pytest-django | 3 | 3 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Python Linting & Formatting | Ruff | 56 files | 56 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend ESLint Code Quality | ESLint | 19 files | 19 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend Production Build | Vite | 1648 modules | 1648 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Playwright E2E Auth & Navigation (Phase 1 & 2) | Playwright (Chrome) | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
-| OpenAPI Schema Validation | drf-spectacular | 22 endpoints | 22 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Learn Module & Roadmap Tests (Phase 3) | pytest-django | 10 | 10 | 0 | 0 | **PASSED** | 2026-11-16 |
+| **Total Backend Test Suite** | **pytest-django** | **44** | **44** | **0** | **0** | **PASSED** | **2026-11-16** |
+| Python Linting & Formatting | Ruff | 62 files | 62 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend ESLint Code Quality | ESLint | 25 files | 25 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend Production Build | Vite | 1650 modules | 1650 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Playwright E2E Tests (Phases 1, 2 & 3) | Playwright (Chrome) | 14 | 14 | 0 | 0 | **PASSED** | 2026-11-16 |
+| OpenAPI Schema Validation | drf-spectacular | 28 endpoints | 28 | 0 | 0 | **PASSED** | 2026-11-16 |
 
 ---
 
 ## Acceptance Criteria Verification Log
+
+### Phase 3: Learn Module & Personalized Roadmap
+- [x] **Setup Wizard (`/learn`):** 6-step roadmap creation flow covering Role (9 + Other custom), Experience (5 tiers), Target Salary (6 tiers + flexible skip), Language (14 options), Framework with dynamic compatibility filter, and Database (10 options).
+- [x] **Dynamic Framework Clearing:** Selecting or changing a programming language automatically validates and clears incompatible frameworks in real-time.
+- [x] **Deterministic Roadmap Generation:** Generates 5 phases, structured weeks, and salary-tier adapted technical topics persisted in PostgreSQL (`RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`).
+- [x] **Honest Topic Progress:** Checkbox marks topics as completed; Skip button records "Not Verified" (skipped) state. Live server-side progress calculation (`completed_topics / total_topics`).
+- [x] **Topic Content Viewer:** Technical modal with learning objectives, concept overview, runtime mechanics, code examples, and recruitment interview perspectives.
+- [x] **Transactional Roadmap Replacement:** Allows student to safely replace active roadmap via confirmation modal under database transaction without dangling records.
+- [x] **Automated Tests:** 10 backend tests (pytest) and 2 browser E2E tests (Playwright) passed. Total 44 backend and 14 E2E tests passed.
+
+---
 
 ### Phase 2: Student Dashboard and Navigation Shell
 - [x] **Student Dashboard (`/dashboard`):** Personalized header, 3 equal pillars (Learn, Practice, Share Experience), Continue Learning card, Recent Activity, and 4 Quick Shortcuts.

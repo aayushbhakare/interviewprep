@@ -1,15 +1,18 @@
 from django.urls import path
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from drf_spectacular.utils import extend_schema
-
-
-class LearningPlaceholderView(APIView):
-    @extend_schema(responses={200: dict})
-    def get(self, request):
-        return Response({"status": "success", "data": {"roadmaps": []}})
-
+from apps.learning.views import (
+    CatalogView,
+    ActiveRoadmapView,
+    RoadmapCreateView,
+    RoadmapReplaceView,
+    TopicProgressUpdateView,
+    TopicContentView,
+)
 
 urlpatterns = [
-    path("roadmaps/", LearningPlaceholderView.as_view(), name="learning-roadmaps"),
+    path("catalog/", CatalogView.as_view(), name="learning-catalog"),
+    path("roadmaps/active/", ActiveRoadmapView.as_view(), name="learning-roadmap-active"),
+    path("roadmaps/", RoadmapCreateView.as_view(), name="learning-roadmap-create"),
+    path("roadmaps/replace/", RoadmapReplaceView.as_view(), name="learning-roadmap-replace"),
+    path("topics/<uuid:topic_id>/progress/", TopicProgressUpdateView.as_view(), name="learning-topic-progress"),
+    path("topics/<uuid:topic_id>/content/", TopicContentView.as_view(), name="learning-topic-content"),
 ]

@@ -1,7 +1,7 @@
 # Interview Preparation Platform (InterviewPrep)
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-34%2F34%20passing-brightgreen)](backend/apps/accounts/tests/)
-[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-12%2F12%20passing-brightgreen)](frontend/e2e/)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-44%2F44%20passing-brightgreen)](backend/apps/accounts/tests/)
+[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-14%2F14%20passing-brightgreen)](frontend/e2e/)
 [![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.1%2B-darkgreen)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61dafb)](https://react.dev/)
@@ -196,6 +196,12 @@ interviewprep/
 
 ## 10. Screenshots & UI Showcase
 
+### Live Student Personalized Roadmap (Verified Phase 3)
+![Personalized Roadmap](documentation/screenshots/roadmap.png)
+
+### Live Topic Study Content (Verified Phase 3)
+![Topic Study Content](documentation/screenshots/topic-study.png)
+
 ### Live Student Dashboard (Verified Phase 2)
 ![Student Dashboard](documentation/screenshots/dashboard.png)
 
@@ -205,8 +211,8 @@ interviewprep/
 ### Additional Module Previews (Under Development)
 | Module | Preview | Status |
 | :--- | :--- | :--- |
-| **Personalized Roadmap** | `[ Roadmap Setup Wizard Placeholder ]` | *Phase 3: Ready to Start* |
 | **45-Question Quiz** | `[ 75-Minute Timed Quiz Interface Placeholder ]` | *Phase 5: Planned* |
+| **Aptitude Practice** | `[ Fresher Aptitude Practice Interface Placeholder ]` | *Phase 6: Planned* |
 | **AI Voice Interview** | `[ Real-time Simulation & Rubrics Placeholder ]` | *Phase 7: Planned* |
 | **Share Experience** | `[ Experience Editor & Story Feed Placeholder ]` | *Phase 8: Planned* |
 
@@ -310,7 +316,7 @@ cd backend
 source .venv/bin/activate
 pytest -v
 ```
-*Current test suite: **34 / 34 passed**.*
+*Current test suite: **44 / 44 passed**.*
 
 ### Backend Linter & System Check
 ```bash
@@ -331,7 +337,7 @@ npm run build
 cd frontend
 npx playwright test
 ```
-*Current test suite: **12 / 12 passed**.*
+*Current test suite: **14 / 14 passed**.*
 
 ---
 
@@ -352,8 +358,8 @@ When the backend is running, visit:
 | **0** | **Project Foundation** | Architecture setup, PostgreSQL, DRF, React Vite, health checks | **Completed & Verified** |
 | **1** | **Authentication & Users** | Email code verification, JWT tokens, profile, admin 2FA, deletion | **Completed & Verified** |
 | **2** | **Main Dashboard & Shell** | Student overview, roadmap status, recent activity, pillar access | **Completed & Verified** |
-| **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | *Ready to Start* |
-| **4** | **Content & Exercises** | Topic versions, code-tracing exercises, interview provenance labels | *Planned* |
+| **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | **Completed & Verified** |
+| **4** | **Content & Exercises** | Topic versions, code-tracing exercises, interview provenance labels | *Ready to Start* |
 | **5** | **45-Q Weekly Quizzes** | Non-MCQ question bank, 75-min timer, async evaluation jobs | *Planned* |
 | **6** | **Aptitude Practice** | TCS NQT pattern, 5 sessions/day limit, 60% qualification cutoff | *Planned* |
 | **7** | **AI Voice Interviews** | Technical, HR, Mixed rounds, Gemini Live adapter, cooldowns | *Planned* |

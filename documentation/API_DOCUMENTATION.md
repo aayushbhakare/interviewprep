@@ -70,9 +70,20 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Implemented Learning & Roadmap Endpoints (`apps/learning`)
+
+### Learning Module (`/api/v1/learning/`)
+- `GET /api/v1/learning/catalog/` — Retrieve the setup catalog including roles, experience tiers, salary bands, languages, frameworks, databases, and compatibility matrix.
+- `GET /api/v1/learning/roadmaps/active/` — Retrieve the active roadmap for the authenticated student, nested with phases, weeks, topics, and live progress metrics.
+- `POST /api/v1/learning/roadmaps/` — Generate a new personalized roadmap from setup choices (validates language/framework matrix; errors with 409 if active roadmap already exists).
+- `POST /api/v1/learning/roadmaps/replace/` — Safely replace existing active roadmap with a fresh configuration in an atomic database transaction.
+- `PATCH /api/v1/learning/topics/<uuid:topic_id>/progress/` — Update individual topic status (`not_started`, `completed`, `skipped`). Returns updated metrics.
+- `GET /api/v1/learning/topics/<uuid:topic_id>/content/` — Retrieve technical study content for a topic (learning objectives, runtime mechanics, code examples, interview perspectives).
+
+---
+
 ## Planned Domain Endpoints
 
-- **Learning (`/api/v1/learning/`):** Catalog, roadmap generation, replacement, topic progress.
 - **Quizzes (`/api/v1/quizzes/`):** Assignment readiness, 45-question attempts, timer, autosave, submission, evaluation.
 - **Aptitude (`/api/v1/aptitude/`):** Standalone & Mixed sessions, question palette, scoring, daily limit.
 - **Interviews (`/api/v1/interviews/`):** Voice interview simulation, round progression, PASS/FAIL outcomes, cooling period.
