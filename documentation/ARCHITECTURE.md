@@ -33,7 +33,21 @@ graph TD
 10. **`ai_services`**: Provider adapters, prompts, structured output validation, token usage tracking, and cost accounting.
 11. **`common`**: Reusable models (timestamps, UUIDs), utilities, error envelopes, and `ProcessingJob` async queue.
 
-## Frontend Organization
+## Coding Standards & Review Architecture
+
+### Permanent Engineering Standards
+- **Natural, Professional Code Style:** Avoid decorative comment banners, ASCII art headers, and obvious comments that restate code syntax. Keep docstrings and comments focused on non-obvious business logic, domain invariants, and security-critical rules.
+- **Consistent Layering:**
+  - Views handle HTTP deserialization, schema contracts (`drf-spectacular`), and dispatch.
+  - Domain services (`apps/<domain>/services/`) encapsulate business logic, transactional operations, and security rules.
+  - Models manage data schemas, foreign keys, and direct table constraints.
+- **Frontend Practices:** Pure React 18 in JavaScript (ES6+ JSX, no TypeScript). Centralized routing with `ProtectedRoute` guards and standard Axios interceptors.
+
+### CodeRabbit Automated Review Architecture
+- Repository-level configuration in `.coderabbit.yaml`.
+- Enforces strict review gates on every phase branch PR before merging into `main`.
+- Validates modular monolith boundaries, absence of unauthorized Celery/Redis dependencies, correct Django migration coverage, and responsive UX states.
+
 
 ```text
 frontend/src/

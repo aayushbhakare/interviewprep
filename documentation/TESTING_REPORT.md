@@ -10,15 +10,28 @@ This report records automated and manual test runs, pass/fail results, and verif
 |---|---|---|---|---|---|---|---|
 | Backend Foundation Unit & API Tests | pytest-django | 2 | 2 | 0 | 0 | **PASSED** | 2026-11-15 |
 | Authentication & User Management (Phase 1) | pytest-django | 29 | 29 | 0 | 0 | **PASSED** | 2026-11-15 |
-| Python Linting & Formatting | Ruff | 55 files | 55 | 0 | 0 | **PASSED** | 2026-11-15 |
-| Frontend ESLint Code Quality | ESLint | 14 files | 14 | 0 | 0 | **PASSED** | 2026-11-15 |
-| Frontend Production Build | Vite | 1644 modules | 1644 | 0 | 0 | **PASSED** | 2026-11-15 |
-| Playwright E2E Authentication Tests | Playwright (Chrome) | 5 | 5 | 0 | 0 | **PASSED** | 2026-11-15 |
-| OpenAPI Schema Validation | drf-spectacular | 21 endpoints | 21 | 0 | 0 | **PASSED** | 2026-11-15 |
+| Student Dashboard API Tests (Phase 2) | pytest-django | 3 | 3 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Python Linting & Formatting | Ruff | 56 files | 56 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend ESLint Code Quality | ESLint | 19 files | 19 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend Production Build | Vite | 1648 modules | 1648 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Playwright E2E Auth & Navigation (Phase 1 & 2) | Playwright (Chrome) | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
+| OpenAPI Schema Validation | drf-spectacular | 22 endpoints | 22 | 0 | 0 | **PASSED** | 2026-11-16 |
 
 ---
 
 ## Acceptance Criteria Verification Log
+
+### Phase 2: Student Dashboard and Navigation Shell
+- [x] **Student Dashboard (`/dashboard`):** Personalized header, 3 equal pillars (Learn, Practice, Share Experience), Continue Learning card, Recent Activity, and 4 Quick Shortcuts.
+- [x] **Continue Learning State Handling:** Correctly handles empty state (compass icon, "No active roadmap yet", "Set Up Roadmap" CTA) and populated active roadmap state (role, salary band, progress bar, weekly quiz status). Does not fabricate mock progress.
+- [x] **Recent Activity State Handling:** Displays clean empty state ("No recent activity yet") when no history exists and dynamically renders real user events. Does not invent fake history.
+- [x] **Desktop Navigation:** Persistent navbar with brand logo, active route highlighting (`bg-brand-50`), user avatar/name, link to `/profile`, and `Sign Out`.
+- [x] **Mobile Navigation:** Responsive hamburger toggle menu supporting full mobile drawer navigation across all modules and authenticated actions.
+- [x] **Protected Routes:** `ProtectedRoute` wrapper intercepts unauthenticated access to `/profile`, redirecting to `/login` with return destination preserved.
+- [x] **Module Entry Points:** Fully implemented landing entry points for `/learn` (Phase 3 status, setup wizard preview), `/practice` (Phase 6/7 status, AI voice & aptitude tracks), and `/experiences` (Phase 8 status, discovery taxonomy).
+- [x] **Automated Regression:** 34 backend pytest tests passed; 12 Playwright browser tests passed; clean Vite production build.
+
+---
 
 ### Phase 1: Authentication and User Management
 - [x] **Registration:** Valid registration works, normalizes email, hashes passwords, enforces password requirements, rejects duplicate emails, mismatched passwords, and missing fields.
