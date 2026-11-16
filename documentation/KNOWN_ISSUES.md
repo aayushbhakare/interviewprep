@@ -33,4 +33,4 @@ This document tracks known limitations, pending provider verifications, and temp
 
 ### 7. Aptitude Deterministic Offline Synthesis Engine
 - **Detail:** Real-time AI question replenishment via Gemini API can be subject to external rate limits or API key quotas.
-- **Resolution:** `AptitudeQuestionGenerator` synthesizes mathematically accurate TCS NQT pattern questions offline with complete step-by-step arithmetic explanations, ensuring ₹0 operational cost and continuous test suite reliability.
+- **Resolution:** `AptitudeQuestionGenerator` synthesizes mathematically accurate cognitive foundation aptitude questions offline with complete step-by-step arithmetic explanations, ensuring ₹0 operational cost and continuous test suite reliability.

@@ -1,6 +1,19 @@
 import { test, expect } from '@playwright/test';
+import { execSync } from 'child_process';
 
 test.describe('Phase 5 — Aptitude Practice Module', () => {
+  test.beforeEach(() => {
+    // Reset test student aptitude sessions so daily limit of 5 is never exhausted during test runs
+    try {
+      execSync(
+        `cd ../backend && .venv/bin/python manage.py shell -c "from apps.accounts.models import User; from apps.aptitude.models import AptitudeSession; u = User.objects.filter(email='e2e_student@interviewprep.local').first(); u and AptitudeSession.objects.filter(student=u).delete()"`,
+        { stdio: 'ignore' }
+      );
+    } catch {
+      // Ignored if backend shell is unavailable in CI
+    }
+  });
+
   test('Complete Fresher Aptitude Practice Workflow: Hub, Test Taking, Palette, Autosave, Submit, Review & Scorecard', async ({
     page,
   }) => {

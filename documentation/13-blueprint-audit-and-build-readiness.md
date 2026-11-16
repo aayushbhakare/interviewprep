@@ -44,7 +44,7 @@ These are genuine implementation gates, not reasons to restart product planning:
 | Admin 2FA recovery | Mandatory 2FA without safe recovery can lock out the only admin. | Phase 1 |
 | Resume upload constraints | Need size limit, robust PDF validation and safe storage lifecycle. | Before resume upload |
 | Account deletion/retention | Must define what is deleted, anonymized or retained. | Before account deletion/production |
-| Aptitude pattern and clock reset | Verify latest official NQT pattern; choose the timezone defining the daily reset. | Phase 6 |
+| Aptitude pattern and clock reset | Verify prevailing cognitive pattern; choose the timezone defining the daily reset. | Phase 5 |
 | Mixed interview round blueprint | Define role/experience-based round templates and where aptitude is inserted for freshers. | Before Mixed interviews |
 | Backup/restore policy | Frequency, retention, storage and recovery ownership are not finalized. | Before production |
 
@@ -58,7 +58,7 @@ These are genuine implementation gates, not reasons to restart product planning:
 - Exact email code expiry/resend limits.
 - Exact JWT access/refresh settings and browser storage.
 - Exact backup frequency/retention.
-- Exact TCS NQT pattern applicable on implementation date.
+- Exact cognitive assessment pattern applicable on implementation date.
 - Exact AI evaluation rubrics and model selection.
 
 Do not turn these into a new round of broad product discussions. Resolve one when its implementation phase needs it, record the answer in `12-decisions-and-open-items.md`, then continue.

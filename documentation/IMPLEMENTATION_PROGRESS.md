@@ -16,11 +16,11 @@ This log tracks granular progress across every feature, component, API, and mile
 
 ## Milestone Progress Log
 
-### Phase 5: Aptitude Practice Module (Completed & Verified)
-- [x] Researched official TCS iON Cognitive Foundation reference pattern (65 questions, 75 mins: 20 Quant, 20 Logical, 25 Verbal, verified Nov 16, 2026). Standardized practice configuration: 45 MCQs (15 Quant, 15 Logical, 15 Verbal) in 60 minutes with 0 penalty, fully admin-configurable.
+### Phase 5: Generic Aptitude Practice Module (Completed & Verified)
+- [x] Standardized fresher cognitive foundation assessment pattern (45 MCQs: 15 Quant, 15 Logical, 15 Verbal in 60 minutes with 0 penalty, fully admin-configurable).
 - [x] Defined models for shared aptitude question bank and test sessions (`apps/aptitude/models.py`): `AptitudeQuestion`, `AptitudeQuestionVersion`, `AptitudeQuestionReport`, `AptitudeValidationHistory`, `AptitudeTestConfig`, `AptitudeSession`, `AptitudeSessionQuestion`, `AptitudeSessionAnswer`.
 - [x] Generated and applied database migration `0002_aptitudetestconfig_alter_aptitudequestion_options_and_more.py`.
-- [x] Implemented `seed_data.py` providing curated baseline bank of 45 verified TCS NQT pattern MCQs across Quantitative Aptitude, Logical Reasoning, and Verbal Ability.
+- [x] Implemented `seed_data.py` providing curated baseline bank of 45 verified cognitive foundation MCQs across Quantitative Aptitude, Logical Reasoning, and Verbal Ability.
 - [x] Implemented `question_generator.py` with structured schema validation, up to 3 AI revisions, offline deterministic fallback engine, and failure logging as `Suspended – Review Failed`.
 - [x] Implemented `aptitude_bank_service.py` with unseen question selection priority, replenishment from generator, duplicate grouping, threshold suspension, and report submission.
 - [x] Implemented `session_service.py` with fresher eligibility enforcement (`"Fresher"`, `"Less than 1 year"`), daily standalone attempt tracking (5 submitted sessions/day; abandoned sessions strictly exempted), start/resume session, 60-minute server timer enforcement, debounced autosave, abandonment handling, and objective deterministic MCQ evaluation.

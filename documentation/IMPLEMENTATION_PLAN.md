@@ -65,9 +65,9 @@ This document defines the sequential execution plan across all phases of the Int
 6. Maximum 5 submitted attempts per weekly quiz, abandonment without consuming attempt limit, and milestone increment (+1 on roadmap week upon quiz submission).
 7. Admin Question Bank catalog with search, filtering, question CRUD, version publishing, suspension/activation, and student report resolution.
 
-### Phase 5: Aptitude Practice (Completed & Verified)
+### Phase 5: Generic Aptitude Practice (Completed & Verified)
 1. Shared aptitude question bank across Quantitative, Logical, and Verbal tracks with 4-option MCQs.
-2. Official TCS iON Cognitive Foundation reference pattern research & test config (45 MCQs: 15 Quant, 15 Logical, 15 Verbal in 60 mins).
+2. Standardized fresher cognitive foundation assessment pattern & test config (45 MCQs: 15 Quant, 15 Logical, 15 Verbal in 60 mins).
 3. AI question generator with schema validation, 3-attempt automated revision loop, and deterministic fallback synthesis.
 4. Fresher experience eligibility enforcement (`"Fresher"`, `"Less than 1 year"` eligible; experienced rejected with 403 Forbidden).
 5. Standalone practice tests with 5 submitted sessions per calendar day limit (abandoned sessions strictly exempted).

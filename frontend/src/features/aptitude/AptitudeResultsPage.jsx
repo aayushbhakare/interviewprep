@@ -214,7 +214,7 @@ export default function AptitudeResultsPage() {
         <Award className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" />
         <div className="text-xs text-indigo-900 leading-relaxed">
           <span className="font-semibold">Practice Module Performance:</span> This is a self-paced
-          aptitude training test designed for TCS NQT cognitive pattern preparation. Practice tests
+          aptitude training test designed for general cognitive aptitude preparation. Practice tests
           do not issue recruitment pass/fail verdicts—review every explanation below to build speed
           and accuracy.
           {results.session_type === 'mixed_stage' && (
@@ -585,7 +585,7 @@ export default function AptitudeResultsPage() {
                     </div>
                     <div className="text-slate-700 whitespace-pre-line leading-relaxed font-mono text-[11.5px] bg-white p-3 rounded border border-slate-200">
                       {q.explanation ||
-                        'Detailed step-by-step mathematical reasoning verified for TCS NQT standard.'}
+                        'Detailed step-by-step mathematical reasoning verified for cognitive aptitude standards.'}
                     </div>
                   </div>
                 </div>

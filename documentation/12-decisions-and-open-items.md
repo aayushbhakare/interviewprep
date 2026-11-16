@@ -74,7 +74,7 @@ These are not reasons to delay all planning. Resolve them just before the releva
 8. Exact email code expiry/resend limits.
 9. Exact account deletion and retention policy before production.
 10. Exact backup retention and restore procedure before production.
-11. Current applicable TCS NQT pattern at the time Aptitude is implemented.
+11. Current applicable cognitive assessment pattern at the time Aptitude is implemented.
 12. Safe sandbox approach for executing coding submissions.
 13. Initial processing mechanism for long-running jobs without Celery/Redis.
 14. Exact model/prompt versions and evaluation rubrics for each AI feature.

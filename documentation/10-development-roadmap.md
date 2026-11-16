@@ -74,7 +74,7 @@ Build incrementally. Do not generate the entire platform in one operation.
 
 ## Phase 6 — Aptitude
 - Shared aptitude bank.
-- Current applicable NQT pattern research at implementation time.
+- Current applicable fresher cognitive assessment pattern at implementation time.
 - Session selection and attempt limits.
 - Test UI, timer/navigation, results/history.
 - Mixed-mode qualifying logic.

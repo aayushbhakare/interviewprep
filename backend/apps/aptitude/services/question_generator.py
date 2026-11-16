@@ -259,7 +259,7 @@ def _call_gemini_aptitude_generator(
     headers = {"Content-Type": "application/json", "x-goog-api-key": api_key}
 
     prompt_text = f"""
-Generate {count} multiple-choice aptitude questions for fresher placement exams (TCS NQT cognitive pattern).
+Generate {count} multiple-choice aptitude questions for fresher placement exams (standardized cognitive foundation pattern).
 - Category: {category} (quantitative, logical, or verbal)
 - Topic: {topic}
 - Difficulty: {difficulty}

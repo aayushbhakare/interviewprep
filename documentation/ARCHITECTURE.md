@@ -52,11 +52,11 @@ graph TD
 ## Aptitude Practice Architecture (Phase 5)
 
 ### Shared Cognitive Question Bank (`apps/aptitude`)
-- **TCS NQT Pattern Reference:** Standardized on official TCS iON Cognitive Foundation pattern (65 questions, 75 mins in real exam; practice baseline standardized to 45 questions, 60 mins: 15 Quantitative Aptitude, 15 Logical Reasoning, 15 Verbal Ability).
+- **Standardized Cognitive Assessment Reference:** Standardized on prevailing campus recruitment cognitive foundation patterns (practice baseline: 45 questions, 60 mins: 15 Quantitative Aptitude, 15 Logical Reasoning, 15 Verbal Ability).
 - **Strict 4-Option MCQ Format:** In direct contrast to non-MCQ technical quizzes, all aptitude items are 4-option multiple-choice questions (A, B, C, D) with exactly one mathematically or logically valid correct option.
 - **Entity vs Version Segregation:** Canonical identity (`AptitudeQuestion`) stores section, topic, difficulty, and operational status (`approved`, `suspended`, `inactive`). Immutable content versions (`AptitudeQuestionVersion`) store question text, options array, correct option index, step-by-step explanation, changelog, and creation timestamp.
 - **Structured Validation & 3-Attempt Revision Loop:** AI-generated questions undergo structural schema checks (distinct non-empty options, valid correct option index, step-by-step mathematical derivation in explanation). Invalid items trigger up to 3 revisions before logging failure in `AptitudeValidationHistory` as `Suspended – Review Failed`.
-- **Deterministic Offline Fallback Engine:** Guarantees ₹0 operational cost and predictable test suite execution by synthesizing curated TCS NQT pattern questions mathematically offline without external API dependencies.
+- **Deterministic Offline Fallback Engine:** Guarantees ₹0 operational cost and predictable test suite execution by synthesizing curated cognitive foundation questions mathematically offline without external API dependencies.
 
 ### Fresher Eligibility Gate & Session Lifecycle
 - **Fresher Experience Restriction:** Standalone aptitude practice is restricted to freshers and entry-level candidates (`"Fresher"`, `"Less than 1 year"`). Experienced candidates (`"1–3 years"`, `"3–5 years"`, `"5+ years"`) are blocked on backend endpoints with 403 Forbidden (`PermissionDenied`).

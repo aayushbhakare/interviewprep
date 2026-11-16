@@ -181,7 +181,7 @@ class AptitudeValidationHistory(TimeStampedModel):
 
 class AptitudeTestConfig(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, default="Standard TCS NQT Pattern Practice")
+    name = models.CharField(max_length=100, default="Standard Cognitive Foundation Assessment")
     total_questions = models.PositiveIntegerField(default=45)
     duration_minutes = models.PositiveIntegerField(default=60)
     distribution = models.JSONField(
@@ -202,7 +202,7 @@ class AptitudeTestConfig(TimeStampedModel):
         config = cls.objects.filter(is_active=True).first()
         if not config:
             config = cls.objects.create(
-                name="Standard TCS NQT Pattern Practice",
+                name="Standard Cognitive Foundation Assessment",
                 total_questions=45,
                 duration_minutes=60,
                 distribution={"quantitative": 15, "logical": 15, "verbal": 15},

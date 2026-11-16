@@ -94,8 +94,9 @@ export default function AptitudePracticePage() {
             Fresher Aptitude Practice
           </h1>
           <p className="text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-            Standardized cognitive assessments modeled on modern campus hiring patterns (TCS iON NQT Cognitive Foundation).
-            Sharpen speed math, logical problem-solving, and verbal reasoning.
+            Standardized cognitive assessments modeled on modern campus hiring patterns across
+            Quantitative Aptitude, Logical Reasoning, and Verbal Ability. Sharpen speed math, logical
+            problem-solving, and verbal reasoning.
           </p>
         </div>
 

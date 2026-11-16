@@ -173,7 +173,7 @@ export default function AdminAptitudePage() {
               Aptitude Bank & Platform Management
             </h1>
             <p className="text-sm text-slate-500 mt-0.5">
-              Curate TCS NQT cognitive pattern MCQs, audit student reports, and tune platform rules.
+              Curate cognitive aptitude MCQs, audit student reports, and tune platform rules.
             </p>
           </div>
 

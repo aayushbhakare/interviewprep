@@ -251,7 +251,7 @@ Rules:
 - Available as standalone Aptitude Practice and as an assessment stage in Mixed recruitment.
 - One shared, pre-generated Aptitude Question Bank; same selection/revision logic in both contexts.
 - Same bank and difficulty for all freshers; salary-independent.
-- Follow the latest applicable TCS NQT pattern at implementation time; verify official current pattern then rather than hardcoding an old version.
+- Follow the prevailing fresher cognitive assessment pattern at implementation time; verify balanced distribution across Quantitative, Logical, and Verbal reasoning.
 - No category-first user setup; present a simple main test.
 - Standalone result: marks, correct answers, incorrect answers; no PASS/FAIL.
 - Mixed aptitude result: marks and correct/incorrect; compare to qualifying threshold.

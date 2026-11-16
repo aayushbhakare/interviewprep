@@ -25,8 +25,8 @@ This report records automated and manual test runs, pass/fail results, and verif
 
 ## Acceptance Criteria Verification Log
 
-### Phase 5: Aptitude Practice Module
-- [x] **TCS NQT Pattern Research & Configuration:** Standardized on official TCS iON Cognitive Foundation reference pattern (45 MCQs: 15 Quantitative Aptitude, 15 Logical Reasoning, 15 Verbal Ability in 60 minutes with 0 negative marking).
+### Phase 5: Generic Aptitude Practice Module
+- [x] **Cognitive Foundation Pattern Configuration:** Standardized on prevailing fresher recruitment cognitive pattern (45 MCQs: 15 Quantitative Aptitude, 15 Logical Reasoning, 15 Verbal Ability in 60 minutes with 0 negative marking).
 - [x] **Strict 4-Option Multiple Choice Format:** All aptitude items are 4-option MCQs (A, B, C, D) with single correct answers and step-by-step mathematical reasoning.
 - [x] **Fresher Experience Eligibility Restriction:** Restricted to freshers and entry-level candidates (`"Fresher"`, `"Less than 1 year"`). Experienced candidates (`"1–3 years"`, `"3–5 years"`, `"5+ years"`) blocked with 403 Forbidden.
 - [x] **Daily Attempt Quota:** 5 submitted sessions per calendar day. Abandoned sessions discard answers and do not consume attempt quota.

@@ -1,7 +1,7 @@
 from apps.aptitude.models import AptitudeQuestion, AptitudeQuestionVersion
 
 # 45 High-Yield Curated Aptitude Questions (15 Quant, 15 Logical, 15 Verbal)
-# Aligned with official TCS iON NQT Cognitive Foundation specification
+# Aligned with standardized fresher recruitment cognitive assessment specification
 CURATED_APTITUDE_SEED = [
     # ─── SECTION 1: QUANTITATIVE APTITUDE (15 Questions) ──────────────────────
     {
@@ -476,7 +476,7 @@ CURATED_APTITUDE_SEED = [
 
 def seed_initial_aptitude_bank() -> int:
     """
-    Populates the shared aptitude question bank with the 45 curated TCS NQT Cognitive baseline questions.
+    Populates the shared aptitude question bank with the 45 curated Cognitive Foundation baseline questions.
     Returns count of newly seeded questions.
     """
     created_count = 0

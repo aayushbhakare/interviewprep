@@ -29,7 +29,7 @@ export default function PracticePage() {
           <div>
             <h3 className="text-sm font-semibold text-indigo-950">Aptitude Practice Module is Active (Module Status: Scheduled for Phases 6 & 7 for Voice Simulation)</h3>
             <p className="text-xs sm:text-sm text-indigo-800 mt-0.5">
-              Standardized 60-minute, 45-question TCS NQT pattern practice tests are now live for fresher candidates.
+              Standardized 60-minute, 45-question cognitive aptitude practice tests are now live for fresher candidates.
             </p>
           </div>
         </div>
@@ -90,12 +90,12 @@ export default function PracticePage() {
               </span>
             </div>
             <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-              Standardized cognitive assessments modeled directly on modern fresher recruitment patterns (TCS NQT Foundation), covering Quantitative Ability, Logical Reasoning, and Verbal Ability.
+              Standardized cognitive assessments modeled directly on modern fresher recruitment patterns, covering Quantitative Ability, Logical Reasoning, and Verbal Ability.
             </p>
             <ul className="space-y-2 text-sm text-slate-600 mb-6">
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-indigo-500 mr-2 shrink-0" />
-                <strong>TCS NQT Pattern:</strong> 45 MCQs (15 Quant, 15 Logical, 15 Verbal) in 60 minutes.
+                <strong>Standard Pattern:</strong> 45 MCQs (15 Quant, 15 Logical, 15 Verbal) in 60 minutes.
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-4 h-4 text-indigo-500 mr-2 shrink-0" />
@@ -108,7 +108,7 @@ export default function PracticePage() {
             </ul>
           </div>
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-xs text-indigo-600 font-semibold">TCS NQT Cognitive Foundation</span>
+            <span className="text-xs text-indigo-600 font-semibold">Cognitive Foundation Pattern</span>
             <Link
               to="/practice/aptitude"
               className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm transition-colors"

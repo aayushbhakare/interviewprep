@@ -44,7 +44,7 @@
 ## 2. Project Overview
 **InterviewPrep** is a web-based interview preparation and recruitment simulation platform built specifically for engineering students and early-career developers. 
 
-Unlike traditional interview portals that force students to prepare for specific company names (e.g. "Google prep", "TCS prep"), **InterviewPrep focuses on salary-oriented competence tiers**. The expected depth, rigor, and technical interview expectations correlate directly with the target salary band (e.g., Below ₹3 LPA, ₹3–5 LPA, ₹5–7 LPA, ₹7–10 LPA, ₹10–15 LPA, ₹15+ LPA) rather than corporate branding.
+Unlike traditional interview portals that force students to prepare for specific company names (e.g. company-specific test guides), **InterviewPrep focuses on salary-oriented competence tiers**. The expected depth, rigor, and technical interview expectations correlate directly with the target salary band (e.g., Below ₹3 LPA, ₹3–5 LPA, ₹5–7 LPA, ₹7–10 LPA, ₹10–15 LPA, ₹15+ LPA) rather than corporate branding.
 
 The platform provides a unified suite comprising self-paced roadmap learning, diagnostic weekly quizzes, realistic AI-driven voice interview simulations, aptitude practice, and authentic peer-contributed recruitment experiences.
 
@@ -76,9 +76,9 @@ Technical recruitment preparation in higher education faces three systemic probl
   - Student profile management (name updates, email change with two-step verification, password change with re-authentication, and explicit soft account deletion).
   - Invitation-only Administrator access with mandatory 2-Factor Authentication (2FA).
 - **Personalized Learning Roadmaps (Phase 3 Planned):** Role, stack, and salary-tier tailored learning paths with weekly milestones.
-- **Diagnostic Weekly Quizzes (Phase 5 Planned):** 45 non-MCQ questions (10 output prediction, 10 debugging, 10 coding, 10 scenario, 5 conceptual) with a strict 75-minute timer and asynchronous grading.
-- **Aptitude Practice (Phase 6 Planned):** Standalone and mixed aptitude sessions following TCS NQT patterns with a 60% qualification threshold.
-- **AI-Powered Voice Interview Simulator (Phase 7 Planned):** Voice-to-voice interview rounds with adaptive follow-ups and comprehensive rubric scorecards.
+- **Diagnostic Weekly Quizzes (Phase 4):** 45 non-MCQ questions (10 output prediction, 10 debugging, 10 coding, 10 scenario, 5 conceptual) with a strict 75-minute timer and asynchronous grading.
+- **Generic Aptitude Practice (Phase 5):** Fresher cognitive foundation assessments (45 MCQs: 15 Quantitative, 15 Logical, 15 Verbal) in 60 minutes with 5 sessions/day limit and step-by-step mathematical reasoning.
+- **AI-Powered Voice Interview Simulator (Phase 6 Planned):** Voice-to-voice interview rounds with adaptive follow-ups and comprehensive rubric scorecards.
 - **Crowdsourced Recruitment Experiences (Phase 8 Planned):** Stage-by-stage interview reports, verified compensation reporting, and question extraction.
 
 ---
@@ -98,7 +98,7 @@ The platform is organized around three completely independent, equal pillars:
        ├──────────────────────┤        ├──────────────────────┤        ├──────────────────────┤
        │ • Personalized Paths │        │ • AI Voice Interview │        │ • Real Student Exps  │
        │ • Role & Salary Tier │        │ • Tech / HR / Mixed  │        │ • Company & Package  │
-       │ • Concept Deep-Dives │        │ • TCS NQT Aptitude   │        │ • Round Breakdown    │
+       │ • Concept Deep-Dives │        │ • Cognitive Aptitude │        │ • Round Breakdown    │
        │ • 45-Q Weekly Quiz   │        │ • Real-time Rubrics  │        │ • Risk Moderation    │
        └──────────────────────┘        └──────────────────────┘        └──────────────────────┘
 ```
@@ -147,7 +147,7 @@ backend/
     ├── content/             # Topic content, exercise definitions, versioning
     ├── questions/           # Question bank, categorization, test cases
     ├── quizzes/             # Weekly 45-Q non-MCQ quiz engine, timer, evaluation
-    ├── aptitude/            # Fresher aptitude sessions (TCS NQT pattern)
+    ├── aptitude/            # Fresher cognitive aptitude practice sessions
     ├── interviews/          # AI simulation sessions, round state machines
     ├── experiences/         # Student interview stories, draft editor, moderation
     ├── administration/      # Internal analytics, invite-only admin management
@@ -365,13 +365,12 @@ When the backend is running, visit:
 | **1** | **Authentication & Users** | Email code verification, JWT tokens, profile, admin 2FA, deletion | **Completed & Verified** |
 | **2** | **Main Dashboard & Shell** | Student overview, roadmap status, recent activity, pillar access | **Completed & Verified** |
 | **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | **Completed & Verified** |
-| **4** | **Content & Exercises** | Topic versions, code-tracing exercises, interview provenance labels | *Ready to Start* |
-| **5** | **45-Q Weekly Quizzes** | Non-MCQ question bank, 75-min timer, async evaluation jobs | *Planned* |
-| **6** | **Aptitude Practice** | TCS NQT pattern, 5 sessions/day limit, 60% qualification cutoff | *Planned* |
-| **7** | **AI Voice Interviews** | Technical, HR, Mixed rounds, Gemini Live adapter, cooldowns | *Planned* |
-| **8** | **Share Experience** | Recruitment stories, stage breakdowns, automated risk moderation | *Planned* |
-| **9** | **Administration Panel** | 11 administrative panels, audit logs, student management | *Planned* |
-| **10** | **Hardening & Release** | Full E2E regression, security audit, deployment checklist | *Planned* |
+| **4** | **Shared Question Bank & Weekly Quizzes** | 45-Q non-MCQ engine, 75-min timer, offline grading, admin catalog | **Completed & Verified** |
+| **5** | **Generic Aptitude Practice** | Cognitive foundation (45 MCQs: Quant, Logical, Verbal), 60m timer, 5/day limit | **Completed & Verified** |
+| **6** | **AI Voice Interviews** | Technical, HR, Mixed rounds, Gemini Live adapter, cooldowns | *Planned* |
+| **7** | **Share Experience** | Recruitment stories, stage breakdowns, automated risk moderation | *Planned* |
+| **8** | **Administration Panel** | 11 administrative panels, audit logs, student management | *Planned* |
+| **9** | **Hardening & Release** | Full E2E regression, security audit, deployment checklist | *Planned* |
 
 ---
 
