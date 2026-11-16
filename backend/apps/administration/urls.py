@@ -26,6 +26,10 @@ from apps.administration.views_aptitude import (
     AdminAptitudeReportResolveView,
     AdminAptitudeConfigView,
 )
+from apps.interviews.views import (
+    AdminInterviewConfigView,
+    AdminInterviewAnalyticsView,
+)
 
 
 class AdminPlaceholderView(APIView):
@@ -110,5 +114,16 @@ urlpatterns = [
         "aptitude/config/",
         AdminAptitudeConfigView.as_view(),
         name="admin-aptitude-config",
+    ),
+    # Admin Interview Practice Management
+    path(
+        "interviews/config/",
+        AdminInterviewConfigView.as_view(),
+        name="admin-interviews-config",
+    ),
+    path(
+        "interviews/analytics/",
+        AdminInterviewAnalyticsView.as_view(),
+        name="admin-interviews-analytics",
     ),
 ]

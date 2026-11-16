@@ -71,7 +71,11 @@ Access API Documentation:
 
 ### Run Backend Tests
 ```bash
+# Run all 88 unit & API tests
 pytest
+
+# Or run interviews module tests specifically
+pytest apps/interviews/tests/
 ```
 
 ---
@@ -85,6 +89,7 @@ npm run dev
 ```
 
 The frontend will be accessible at `http://localhost:5173`.
+To test voice simulations, use Google Chrome or any Chromium browser with Web Speech API support.
 
 ### Run Frontend Lint & Build
 ```bash
@@ -94,5 +99,9 @@ npm run build
 
 ### Run End-to-End Playwright Tests
 ```bash
+# Run all 19 Playwright tests (with backend server running)
 npx playwright test
+
+# Or run interview tests specifically
+npx playwright test e2e/interviews.spec.js
 ```

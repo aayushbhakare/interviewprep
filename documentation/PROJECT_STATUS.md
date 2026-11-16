@@ -2,8 +2,8 @@
 
 **Repository:** [https://github.com/aayushbhakare/interviewprep](https://github.com/aayushbhakare/interviewprep)  
 **Primary Branch:** `main`  
-**Current Phase:** Phase 5 — Aptitude Practice  
-**Overall Status:** Phase 0, Phase 1, Phase 2, Phase 3, Phase 4 & Phase 5 Complete & Verified  
+**Current Phase:** Phase 6 — AI-Powered Interview Practice Module  
+**Overall Status:** Phases 0, 1, 2, 3, 4, 5 & 6 Complete & Verified  
 **Last Updated:** 2026-11-16  
 
 ---
@@ -17,11 +17,27 @@
 | **Phase 2** | Main Dashboard & Navigation Shell | **Verified** | 2026-11-16 |
 | **Phase 3** | Learn Module & Personalized Roadmap | **Verified** | 2026-11-16 |
 | **Phase 4** | Shared Question Bank & Weekly Quiz System | **Verified** | 2026-11-16 |
-| **Phase 5** | Aptitude Practice | **Verified** | 2026-11-16 |
-| **Phase 6** | Share Interview Experience | Not Started | — |
-| **Phase 7** | AI Interview Practice (Voice Simulation) | Not Started | — |
-| **Phase 8** | Admin Panel & Platform Operations | Not Started | — |
-| **Phase 9** | Integration, Hardening & End-to-End Testing | Not Started | — |
+| **Phase 5** | Aptitude Practice Module | **Verified** | 2026-11-16 |
+| **Phase 6** | AI-Powered Interview Practice Module (Voice Simulation) | **Verified** | 2026-11-16 |
+| **Phase 7** | Share Interview Experience | Planned | — |
+| **Phase 8** | Admin Panel & Platform Operations | Planned | — |
+| **Phase 9** | Integration, Hardening & End-to-End Testing | Planned | — |
+
+---
+
+## Phase 6 Milestones: Complete & Verified
+
+- [x] AI Interview Practice Architecture (`apps/interviews`): Core models (`InterviewSession`, `InterviewRound`, `InterviewCoolingPeriod`, `InterviewConfig`) with PostgreSQL indexing and constraint integrity.
+- [x] 3 Interview Tracks: Technical Interview, HR Behavioral Interview, and Mixed Multi-Round Sequential Recruitment Pipeline.
+- [x] Strict Generic Positioning: Salary-wise and role-wise standards across all tiers (₹3–5 LPA to ₹30+ LPA); 100% free of company-specific branding, question templates, or company selection.
+- [x] Strict Binary Verdicts: Evaluates simulations into definitive `INTERVIEW PASSED` or `INTERVIEW NOT CLEARED` with structured qualitative feedback (Technical, Communication, Problem Solving, Weaknesses, Priority Areas, and Actionable Suggestions). Zero numerical marks or percentage scorecards.
+- [x] Independent Cooling Periods: Unsuccessful attempts trigger an independent 24-hour cooling window strictly isolated by interview type (`technical`, `hr`, `mixed`). Passing sessions and abandoned attempts never incur cooling.
+- [x] Mixed Recruitment Sequential Pipeline: Automatic round determination (Freshers: Aptitude -> Tech 1 -> Tech 2 -> HR; Experienced: Tech 1 -> Tech 2 -> HR). Scoring $\ge 60\%$ in Aptitude stage advances to Round 2; failing aborts the pipeline with an objective `FAIL`.
+- [x] Real-Time Voice Simulation Architecture: Browser native Web Speech API (STT & TTS) with zero external latency and ₹0 operational budget. Real-time avatar states (Listening, Thinking, Speaking), silence detection (1.8s), manual interruption button ("Interrupt Interviewer"), and fallback text input.
+- [x] Voice Hardware Diagnostics PoC: Interactive audio hardware diagnostic modal for candidate microphone permission verification, live STT transcription test, and TTS audio playback test.
+- [x] Resume Version Snapshotting: Preserves immutable snapshot reference of user's active resume version (`UserResumeVersion`) at session creation time.
+- [x] Administration & Telemetry: Staff console (`AdminInterviewsPage.jsx`) to configure cooling hours, AI provider selection (Gemini vs Deterministic), mixed qualifying cutoff (60%), and view live session and token metrics.
+- [x] Comprehensive Testing: 15 new pytest backend tests (88/88 total passing in 51.3s); 2 new Playwright e2e tests (19/19 full suite passing in 38.4s); all 8 visual evidence screenshots captured and verified.
 
 ---
 

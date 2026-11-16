@@ -1,7 +1,7 @@
 # Interview Preparation Platform (InterviewPrep)
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-49%2F49%20passing-brightgreen)](backend/apps/accounts/tests/)
-[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-14%2F14%20passing-brightgreen)](frontend/e2e/)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-88%2F88%20passing-brightgreen)](backend/apps/accounts/tests/)
+[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-19%2F19%20passing-brightgreen)](frontend/e2e/)
 [![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.1%2B-darkgreen)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61dafb)](https://react.dev/)
@@ -322,7 +322,7 @@ cd backend
 source .venv/bin/activate
 pytest -v
 ```
-*Current test suite: **49 / 49 passed**.*
+*Current test suite: **88 / 88 passed**.*
 
 ### Backend Linter & System Check
 ```bash
@@ -343,7 +343,7 @@ npm run build
 cd frontend
 npx playwright test
 ```
-*Current test suite: **14 / 14 passed**.*
+*Current test suite: **19 / 19 passed**.*
 
 ---
 
@@ -367,7 +367,7 @@ When the backend is running, visit:
 | **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | **Completed & Verified** |
 | **4** | **Shared Question Bank & Weekly Quizzes** | 45-Q non-MCQ engine, 75-min timer, offline grading, admin catalog | **Completed & Verified** |
 | **5** | **Generic Aptitude Practice** | Cognitive foundation (45 MCQs: Quant, Logical, Verbal), 60m timer, 5/day limit | **Completed & Verified** |
-| **6** | **AI Voice Interviews** | Technical, HR, Mixed rounds, Gemini Live adapter, cooldowns | *Planned* |
+| **6** | **AI Voice Interviews** | Technical, HR, Mixed sequential rounds, Web Speech STT/TTS, cooling periods, binary PASS/FAIL | **Completed & Verified** |
 | **7** | **Share Experience** | Recruitment stories, stage breakdowns, automated risk moderation | *Planned* |
 | **8** | **Administration Panel** | 11 administrative panels, audit logs, student management | *Planned* |
 | **9** | **Hardening & Release** | Full E2E regression, security audit, deployment checklist | *Planned* |

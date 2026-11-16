@@ -19,6 +19,12 @@ import AptitudePracticePage from '../../features/aptitude/AptitudePracticePage';
 import AptitudeTestPage from '../../features/aptitude/AptitudeTestPage';
 import AptitudeResultsPage from '../../features/aptitude/AptitudeResultsPage';
 import AdminAptitudePage from '../../features/admin/AdminAptitudePage';
+import InterviewSetupPage from '../../features/interviews/InterviewSetupPage';
+import ActiveInterviewPage from '../../features/interviews/ActiveInterviewPage';
+import MixedProcessPage from '../../features/interviews/MixedProcessPage';
+import InterviewResultsPage from '../../features/interviews/InterviewResultsPage';
+import InterviewHistoryPage from '../../features/interviews/InterviewHistoryPage';
+import AdminInterviewsPage from '../../features/admin/AdminInterviewsPage';
 
 export default function AppRouter() {
   return (
@@ -80,9 +86,57 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/interviews"
+        element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminInterviewsPage />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Practice Module & Aptitude Routes */}
+      {/* Practice Module, Interviews & Aptitude Routes */}
       <Route path="/practice" element={<PracticePage />} />
+      <Route
+        path="/practice/interviews/setup"
+        element={
+          <ProtectedRoute>
+            <InterviewSetupPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/interviews/:sessionId/active"
+        element={
+          <ProtectedRoute>
+            <ActiveInterviewPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/interviews/:sessionId/mixed"
+        element={
+          <ProtectedRoute>
+            <MixedProcessPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/interviews/:sessionId/results"
+        element={
+          <ProtectedRoute>
+            <InterviewResultsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/practice/interviews/history"
+        element={
+          <ProtectedRoute>
+            <InterviewHistoryPage />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/practice/aptitude"
         element={

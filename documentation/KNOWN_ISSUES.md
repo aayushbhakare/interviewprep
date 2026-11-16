@@ -34,3 +34,11 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 7. Aptitude Deterministic Offline Synthesis Engine
 - **Detail:** Real-time AI question replenishment via Gemini API can be subject to external rate limits or API key quotas.
 - **Resolution:** `AptitudeQuestionGenerator` synthesizes mathematically accurate cognitive foundation aptitude questions offline with complete step-by-step arithmetic explanations, ensuring ₹0 operational cost and continuous test suite reliability.
+
+### 8. Web Speech API Browser Compatibility & Text Fallback
+- **Detail:** Browser native speech recognition (`webkitSpeechRecognition` / `SpeechRecognition`) is supported out-of-the-box in Chromium/Chrome, Safari, and Edge, but requires explicit microphone permissions or may be disabled in headless environments.
+- **Resolution:** The interactive simulation room includes an always-available manual text input and "Done Speaking" button alongside the voice interface, enabling uninterrupted practice across all devices, environments, and automated E2E test runs.
+
+### 9. Voice Simulation Budget & Deterministic Provider
+- **Detail:** Real-time conversational audio with external multimodal LLMs incurs token and audio streaming bandwidth expenses.
+- **Resolution:** `DeterministicVoiceProvider` operates 100% offline at ₹0 cost with dynamic follow-ups, clarification handling, and binary PASS/FAIL rubrics tailored to compensation tiers, guaranteeing zero cloud expenditure. Staff administrators can toggle between Gemini and Deterministic providers via the admin console.

@@ -65,6 +65,32 @@ graph TD
 - **No PASS/FAIL for Standalone Practice:** Standalone practice sessions **never** issue recruitment pass/fail verdicts—they serve purely as self-paced diagnostic practice with detailed step-by-step mathematical working.
 - **Objective Evaluation Engine:** Deterministic MCQ grading evaluates `is_correct = (selected == correct)`. Unattempted questions receive 0 marks with 0 penalty.
 
+## AI-Powered Interview Practice Architecture (Phase 6)
+
+### Three Practice Tracks & Generic Standards (`apps/interviews`)
+- **Strict Generic Positioning:** No company names, questions, or templates. Simulations strictly follow salary-wise and role-wise standards across Indian tech recruitment tiers (₹3–5 LPA to ₹30+ LPA).
+- **Technical Track:** Deep technical interrogation covering core languages, frameworks, databases, system design, and complexity trade-offs tailored to candidate's stack.
+- **HR Track:** Behavioral, situational, teamwork, conflict management, and career motivation questions without technical stack requirements.
+- **Mixed Sequential Pipeline:** Multi-round recruitment simulation:
+  - Freshers: Round 1 (Cognitive Aptitude Screening, 60% cutoff) -> Round 2 (Technical 1) -> Round 3 (Technical 2) -> Round 4 (HR).
+  - Experienced: Round 1 (Technical 1) -> Round 2 (Technical 2) -> Round 3 (HR).
+  - Gated round progression: passing Round 1 Aptitude ($\ge 60\%$) unlocks Round 2; failing aborts the pipeline with an objective `FAIL`.
+
+### Binary Evaluation Engine & Feedback
+- **Purely Binary Outcomes:** System strictly outputs `INTERVIEW PASSED` or `INTERVIEW NOT CLEARED`. No marks, numbers, or percentages are displayed.
+- **Constructive Qualitative Feedback:** Six structured dimensions: Technical Knowledge, Communication, Problem Solving, Observed Weaknesses, Priority Areas to Revise, and Actionable Suggestions.
+
+### Independent Cooling Period Engine
+- **Independent Isolation:** Unsuccessful attempts trigger a 24-hour cooling period strictly per `(user, interview_type)` stored in `InterviewCoolingPeriod`.
+- **Cross-Track Freedom:** Failing Technical does not prevent candidate from attempting HR or Mixed interviews. Passing or voluntarily abandoning an interview incurs 0 cooling.
+
+### Real-Time Voice Simulation & ₹0 Budget Architecture
+- **Browser Native Web Speech API:** Client-side speech recognition (STT) and synthesized speech playback (TTS) operate directly in the browser with zero external API latency and zero operational expense.
+- **Interruption & Silence Detection:** Candidate speech is punctuated with 1.8-second silence detection; a manual "Interrupt Interviewer" button cancels ongoing audio synthesis instantly.
+- **Provider Abstraction:** Backend `BaseInterviewProvider` interfaces with `DeterministicVoiceProvider` (100% offline predictability, ₹0 budget) and `GeminiVoiceProvider` (Gemini 2.0 Flash) with token usage metering.
+- **Hardware Diagnostics PoC:** Built-in `VoicePoCModal` verifies microphone hardware, live STT recognition, and TTS playback prior to starting an interview session.
+- **Resume Snapshotting:** Preserves an immutable snapshot reference to the candidate's active `UserResumeVersion` at session creation time.
+
 ## Coding Standards & Review Architecture
 
 ### Permanent Engineering Standards

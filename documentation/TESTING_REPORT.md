@@ -14,12 +14,30 @@ This report records automated and manual test runs, pass/fail results, and verif
 | Learn Module & Roadmap Tests (Phase 3) | pytest-django | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
 | Shared Question Bank & Weekly Quizzes (Phase 4) | pytest-django | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
 | Aptitude Practice Module (Phase 5) | pytest-django | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
-| **Total Backend Test Suite** | **pytest-django** | **73** | **73** | **0** | **0** | **PASSED** | **2026-11-16** |
-| Python Linting & Formatting | Ruff | 83 files | 83 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend ESLint Code Quality | ESLint | 44 files | 44 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend Production Build | Vite | 1673 modules | 1673 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Playwright E2E Tests (Phases 1, 2, 3, 4 & 5) | Playwright (Chrome) | 17 | 17 | 0 | 0 | **PASSED** | 2026-11-16 |
-| OpenAPI Schema Validation | drf-spectacular | 62 endpoints | 62 | 0 | 0 | **PASSED** | 2026-11-16 |
+| AI Interview Practice Module (Phase 6) | pytest-django | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
+| **Total Backend Test Suite** | **pytest-django** | **88** | **88** | **0** | **0** | **PASSED** | **2026-11-16** |
+| Python Linting & Formatting | Ruff | 86 files | 86 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend ESLint Code Quality | ESLint | 48 files | 48 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend Production Build | Vite | 1683 modules | 1683 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Playwright E2E Tests (Phases 1 through 6) | Playwright (Chrome) | 19 | 19 | 0 | 0 | **PASSED** | 2026-11-16 |
+| OpenAPI Schema Validation | drf-spectacular | 75 endpoints | 75 | 0 | 0 | **PASSED** | 2026-11-16 |
+
+---
+
+## Acceptance Criteria Verification Log
+
+### Phase 6: AI-Powered Interview Practice Module
+- [x] **Three Interview Tracks:** Full operational capability for Technical Interviews, HR Interviews, and Mixed Sequential Multi-Round Pipelines.
+- [x] **Strict Generic Positioning:** Tailored to compensation tiers (₹3–5 LPA through ₹30+ LPA) and job roles with zero company branding, templates, or selection menus.
+- [x] **Strict Binary Verdicts:** Evaluates sessions into unambiguous `INTERVIEW PASSED` or `INTERVIEW NOT CLEARED` with structured qualitative feedback. No scores, marks, or percentages.
+- [x] **Independent 24-Hour Cooling:** Enforced per `(user, interview_type)`. Failing technical never locks HR or Mixed. Abandonment and passing incur 0 cooling.
+- [x] **Sequential Mixed Recruitment Pipeline:** Freshers take 4 rounds (Aptitude -> Tech 1 -> Tech 2 -> HR); experienced take 3 rounds. Round 1 Aptitude requires 60% qualifying score to unlock Round 2; failing aborts pipeline with `FAIL`.
+- [x] **Real-Time Voice Architecture & Zero Budget:** Web Speech STT and TTS provide zero-latency voice interaction with ₹0 API cost. Automatic 1.8s silence detection, manual "Interrupt Interviewer" button, and fallback text input.
+- [x] **Audio Diagnostics PoC:** Interactive `VoicePoCModal` for candidate mic permission verification and audio test playback.
+- [x] **Resume Version Snapshotting:** Preserves immutable snapshot reference of user's active resume version (`UserResumeVersion`) at session creation time.
+- [x] **Staff Admin Console:** Admin interface to manage cooling hours, AI provider, cutoff, and inspect real-time token telemetry.
+- [x] **Automated Tests:** 15 new backend pytest tests (88/88 total passed in 51.3s); 2 new Playwright E2E tests (19/19 full suite passed in 38.4s).
+- [x] **Visual Evidence:** Captured and verified 8 high-fidelity screenshots under `phase6_evidence/`.
 
 ---
 

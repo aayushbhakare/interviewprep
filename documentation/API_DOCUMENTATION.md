@@ -138,8 +138,29 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Implemented Interview Practice Endpoints (`apps/interviews`) (Phase 6 Verified)
+
+### Student Interview Endpoints (`/api/v1/interviews/`)
+- `GET /api/v1/interviews/eligibility/` — Check candidate eligibility and cooling status across all three tracks (`technical`, `hr`, `mixed`), returning remaining cooling seconds and active session references if any.
+- `GET /api/v1/interviews/setup-data/` — Retrieve pre-populated setup fields derived from active learning roadmap (role, experience level, salary tier, tech stack) and available resume versions.
+- `POST /api/v1/interviews/sessions/` — Create or resume an interview simulation session. Snapshots active resume version and enforces independent cooling period restrictions.
+- `GET /api/v1/interviews/sessions/{id}/` — Retrieve interview session state, transcript turns, current round status, and question context.
+- `POST /api/v1/interviews/sessions/{id}/turn/` — Submit candidate spoken or text utterance. Triggers conversational turn processing, verbal repetition/clarification handling, or generates follow-up question.
+- `POST /api/v1/interviews/sessions/{id}/complete-aptitude-stage/` — Verify completed Phase 5 aptitude stage for Mixed recruitment simulations. Advances candidate to Round 2 if score $\ge 60\%$; aborts session with `FAIL` if below threshold.
+- `POST /api/v1/interviews/sessions/{id}/evaluate/` — Finalize interview session and trigger binary evaluation. Produces strictly `PASS` or `FAIL` verdict and structured 6-dimension constructive feedback; applies 24-hour cooling on failure.
+- `POST /api/v1/interviews/sessions/{id}/abandon/` — Abandon in-progress interview. Leaves session without failure verdict and does NOT incur a cooling period.
+- `GET /api/v1/interviews/sessions/{id}/results/` — Retrieve final evaluation scorecard with binary decision, target salary tier expectations, and constructive performance breakdown.
+- `GET /api/v1/interviews/history/` — List chronological past interview sessions for the authenticated student with track filter support.
+- `GET /api/v1/interviews/config/` — Retrieve public platform simulation configuration and default cooling parameters.
+
+### Admin Interview Operations (`/api/v1/admin-panel/interviews/`)
+- `GET /api/v1/admin-panel/interviews/config/` — Retrieve administrative simulation parameters, cooling durations per track, AI provider settings, and mixed qualification cutoff.
+- `PUT /api/v1/admin-panel/interviews/config/` — Update administrative simulation configuration parameters.
+- `GET /api/v1/admin-panel/interviews/analytics/` — Retrieve operational telemetry, total session volume, overall pass rate, and AI token consumption metrics.
+
+---
+
 ## Planned Domain Endpoints
 
-- **Interviews (`/api/v1/interviews/`):** Voice interview simulation, round progression, PASS/FAIL outcomes, cooling period.
 - **Experiences (`/api/v1/experiences/`):** Submission, draft saving, moderation, search, filtering.
 - **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, moderation queues, activity logs.

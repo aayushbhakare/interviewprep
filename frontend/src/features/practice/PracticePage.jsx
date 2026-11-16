@@ -27,32 +27,53 @@ export default function PracticePage() {
         <div className="flex items-start space-x-3">
           <Award className="w-5 h-5 text-indigo-600 mt-0.5 shrink-0" />
           <div>
-            <h3 className="text-sm font-semibold text-indigo-950">Aptitude Practice Module is Active (Module Status: Scheduled for Phases 6 & 7 for Voice Simulation)</h3>
+            <h3 className="text-sm font-semibold text-indigo-950">
+              Aptitude Practice Module is Active (Module Status: Scheduled for Phases 6 & 7)
+            </h3>
             <p className="text-xs sm:text-sm text-indigo-800 mt-0.5">
-              Standardized 60-minute, 45-question cognitive aptitude practice tests are now live for fresher candidates.
+              Practice real-time Technical, HR, and Mixed recruitment rounds with adaptive voice dialogue alongside standardized cognitive aptitude tests.
             </p>
           </div>
         </div>
-        <Link
-          to="/practice/aptitude"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shrink-0"
-        >
-          <Play className="w-3.5 h-3.5" />
-          Start Aptitude Test
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/practice/aptitude"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs shrink-0"
+          >
+            Start Aptitude Test
+          </Link>
+          <Link
+            to="/practice/interviews/history"
+            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs"
+          >
+            Past Sessions
+          </Link>
+          <Link
+            to="/practice/interviews/setup"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shrink-0"
+          >
+            <Play className="w-3.5 h-3.5" />
+            Start Voice Interview
+          </Link>
+        </div>
       </div>
 
       {/* Two Core Tracks */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
         {/* Track 1: AI Voice Interviews */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+        <div className="bg-white border-2 border-emerald-200 rounded-xl p-6 sm:p-8 shadow-sm flex flex-col justify-between hover:border-emerald-400 transition-colors">
           <div>
             <div className="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
               <Mic className="w-6 h-6" />
             </div>
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Track 1: AI Voice Simulation</h2>
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-xl font-bold text-slate-900">Track 1: AI Voice Simulation</h2>
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                Active
+              </span>
+            </div>
             <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-              Experience dynamic, voice-to-voice interview rounds. The AI interviewer listens to your responses, probes with contextual follow-up questions, and challenges technical assertions.
+              Experience dynamic, voice-to-voice interview rounds. The AI interviewer listens to your responses, probes with contextual follow-up questions, and evaluates readiness.
             </p>
             <ul className="space-y-2 text-sm text-slate-600 mb-6">
               <li className="flex items-center">
@@ -70,10 +91,13 @@ export default function PracticePage() {
             </ul>
           </div>
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">Phase 6 • Real-time WebRTC / Gemini Live API</span>
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
-              Upcoming
-            </span>
+            <span className="text-xs text-emerald-700 font-semibold">Real-Time Voice • Binary PASS/FAIL</span>
+            <Link
+              to="/practice/interviews/setup"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition-colors"
+            >
+              Start Voice Interview <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 

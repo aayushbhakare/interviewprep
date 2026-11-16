@@ -77,21 +77,25 @@ This document defines the sequential execution plan across all phases of the Int
 9. Admin Aptitude Management portal with search/filter, question CRUD, version publishing, suspension/activation, student report resolution, and platform configuration updates.
 10. Full backend (73 passing tests) and Playwright E2E coverage (17 passing tests) with browser visual inspection.
 
-### Phase 6: Share Interview Experience
-1. Real-time voice architecture evaluation and proof of concept.
-2. Technical, HR, and sequential Mixed recruitment interviews.
-3. Voice UI states (Listening, Thinking, Speaking), manual interruption, and Done Speaking backup.
-4. PASS/FAIL scoring and category-level feedback; 24-hour cooling period for failed interview types.
-5. Associated resume snapshots and session history.
+### Phase 6: AI-Powered Interview Practice Module (Completed & Verified)
+1. Real-time voice architecture evaluation and proof of concept (`VoicePoCModal.jsx`, Web Speech STT/TTS).
+2. Three interview tracks: Technical Interview, HR Behavioral Interview, and Mixed Sequential Recruitment Pipeline.
+3. Strict generic positioning: Salary-wise and role-wise standards across all tiers (₹3–5 LPA to ₹30+ LPA); 100% free of company-specific branding, templates, or company selection.
+4. Voice UI states (Listening, Thinking, Speaking), manual interruption ("Interrupt Interviewer"), 1.8s silence detection, Done Speaking backup, and text fallback input.
+5. Strictly binary PASS/FAIL scoring with qualitative dimension feedback; independent 24-hour cooling periods per failed interview type.
+6. Mixed recruitment multi-round sequential pipeline with 60% aptitude threshold advancement and automatic round orchestration (Freshers: Aptitude -> Tech 1 -> Tech 2 -> HR; Experienced: Tech 1 -> Tech 2 -> HR).
+7. Associated resume snapshots and session history.
+8. Staff administration portal for cooling hours, AI provider selection (Gemini vs Deterministic), cutoff adjustment, and token telemetry.
+9. Comprehensive automated test suite: 15 backend tests (88 total pytest passing) and 2 Playwright e2e tests (19 total Playwright passing).
 
-### Phase 8: Share Interview Experience
+### Phase 7: Share Interview Experience
 1. Structured recruitment journey submission (Application, Screening, Aptitude, Technical Rounds, HR, Outcome).
 2. Anonymous vs. Public author options; draft saving, editing, and deletion.
 3. Automated risk-based moderation workflow and admin review queue.
 4. Discovery with search, sorting (Recent, Helpful), and filtering (Salary, Role, Experience, Company, Outcome, Round).
 5. Community helpful votes and reporting mechanisms.
 
-### Phase 9: Admin Panel & Platform Operations
+### Phase 8: Admin Panel & Platform Operations
 1. Comprehensive admin dashboard across all 11 blueprint sections.
 2. Student management, content versioning, question bank approval, and moderation queues.
 3. Dynamic platform settings, immutable admin activity logs, AI model management, and system monitoring.

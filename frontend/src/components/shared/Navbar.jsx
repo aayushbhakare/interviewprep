@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { BookOpen, Target, Share2, User, LogOut, Menu, X, LayoutDashboard, Database, Settings } from 'lucide-react';
+import { BookOpen, Target, Share2, User, LogOut, Menu, X, LayoutDashboard, Database, Settings, Bot } from 'lucide-react';
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -83,6 +83,17 @@ export default function Navbar() {
                     >
                       <Settings className="w-3.5 h-3.5 mr-1 text-indigo-600" />
                       Aptitude Admin
+                    </Link>
+                    <Link
+                      to="/admin/interviews"
+                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
+                        location.pathname === '/admin/interviews'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                      }`}
+                    >
+                      <Bot className="w-3.5 h-3.5 mr-1 text-emerald-600" />
+                      Interview Admin
                     </Link>
                   </div>
                 )}
@@ -183,6 +194,14 @@ export default function Navbar() {
                     >
                       <Settings className="w-5 h-5 mr-3 text-indigo-600" />
                       Aptitude Administration
+                    </Link>
+                    <Link
+                      to="/admin/interviews"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-emerald-700 hover:bg-emerald-50"
+                    >
+                      <Bot className="w-5 h-5 mr-3 text-emerald-600" />
+                      Interview Practice Admin
                     </Link>
                   </>
                 )}

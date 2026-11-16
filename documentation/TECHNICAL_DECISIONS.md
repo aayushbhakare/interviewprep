@@ -65,3 +65,23 @@ This log records architecture and technical decisions made during implementation
 ### TD-015: No PASS/FAIL Verdicts for Standalone Practice Sessions
 - **Decision:** Standalone aptitude practice tests **never** issue recruitment PASS/FAIL verdicts. They display overall percentage, accuracy, section breakdowns, and detailed mathematical solutions. PASS/FAIL qualification is strictly reserved for Phase 6 Mixed recruitment simulations using `mixed_qualifying_cutoff`.
 - **Rationale:** Standalone practice is a formative self-paced learning tool; imposing recruitment pass/fail verdicts on self-study runs creates unnecessary stress and distorts diagnostic progress.
+
+### TD-016: Strict Generic Recruitment Standards (Salary & Role Wise, Never Company Wise)
+- **Decision:** All interview practice simulations, questions, follow-ups, and rubrics are calibrated strictly to target job roles and salary bands (₹3–5 LPA to ₹30+ LPA) with zero company-specific branding, company selection, or question templates.
+- **Rationale:** Prepares candidates for general market expectations and engineering depth rather than narrow company-specific trivia, supporting widespread employability.
+
+### TD-017: Purely Binary PASS/FAIL Simulation Verdicts
+- **Decision:** Interview practice results produce strictly binary `PASS` or `FAIL` verdicts accompanied by 6-dimension qualitative feedback (Technical Depth, Communication, Problem Solving, Weaknesses, Priorities, and Recommendations). Numerical marks, scores, and percentages are prohibited on interview scorecards.
+- **Rationale:** Mimics authentic hiring committee decision-making where a candidate is either hired or rejected; prevents false precision and counterproductive obsession with fractional percentage points.
+
+### TD-018: Independent 24-Hour Cooling Periods
+- **Decision:** An unsuccessful interview simulation incurs a 24-hour cooling period strictly isolated to that specific interview track (`technical`, `hr`, `mixed`). Failing a technical round never blocks an HR or Mixed session. Passing or abandoning incurs 0 cooling.
+- **Rationale:** Ensures focused revision and deliberate practice without completely locking candidates out of complementary preparation tracks.
+
+### TD-019: Browser Native Web Speech API with ₹0 Operational Budget
+- **Decision:** Implement real-time voice speech-to-text (STT) and text-to-speech (TTS) entirely using browser-native APIs (`webkitSpeechRecognition` / `SpeechSynthesis`) combined with backend `DeterministicVoiceProvider` fallback.
+- **Rationale:** Eliminates external audio streaming latency and paid third-party vendor dependencies, maintaining ₹0 operational budget with 100% test reliability.
+
+### TD-020: Mixed Recruitment Gated Round Advancement
+- **Decision:** Mixed recruitment multi-round processes gate round progression: scoring $\ge 60\%$ in Round 1 Cognitive Aptitude automatically unlocks Round 2; scoring $< 60\%$ immediately halts the pipeline with an objective `FAIL` verdict.
+- **Rationale:** Replicates the actual corporate recruitment funnel where aptitude screening is a prerequisite for technical and managerial interview evaluation.
