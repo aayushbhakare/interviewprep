@@ -1,0 +1,42 @@
+# CodeRabbit Configuration File
+# Documentation: https://docs.coderabbit.ai/guides/configure-coderabbit
+
+version: "2"
+language: "en-US"
+tone_instructions: "Be concise, actionable, and prioritize critical bugs, security vulnerabilities, data integrity, and architectural consistency over cosmetic style preferences."
+
+early_access: false
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - "main"
+  path_instructions:
+    - path: "backend/**"
+      instructions: |
+        - Architecture is a Django REST Framework modular monolith.
+        - Background tasks use the PostgreSQL-backed `common.ProcessingJob` ledger. Do NOT suggest Celery, Redis, or microservices.
+        - Ensure all database changes include valid Django migrations.
+        - Ensure authentication endpoints validate against token blacklists and do not leak user enumeration timing signals.
+        - Keep comments natural and concise; flag overly verbose decorative comment banners or paragraph docstrings explaining obvious logic.
+    - path: "frontend/**"
+      instructions: |
+        - Frontend uses React 18, Vite, Tailwind CSS, and shadcn/ui patterns in JavaScript (JSX). Do NOT suggest converting to TypeScript.
+        - Verify responsive design (mobile and desktop support) and active navigation state handling.
+        - Ensure client-side authentication states synchronize correctly with Axios interceptors and JWT token refresh mechanisms.
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/.venv/**"
+    - "!**/dist/**"
+    - "!**/staticfiles/**"
+    - "!**/test-results/**"
+    - "!**/playwright-report/**"
+
+chat:
+  auto_reply: true

@@ -35,6 +35,13 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Core Platform & Dashboard (`apps/common`)
+
+- `GET /api/v1/health/` — System health check (server status, database connection, environment mode).
+- `GET /api/v1/dashboard/student/` — Student dashboard overview (active roadmap details, recent activities stream, quick shortcuts, user summary). Protected (`IsAuthenticated`).
+
+---
+
 ## Implemented Authentication & Account Endpoints (`apps/accounts`)
 
 ### Authentication (`/api/v1/auth/`)

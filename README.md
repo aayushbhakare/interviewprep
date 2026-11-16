@@ -1,7 +1,7 @@
 # Interview Preparation Platform (InterviewPrep)
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-31%2F31%20passing-brightgreen)](backend/apps/accounts/tests/)
-[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-5%2F5%20passing-brightgreen)](frontend/e2e/)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-34%2F34%20passing-brightgreen)](backend/apps/accounts/tests/)
+[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-12%2F12%20passing-brightgreen)](frontend/e2e/)
 [![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.1%2B-darkgreen)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61dafb)](https://react.dev/)
@@ -196,14 +196,16 @@ interviewprep/
 
 ## 10. Screenshots & UI Showcase
 
+### Live Student Dashboard (Verified Phase 2)
+![Student Dashboard](documentation/screenshots/dashboard.png)
+
 ### Live Landing Page (Verified Phase 0 & 1)
 ![Landing Page](documentation/screenshots/landing-page.png)
 
 ### Additional Module Previews (Under Development)
 | Module | Preview | Status |
 | :--- | :--- | :--- |
-| **Student Dashboard** | `[ Dashboard UI Preview Placeholder ]` | *Phase 2: In Progress* |
-| **Personalized Roadmap** | `[ Roadmap Setup Wizard Placeholder ]` | *Phase 3: Planned* |
+| **Personalized Roadmap** | `[ Roadmap Setup Wizard Placeholder ]` | *Phase 3: Ready to Start* |
 | **45-Question Quiz** | `[ 75-Minute Timed Quiz Interface Placeholder ]` | *Phase 5: Planned* |
 | **AI Voice Interview** | `[ Real-time Simulation & Rubrics Placeholder ]` | *Phase 7: Planned* |
 | **Share Experience** | `[ Experience Editor & Story Feed Placeholder ]` | *Phase 8: Planned* |
@@ -308,7 +310,7 @@ cd backend
 source .venv/bin/activate
 pytest -v
 ```
-*Current test suite: **31 / 31 passed**.*
+*Current test suite: **34 / 34 passed**.*
 
 ### Backend Linter & System Check
 ```bash
@@ -329,7 +331,7 @@ npm run build
 cd frontend
 npx playwright test
 ```
-*Current test suite: **5 / 5 passed**.*
+*Current test suite: **12 / 12 passed**.*
 
 ---
 
@@ -349,8 +351,8 @@ When the backend is running, visit:
 | :---: | :--- | :--- | :---: |
 | **0** | **Project Foundation** | Architecture setup, PostgreSQL, DRF, React Vite, health checks | **Completed & Verified** |
 | **1** | **Authentication & Users** | Email code verification, JWT tokens, profile, admin 2FA, deletion | **Completed & Verified** |
-| **2** | **Main Dashboard & Shell** | Student overview, roadmap status, recent activity, pillar access | *In Progress* |
-| **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | *Planned* |
+| **2** | **Main Dashboard & Shell** | Student overview, roadmap status, recent activity, pillar access | **Completed & Verified** |
+| **3** | **Learn Module Foundation** | Multi-step setup wizard, catalog endpoints, transactional replacement | *Ready to Start* |
 | **4** | **Content & Exercises** | Topic versions, code-tracing exercises, interview provenance labels | *Planned* |
 | **5** | **45-Q Weekly Quizzes** | Non-MCQ question bank, 75-min timer, async evaluation jobs | *Planned* |
 | **6** | **Aptitude Practice** | TCS NQT pattern, 5 sessions/day limit, 60% qualification cutoff | *Planned* |
