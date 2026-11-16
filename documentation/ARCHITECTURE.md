@@ -24,14 +24,30 @@ graph TD
 1. **`accounts`**: Custom User model (email login), UserProfile, authentication tokens (SimpleJWT), verification codes, password reset, and admin 2FA.
 2. **`learning`**: Active roadmap, roadmap configuration snapshots, phases, weeks, topic progress tracking, hands-on practice roadmap, practice task progress, and transactional replacement.
 3. **`content`**: Versioned topic content, concept explanations, and practical exercises.
-4. **`questions`**: Shared question bank, versioning, AI validation records, reports, and exposure tracking.
-5. **`quizzes`**: Weekly quiz assignments (45 questions), timer enforcement, immutable attempt snapshots, answers, and evaluations.
+4. **`questions`**: Shared question bank, versioning, AI validation records (`QuestionValidationHistory`), student reports, and admin management.
+5. **`quizzes`**: Weekly quiz assignments (45 questions), 75-minute timer enforcement, question version snapshotting, autosave, binary evaluation engine (Correct/Incorrect), and attempt history.
 6. **`aptitude`**: Shared aptitude question bank, sessions, daily attempt limits, scoring, and Mixed qualifying thresholds.
 7. **`interviews`**: Voice interview sessions, rounds, round-level and overall PASS/FAIL outcomes, cooling period enforcement, and resume snapshot references.
 8. **`experiences`**: Student interview journeys, drafts, stages, anonymous/public authoring, risk-based moderation, discovery, and reports.
 9. **`administration`**: System settings, admin activity audit logs, and maintenance toggles.
 10. **`ai_services`**: Provider adapters, prompts, structured output validation, token usage tracking, and cost accounting.
 11. **`common`**: Reusable models (timestamps, UUIDs), utilities, error envelopes, and `ProcessingJob` async queue.
+
+## Question Bank & Weekly Quiz Architecture
+
+### Question Bank & Validation Pipeline (`apps/questions`)
+- **Strict Non-MCQ Categories:** Questions are strictly categorized into 5 formats: Code Output Prediction, Find Error / Debugging, Coding Problems, Scenario-Based Architecture, Conceptual / Short Answer. Multiple-choice questions (MCQs) are prohibited.
+- **Entity vs Version Segregation:** The `Question` model represents the canonical identity of a question (technology, topic, category, difficulty, status). The `QuestionVersion` model stores immutable content snapshots (prompt, code snippet, expected answer, explanation, version number, created timestamp).
+- **Automated Validation & 3-Attempt Revision Loop:** New AI-generated questions undergo structural schema checks (prompt length, code snippet presence for debugging/output, expected answer completeness). Failing questions trigger an automated revision prompt up to 3 times before being marked as `Suspended – Review Failed` with logged failure diagnostics in `QuestionValidationHistory`.
+- **Deterministic Offline Fallback:** A local deterministic engine generates curated questions with zero API calls, ensuring high test performance and zero financial cost.
+
+### Weekly Quiz Lifecycle (`apps/quizzes`)
+- **Strict 45-Question Distribution:** Each roadmap week assignment prepares exactly 45 questions: 10 Output, 10 Debugging, 10 Coding, 10 Scenario, and 5 Conceptual questions, prioritizing previously unseen questions from the bank.
+- **Session Management & Countdown Timer:** The 75-minute timer is calculated on the server from `started_at` timestamp. Client-side timer displays the countdown while server endpoints enforce the limit (+60s network latency buffer).
+- **Debounced Autosave & Persistence:** User answers are persisted to `AttemptAnswer` via debounced API calls, preserving progress across browser reloads or tab closures.
+- **Abandonment vs Submission:** Leaving an active quiz discards current attempt answers without consuming one of the 5 allowed submitted attempts. Submitting permanently locks answers and increments the submission count.
+- **Binary Evaluation Engine:** Answers are strictly evaluated as Correct or Incorrect. No partial credit is awarded. Score equals `(Correct / 45) * 100`. Failed evaluations transition to `Evaluation Pending` with a background `ProcessingJob` retry mechanism. Retakes are blocked while evaluation is pending.
+- **Milestone Increment:** Submitting a weekly quiz increments the roadmap week's completed milestones counter by exactly 1. Retakes do not award duplicate milestone credit.
 
 ## Coding Standards & Review Architecture
 

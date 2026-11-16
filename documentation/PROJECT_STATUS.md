@@ -2,8 +2,8 @@
 
 **Repository:** [https://github.com/aayushbhakare/interviewprep](https://github.com/aayushbhakare/interviewprep)  
 **Primary Branch:** `main`  
-**Current Phase:** Phase 3 — Learn Module & Personalized Roadmap  
-**Overall Status:** Phase 0, Phase 1, Phase 2 & Phase 3 Complete & Verified  
+**Current Phase:** Phase 4 — Shared Question Bank & Weekly Quiz System  
+**Overall Status:** Phase 0, Phase 1, Phase 2, Phase 3 & Phase 4 Complete & Verified  
 **Last Updated:** 2026-11-16  
 
 ---
@@ -16,13 +16,29 @@
 | **Phase 1** | Complete Authentication & User Management | **Verified** | 2026-11-15 |
 | **Phase 2** | Main Dashboard & Navigation Shell | **Verified** | 2026-11-16 |
 | **Phase 3** | Learn Module & Personalized Roadmap | **Verified** | 2026-11-16 |
-| **Phase 4** | Learning Content & Exercises | Ready to Start | — |
-| **Phase 5** | Question Bank & Weekly Quizzes | Not Started | — |
-| **Phase 6** | Aptitude Practice | Not Started | — |
-| **Phase 7** | Share Interview Experience | Not Started | — |
-| **Phase 8** | AI Interview Practice (Voice Simulation) | Not Started | — |
-| **Phase 9** | Admin Panel & Platform Operations | Not Started | — |
-| **Phase 10** | Integration, Hardening & End-to-End Testing | Not Started | — |
+| **Phase 4** | Shared Question Bank & Weekly Quiz System | **Verified** | 2026-11-16 |
+| **Phase 5** | Aptitude Practice | Not Started | — |
+| **Phase 6** | Share Interview Experience | Not Started | — |
+| **Phase 7** | AI Interview Practice (Voice Simulation) | Not Started | — |
+| **Phase 8** | Admin Panel & Platform Operations | Not Started | — |
+| **Phase 9** | Integration, Hardening & End-to-End Testing | Not Started | — |
+
+---
+
+## Phase 4 Milestones: Complete & Verified
+
+- [x] Shared Question Bank Architecture (`apps/questions`): Data models (`Question`, `QuestionVersion`, `QuestionReport`, `QuestionValidationHistory`) supporting strict non-MCQ formats across Python, Django, SQL, React, etc.
+- [x] 5 Structured Question Categories: Code Output Prediction, Find Error / Debugging, Coding Problems, Scenario-Based Architecture, Conceptual / Short Answer across 3 difficulty levels (Easy, Medium, Hard).
+- [x] Question Generation & Revision Engine (`apps/questions/services/question_generator.py`): Structured validation with initial check and up to 3 automated AI revisions; failed questions recorded with failure reason in `QuestionValidationHistory` as `Suspended – Review Failed`. Deterministic offline fallback engine guarantees zero-cost operation and predictable test suite execution.
+- [x] Weekly Quiz Assignment Engine (`apps/quizzes/services/quiz_service.py`): Generates exact 45-question assignments per roadmap week with strict distribution (10 Output, 10 Debugging, 10 Coding, 10 Scenario, 5 Conceptual), prioritizing unseen questions from the bank.
+- [x] Quiz Taking Experience (`QuizTakingPage.jsx`): 75-minute live server-enforced countdown timer, 45-button question palette (Answered, Unanswered, Current), autosave persistence across page reloads, and code input editors.
+- [x] Modal Dialogs: Quiz instructions modal with format overview, leave modal with warning of answer loss on abandonment without consuming attempt limit, and submit modal with unanswered question count indicator.
+- [x] Binary Evaluation Engine (`apps/quizzes/services/evaluation_service.py`): Strict Correct / Incorrect grading (no partial credit). Final score calculation `(Correct / 45) * 100`. Comprehensive question-by-question review with expected solution and technical explanation.
+- [x] Attempt Enforcement & Safety: Up to 5 submitted attempts allowed per weekly quiz. Retakes blocked while an attempt is in `Evaluation Pending`. Abandonment cancels active attempt without consuming a submission slot.
+- [x] Roadmap Progress Integration: Submitting a weekly quiz dynamically increments the week's completed milestones by exactly 1 (e.g. 28/30 -> 28/31).
+- [x] Admin Question Bank Management (`AdminQuestionBankPage.jsx` & `views_questions.py`): Catalog search, multi-faceted filtering, question creation, version publishing, question activation/suspension, and student report resolution.
+- [x] Comprehensive Testing: 12 new backend pytest tests for questions and quizzes (61/61 total backend tests passing); 1 new end-to-end Playwright spec (`weekly_quiz.spec.js`) covering complete quiz lifecycle (15/15 total E2E tests passing).
+- [x] Zero API cost, human-style code without AI decorative comments, clean separation between frontend presentation and backend business logic.
 
 ---
 

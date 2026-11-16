@@ -41,20 +41,24 @@ class StudentDashboardView(APIView):
                 "completed_topics": completed_topics,
                 "total_topics": total_topics,
                 "weekly_quiz_status": (
-                    "Preparing" if active_roadmap.status == Roadmap.STATUS_PREPARING else "Available"
+                    "Preparing"
+                    if active_roadmap.status == Roadmap.STATUS_PREPARING
+                    else "Available"
                 ),
             }
 
         recent_activities = []
         if active_roadmap:
-            recent_activities.append({
-                "id": f"roadmap-{active_roadmap.id}",
-                "type": "roadmap",
-                "title": f"Started {active_roadmap.role} Roadmap",
-                "description": f"Target: {active_roadmap.target_salary or 'Standard'} • {active_roadmap.language}/{active_roadmap.framework}",
-                "timestamp": active_roadmap.created_at.isoformat(),
-                "badge": "Roadmap",
-            })
+            recent_activities.append(
+                {
+                    "id": f"roadmap-{active_roadmap.id}",
+                    "type": "roadmap",
+                    "title": f"Started {active_roadmap.role} Roadmap",
+                    "description": f"Target: {active_roadmap.target_salary or 'Standard'} • {active_roadmap.language}/{active_roadmap.framework}",
+                    "timestamp": active_roadmap.created_at.isoformat(),
+                    "badge": "Roadmap",
+                }
+            )
 
         shortcuts = [
             {
@@ -87,17 +91,19 @@ class StudentDashboardView(APIView):
             },
         ]
 
-        return Response({
-            "status": "success",
-            "data": {
-                "user": {
-                    "id": str(user.id),
-                    "full_name": user.full_name,
-                    "email": user.email,
-                    "created_at": user.created_at.isoformat(),
+        return Response(
+            {
+                "status": "success",
+                "data": {
+                    "user": {
+                        "id": str(user.id),
+                        "full_name": user.full_name,
+                        "email": user.email,
+                        "created_at": user.created_at.isoformat(),
+                    },
+                    "active_roadmap": roadmap_data,
+                    "recent_activities": recent_activities,
+                    "shortcuts": shortcuts,
                 },
-                "active_roadmap": roadmap_data,
-                "recent_activities": recent_activities,
-                "shortcuts": shortcuts,
-            },
-        })
+            }
+        )

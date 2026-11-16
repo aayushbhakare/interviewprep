@@ -112,14 +112,18 @@ def validate_roadmap_input(data: dict) -> list[str]:
         errors.append("A valid experience level must be selected.")
 
     if salary and salary not in SUPPORTED_SALARIES:
-        errors.append("Target salary range must be one of the supported tiers or 'Skip'.")
+        errors.append(
+            "Target salary range must be one of the supported tiers or 'Skip'."
+        )
 
     if not language or language not in SUPPORTED_LANGUAGES:
         errors.append("A valid programming language must be selected.")
 
     if framework and language:
         if not is_framework_compatible(language, framework):
-            errors.append(f"Framework '{framework}' is not compatible with language '{language}'.")
+            errors.append(
+                f"Framework '{framework}' is not compatible with language '{language}'."
+            )
 
     if not database or database not in SUPPORTED_DATABASES:
         errors.append("A valid database must be selected.")

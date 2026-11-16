@@ -56,12 +56,14 @@ This document defines the sequential execution plan across all phases of the Int
 2. Topic-level coding and scenario exercises (deterministic test case verification and AI evaluation adapter).
 3. Student-reported interview question integration with clear provenance labels.
 
-### Phase 5: Shared Question Bank and Weekly Quizzes
-1. Shared question bank organized by technology, topic, category, and difficulty.
-2. Weekly quiz assignment with exact 45-question distribution (10 Output, 10 Debugging, 10 Coding, 10 Scenario, 5 Conceptual).
-3. 75-minute persistent timer, question palette, section navigation, leave confirmation, and auto-submission.
-4. Asynchronous evaluation pipeline with PostgreSQL `ProcessingJob`, retry handling, and `Evaluation Pending` state.
-5. Maximum 5 submitted attempts per week/roadmap, immutable attempt snapshots, and question reporting system.
+### Phase 4: Shared Question Bank and Weekly Quizzes (Completed & Verified)
+1. Shared question bank organized by technology, topic, category (5 non-MCQ formats), and difficulty.
+2. AI-assisted question generation with schema validation and 3-attempt automated revision loop, backed by offline deterministic fallback engine.
+3. Weekly quiz assignment generation with exact 45-question distribution (10 Output, 10 Debugging, 10 Coding, 10 Scenario, 5 Conceptual).
+4. 75-minute persistent server-enforced timer, 45-button question palette, answer autosave across reloads, leave and submission dialogs.
+5. Strict binary evaluation engine (Correct / Incorrect), zero partial credit, immutable question version snapshots, and question reporting system.
+6. Maximum 5 submitted attempts per weekly quiz, abandonment without consuming attempt limit, and milestone increment (+1 on roadmap week upon quiz submission).
+7. Admin Question Bank catalog with search, filtering, question CRUD, version publishing, suspension/activation, and student report resolution.
 
 ### Phase 6: Aptitude Practice
 1. Shared aptitude question bank aligned with current TCS NQT pattern.

@@ -206,4 +206,3 @@ class PracticeTaskProgress(models.Model):
 
     def __str__(self):
         return f"{self.roadmap_id} - Task {self.task.title}: {self.status}"
-

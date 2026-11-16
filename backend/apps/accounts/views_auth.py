@@ -129,7 +129,12 @@ class LogoutView(APIView):
     @extend_schema(
         summary="User Logout",
         description="Invalidate current refresh token and securely log out.",
-        request={"application/json": {"type": "object", "properties": {"refresh": {"type": "string"}}}},
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {"refresh": {"type": "string"}},
+            }
+        },
         responses={200: dict},
     )
     def post(self, request):

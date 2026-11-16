@@ -24,6 +24,7 @@ urlpatterns = [
     path("api/v1/account/", include("apps.accounts.urls_account")),
     path("api/v1/learning/", include("apps.learning.urls")),
     path("api/v1/quizzes/", include("apps.quizzes.urls")),
+    path("api/v1/questions/", include("apps.questions.urls")),
     path("api/v1/aptitude/", include("apps.aptitude.urls")),
     path("api/v1/interviews/", include("apps.interviews.urls")),
     path("api/v1/experiences/", include("apps.experiences.urls")),

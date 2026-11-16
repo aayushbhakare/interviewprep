@@ -7,7 +7,10 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+from rest_framework_simplejwt.token_blacklist.models import (
+    OutstandingToken,
+    BlacklistedToken,
+)
 
 from apps.accounts.models import (
     User,
@@ -40,7 +43,9 @@ def blacklist_user_tokens(user: User):
 def register_student(full_name: str, email: str, password: str) -> User:
     email = email.lower().strip()
     if User.objects.filter(email=email).exists():
-        raise ValidationError({"email": ["An account with this email address already exists."]})
+        raise ValidationError(
+            {"email": ["An account with this email address already exists."]}
+        )
 
     try:
         validate_password(password)
@@ -83,22 +88,30 @@ def verify_email(email: str, code: str) -> User:
     )
 
     if not latest_code:
-        raise ValidationError({"detail": "No active verification code found. Please request a new one."})
+        raise ValidationError(
+            {"detail": "No active verification code found. Please request a new one."}
+        )
 
     if latest_code.expires_at < timezone.now():
-        raise ValidationError({"detail": "Verification code has expired. Please request a new one."})
+        raise ValidationError(
+            {"detail": "Verification code has expired. Please request a new one."}
+        )
 
     if latest_code.attempts_count >= 5:
         latest_code.is_used = True
         latest_code.save(update_fields=["is_used"])
-        raise ValidationError({"detail": "Too many failed attempts. This code is invalidated."})
+        raise ValidationError(
+            {"detail": "Too many failed attempts. This code is invalidated."}
+        )
 
     expected_hash = _hash_value(code.strip(), salt=str(user.id))
     if latest_code.code_hash != expected_hash:
         latest_code.attempts_count += 1
         latest_code.save(update_fields=["attempts_count"])
         remaining = 5 - latest_code.attempts_count
-        raise ValidationError({"detail": f"Invalid code. {remaining} attempt(s) remaining."})
+        raise ValidationError(
+            {"detail": f"Invalid code. {remaining} attempt(s) remaining."}
+        )
 
     latest_code.is_used = True
     latest_code.save(update_fields=["is_used"])
@@ -116,17 +129,19 @@ def resend_verification_code(email: str) -> bool:
         return False
 
     if user.is_verified:
-        raise ValidationError({"detail": "This account is already verified. You can log in."})
+        raise ValidationError(
+            {"detail": "This account is already verified. You can log in."}
+        )
 
     # Resend cooldown: 60 seconds
     recent = (
-        EmailVerificationCode.objects.filter(user=user)
-        .order_by("-created_at")
-        .first()
+        EmailVerificationCode.objects.filter(user=user).order_by("-created_at").first()
     )
     if recent and (timezone.now() - recent.created_at).total_seconds() < 60:
         remaining = int(60 - (timezone.now() - recent.created_at).total_seconds())
-        raise ValidationError({"detail": f"Please wait {remaining} seconds before requesting a new code."})
+        raise ValidationError(
+            {"detail": f"Please wait {remaining} seconds before requesting a new code."}
+        )
 
     # Invalidate previous unused codes
     EmailVerificationCode.objects.filter(user=user, is_used=False).update(is_used=True)
@@ -155,7 +170,9 @@ def login_user(email: str, password: str) -> dict:
         raise AuthenticationFailed("Account is deactivated. Please contact support.")
 
     if not user.is_verified:
-        raise AuthenticationFailed("Email not verified. Please verify your email before logging in.")
+        raise AuthenticationFailed(
+            "Email not verified. Please verify your email before logging in."
+        )
 
     refresh = RefreshToken.for_user(user)
     return {
@@ -205,22 +222,30 @@ def confirm_password_reset(email: str, code: str, new_password: str) -> bool:
     )
 
     if not latest_token:
-        raise ValidationError({"detail": "No active reset request found. Please request a new one."})
+        raise ValidationError(
+            {"detail": "No active reset request found. Please request a new one."}
+        )
 
     if latest_token.expires_at < timezone.now():
-        raise ValidationError({"detail": "Reset code has expired. Please request a new one."})
+        raise ValidationError(
+            {"detail": "Reset code has expired. Please request a new one."}
+        )
 
     if latest_token.attempts_count >= 5:
         latest_token.is_used = True
         latest_token.save(update_fields=["is_used"])
-        raise ValidationError({"detail": "Too many failed attempts. This code is invalidated."})
+        raise ValidationError(
+            {"detail": "Too many failed attempts. This code is invalidated."}
+        )
 
     expected_hash = _hash_value(code.strip(), salt=str(user.id))
     if latest_token.token_hash != expected_hash:
         latest_token.attempts_count += 1
         latest_token.save(update_fields=["attempts_count"])
         remaining = 5 - latest_token.attempts_count
-        raise ValidationError({"detail": f"Invalid code. {remaining} attempt(s) remaining."})
+        raise ValidationError(
+            {"detail": f"Invalid code. {remaining} attempt(s) remaining."}
+        )
 
     try:
         validate_password(new_password, user=user)
@@ -240,7 +265,9 @@ def confirm_password_reset(email: str, code: str, new_password: str) -> bool:
 
 def change_password(user: User, current_password: str, new_password: str) -> bool:
     if not user.check_password(current_password):
-        raise ValidationError({"current_password": ["Current password does not match."]})
+        raise ValidationError(
+            {"current_password": ["Current password does not match."]}
+        )
 
     try:
         validate_password(new_password, user=user)
@@ -259,10 +286,14 @@ def request_email_change(user: User, new_email: str, password: str) -> bool:
         raise ValidationError({"password": ["Incorrect password."]})
 
     if user.email == new_email:
-        raise ValidationError({"new_email": ["New email address is the same as your current email."]})
+        raise ValidationError(
+            {"new_email": ["New email address is the same as your current email."]}
+        )
 
     if User.objects.filter(email=new_email).exists():
-        raise ValidationError({"new_email": ["An account with this email address already exists."]})
+        raise ValidationError(
+            {"new_email": ["An account with this email address already exists."]}
+        )
 
     # Invalidate previous unused requests
     EmailChangeRequest.objects.filter(user=user, is_used=False).update(is_used=True)
@@ -301,10 +332,18 @@ def confirm_email_change(user: User, new_email: str, code: str) -> bool:
         req.attempts_count += 1
         req.save(update_fields=["attempts_count"])
         remaining = 5 - req.attempts_count
-        raise ValidationError({"detail": f"Invalid verification code. {remaining} attempt(s) remaining."})
+        raise ValidationError(
+            {"detail": f"Invalid verification code. {remaining} attempt(s) remaining."}
+        )
 
     if User.objects.filter(email=new_email).exclude(id=user.id).exists():
-        raise ValidationError({"new_email": ["This email was claimed by another account in the meantime."]})
+        raise ValidationError(
+            {
+                "new_email": [
+                    "This email was claimed by another account in the meantime."
+                ]
+            }
+        )
 
     user.email = new_email
     user.save(update_fields=["email"])
@@ -316,7 +355,9 @@ def confirm_email_change(user: User, new_email: str, code: str) -> bool:
 
 def delete_user_account(user: User, password: str, confirmation: str) -> bool:
     if confirmation.strip() != "DELETE":
-        raise ValidationError({"confirmation": ["Confirmation must be exactly 'DELETE'."]})
+        raise ValidationError(
+            {"confirmation": ["Confirmation must be exactly 'DELETE'."]}
+        )
 
     if not user.check_password(password):
         raise ValidationError({"password": ["Incorrect password."]})
@@ -333,6 +374,7 @@ def delete_user_account(user: User, password: str, confirmation: str) -> bool:
 # -------------------------------------------------------------
 # Admin Authentication & Invitation Services
 # -------------------------------------------------------------
+
 
 def admin_login(email: str, password: str) -> dict:
     email = email.lower().strip()
@@ -385,14 +427,18 @@ def verify_admin_2fa(temp_token: str, code: str) -> dict:
     if two_factor.attempts_count >= 5:
         two_factor.is_used = True
         two_factor.save(update_fields=["is_used"])
-        raise ValidationError({"detail": "Too many failed attempts. Session invalidated."})
+        raise ValidationError(
+            {"detail": "Too many failed attempts. Session invalidated."}
+        )
 
     expected_hash = _hash_value(code.strip(), salt=temp_token)
     if two_factor.code_hash != expected_hash:
         two_factor.attempts_count += 1
         two_factor.save(update_fields=["attempts_count"])
         remaining = 5 - two_factor.attempts_count
-        raise ValidationError({"detail": f"Invalid 2FA code. {remaining} attempt(s) remaining."})
+        raise ValidationError(
+            {"detail": f"Invalid 2FA code. {remaining} attempt(s) remaining."}
+        )
 
     two_factor.is_used = True
     two_factor.save(update_fields=["is_used"])
@@ -414,11 +460,15 @@ def verify_admin_2fa(temp_token: str, code: str) -> dict:
 
 def invite_admin(invited_by: User, email: str) -> AdminInvitation:
     if not invited_by.is_staff:
-        raise ValidationError({"detail": "Only staff administrators can invite new administrators."})
+        raise ValidationError(
+            {"detail": "Only staff administrators can invite new administrators."}
+        )
 
     email = email.lower().strip()
     if User.objects.filter(email=email, is_staff=True).exists():
-        raise ValidationError({"email": ["An administrator with this email already exists."]})
+        raise ValidationError(
+            {"email": ["An administrator with this email already exists."]}
+        )
 
     AdminInvitation.objects.filter(email=email, is_accepted=False).delete()
 
@@ -447,7 +497,9 @@ def accept_admin_invitation(invite_token: str, full_name: str, password: str) ->
         raise ValidationError({"detail": "Invalid or expired invitation token."})
 
     if matched_invitation.expires_at < timezone.now():
-        raise ValidationError({"detail": "Invitation has expired. Please request a new invitation."})
+        raise ValidationError(
+            {"detail": "Invitation has expired. Please request a new invitation."}
+        )
 
     try:
         validate_password(password)

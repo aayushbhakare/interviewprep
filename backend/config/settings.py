@@ -179,6 +179,11 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
+# Gemini AI Configuration
+GEMINI_API_KEY = config("GEMINI_API_KEY", default="")
+GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-2.0-flash")
+
+
 # Email Backend
 EMAIL_BACKEND = config(
     "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"

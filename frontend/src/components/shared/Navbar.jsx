@@ -60,6 +60,18 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-3">
             {isAuthenticated ? (
               <>
+                {user?.is_staff && (
+                  <Link
+                    to="/admin/question-bank"
+                    className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
+                      location.pathname === '/admin/question-bank'
+                        ? 'bg-purple-50 text-purple-700 border-purple-300'
+                        : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+                    }`}
+                  >
+                    Question Bank
+                  </Link>
+                )}
                 <Link
                   to="/profile"
                   className={`inline-flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${

@@ -20,7 +20,9 @@ def test_email_verification_correct_code():
     assert code is not None
 
     url = reverse("auth-verify-email")
-    response = client.post(url, {"email": "verify@example.com", "code": code}, format="json")
+    response = client.post(
+        url, {"email": "verify@example.com", "code": code}, format="json"
+    )
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "success"
@@ -39,11 +41,15 @@ def test_email_verification_incorrect_code():
     )
 
     url = reverse("auth-verify-email")
-    response = client.post(url, {"email": "wrongcode@example.com", "code": "000000"}, format="json")
+    response = client.post(
+        url, {"email": "wrongcode@example.com", "code": "000000"}, format="json"
+    )
     assert response.status_code == 400
     data = response.json()
     assert data["status"] == "error"
-    assert "Invalid code" in data["error"]["message"] or "Invalid code" in str(data["error"]["details"])
+    assert "Invalid code" in data["error"]["message"] or "Invalid code" in str(
+        data["error"]["details"]
+    )
 
 
 @pytest.mark.django_db
@@ -62,7 +68,9 @@ def test_email_verification_expired_code():
     code_obj.save(update_fields=["expires_at"])
 
     url = reverse("auth-verify-email")
-    response = client.post(url, {"email": "expiredcode@example.com", "code": code}, format="json")
+    response = client.post(
+        url, {"email": "expiredcode@example.com", "code": code}, format="json"
+    )
     assert response.status_code == 400
     data = response.json()
     assert "expired" in str(data).lower()
@@ -80,11 +88,15 @@ def test_email_verification_reused_code():
 
     url = reverse("auth-verify-email")
     # First attempt: succeeds
-    res1 = client.post(url, {"email": "reused@example.com", "code": code}, format="json")
+    res1 = client.post(
+        url, {"email": "reused@example.com", "code": code}, format="json"
+    )
     assert res1.status_code == 200
 
     # Second attempt: user is already verified
-    res2 = client.post(url, {"email": "reused@example.com", "code": code}, format="json")
+    res2 = client.post(
+        url, {"email": "reused@example.com", "code": code}, format="json"
+    )
     assert res2.status_code == 200  # idempotently returns verified
 
 
@@ -100,10 +112,14 @@ def test_email_verification_attempt_limit():
     url = reverse("auth-verify-email")
     # Fail 5 times
     for _ in range(5):
-        client.post(url, {"email": "attempts@example.com", "code": "999999"}, format="json")
+        client.post(
+            url, {"email": "attempts@example.com", "code": "999999"}, format="json"
+        )
 
     # 6th attempt should state too many failed attempts
-    res = client.post(url, {"email": "attempts@example.com", "code": "999999"}, format="json")
+    res = client.post(
+        url, {"email": "attempts@example.com", "code": "999999"}, format="json"
+    )
     assert res.status_code == 400
     data = res.json()
     assert "too many" in str(data).lower() or "attempt" in str(data).lower()

@@ -6,7 +6,9 @@ class Command(BaseCommand):
     help = "Create or reset a verified student user for end-to-end testing."
 
     def add_arguments(self, parser):
-        parser.add_argument("--email", type=str, default="e2e_student@interviewprep.local")
+        parser.add_argument(
+            "--email", type=str, default="e2e_student@interviewprep.local"
+        )
         parser.add_argument("--name", type=str, default="E2E Student")
         parser.add_argument("--password", type=str, default="E2EPassword123!")
 

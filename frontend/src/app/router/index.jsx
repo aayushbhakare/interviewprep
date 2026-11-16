@@ -12,6 +12,9 @@ import ProfilePage from '../../features/profile/ProfilePage';
 import LearnPage from '../../features/learn/LearnPage';
 import PracticePage from '../../features/practice/PracticePage';
 import ExperiencesPage from '../../features/experiences/ExperiencesPage';
+import QuizTakingPage from '../../features/quizzes/QuizTakingPage';
+import QuizResultsPage from '../../features/quizzes/QuizResultsPage';
+import AdminQuestionBankPage from '../../features/admin/AdminQuestionBankPage';
 
 export default function AppRouter() {
   return (
@@ -39,6 +42,33 @@ export default function AppRouter() {
 
       {/* Core Domain Module Entry Points */}
       <Route path="/learn" element={<LearnPage />} />
+      <Route
+        path="/learn/quiz/:weekNumber/take"
+        element={
+          <ProtectedRoute>
+            <QuizTakingPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/learn/quiz/:attemptId/results"
+        element={
+          <ProtectedRoute>
+            <QuizResultsPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin Question Bank Route */}
+      <Route
+        path="/admin/question-bank"
+        element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminQuestionBankPage />
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="/practice" element={<PracticePage />} />
       <Route path="/experiences" element={<ExperiencesPage />} />
 

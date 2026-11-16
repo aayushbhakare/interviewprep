@@ -18,3 +18,11 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 3. CodeRabbit GitHub App Authorization
 - **Detail:** CodeRabbit configuration (`.coderabbit.yaml`) is configured and committed to the repository root.
 - **Status:** Requires one-time GitHub App authorization by the repository owner at `https://github.com/apps/coderabbitai`. Until authorized for `aayushbhakare/interviewprep`, automated bot reviews on pull requests remain pending; manual code reviews and local test runs are executed.
+
+### 4. Quiz Autosave Network Latency Tolerance
+- **Detail:** In low-bandwidth network conditions, autosave or submit requests near the 75-minute timer deadline could arrive slightly past the cutoff.
+- **Resolution:** Backend endpoints implement a 60-second grace buffer past the exact 4,500-second mark to accommodate client HTTP latency without rejecting valid in-flight answers.
+
+### 5. Deterministic Fallback for AI Question Generation
+- **Detail:** Real-time AI question generation via external LLM APIs can be subject to rate limits or network unavailability.
+- **Resolution:** A local deterministic curriculum synthesis engine generates structured, schema-compliant questions across all categories and difficulties when API calls fail or offline mode is active, ensuring ₹0 operational cost.

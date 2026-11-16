@@ -29,11 +29,19 @@ PostgreSQL is the permanent source of truth for the platform. Schema changes are
 ### 3. `content` (Initial Schema)
 - `TopicContent`: `slug`, `topic_name`, `technology`, `version`, `learning_objectives`, `concept_explanation`, `how_it_works`, `examples`, `practical_implementation`, `interview_perspective`, `key_takeaways`, `is_published`.
 
-### 4. `questions` & `quizzes` (Initial Schema)
-- `Question`: `technology`, `topic_slug`, `category`, `difficulty`, `current_version_number`.
-- `QuestionVersion`: `question` (ForeignKey), `version_number`, `prompt`, `rubric`, `expected_output`, `validation_status`.
-- `WeeklyQuizAssignment`: `student` (ForeignKey), `week_number`, `roadmap_id`, `status`.
-- `QuizAttempt`: `assignment` (ForeignKey), `student` (ForeignKey), `attempt_number` (1..5), `status`, `score`, `correct_count`, `total_questions` (45).
+### 4. `questions` & `quizzes` (Phase 4 Verified)
+
+#### `questions`
+- `Question`: Canonical question entity. Fields: `id` (UUID), `technology`, `topic_slug`, `category` (`output`, `debugging`, `coding`, `scenario`, `conceptual`), `difficulty` (`easy`, `medium`, `hard`), `status` (`draft`, `active`, `suspended`, `deprecated`, `review_failed`), `created_by` (ForeignKey to User, null=True), `created_at`, `updated_at`.
+- `QuestionVersion`: Immutable content snapshot. Fields: `id` (UUID), `question` (ForeignKey), `version_number` (int), `prompt` (text), `code_snippet` (text, blank), `expected_answer` (text), `explanation` (text), `validation_status` (`valid`, `invalid`, `review_failed`), `is_published` (bool), `created_at`. Unique on `(question, version_number)`.
+- `QuestionReport`: Issue reporting with deduplication. Fields: `id` (UUID), `question` (ForeignKey), `reported_by` (ForeignKey to User), `report_reason` (`incorrect_solution`, `unclear_problem`, `typo_grammar`, `broken_snippet`, `other`), `description` (text), `status` (`pending`, `reviewed`, `resolved`, `dismissed`), `admin_notes` (text), `created_at`, `updated_at`.
+- `QuestionValidationHistory`: Validation audit log. Fields: `id` (UUID), `question` (ForeignKey), `version_number` (int), `revision_count` (int), `is_valid` (bool), `failure_reason` (text), `validation_payload` (JSONField), `created_at`.
+
+#### `quizzes`
+- `WeeklyQuizAssignment`: Roadmap-scoped quiz assignment. Fields: `id` (UUID), `student` (ForeignKey to User), `roadmap` (ForeignKey to Roadmap, `db_column="roadmap_id"`), `week_number` (int), `status` (`assigned`, `completed`), `created_at`. Unique on `(student, roadmap, week_number)`.
+- `AssignmentQuestion`: Junction table capturing frozen question version snapshot. Fields: `id` (UUID), `assignment` (ForeignKey), `question` (ForeignKey), `question_version` (ForeignKey), `order` (int, 1..45). Unique on `(assignment, order)`.
+- `QuizAttempt`: Quiz attempt session. Fields: `id` (UUID), `assignment` (ForeignKey), `student` (ForeignKey), `attempt_number` (int), `status` (`in_progress`, `evaluation_pending`, `evaluated`, `abandoned`), `score` (float), `correct_count` (int), `total_questions` (int, 45), `started_at` (datetime), `submitted_at` (datetime, null=True), `time_spent_seconds` (int). Unique on `(assignment, attempt_number)`.
+- `AttemptAnswer`: Answer persistence per question. Fields: `id` (UUID), `attempt` (ForeignKey), `assignment_question` (ForeignKey), `user_answer` (text), `is_correct` (bool, null=True), `evaluation_notes` (text), `evaluated_at` (datetime, null=True), `updated_at` (datetime). Unique on `(attempt, assignment_question)`.
 
 ### 5. `aptitude` (Initial Schema)
 - `AptitudeQuestion`: `category`, `question_text`, `options`, `correct_option_index`, `explanation`, `is_active`.

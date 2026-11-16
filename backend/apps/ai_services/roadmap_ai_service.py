@@ -73,7 +73,10 @@ Respond ONLY with valid JSON matching the structure.
 """
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.2, "response_mime_type": "application/json"},
+            "generationConfig": {
+                "temperature": 0.2,
+                "response_mime_type": "application/json",
+            },
         }
 
         try:
@@ -89,7 +92,9 @@ Respond ONLY with valid JSON matching the structure.
                     .get("text", "")
                 )
                 parsed = json.loads(raw_text)
-                phases = parsed.get("phases", parsed if isinstance(parsed, list) else None)
+                phases = parsed.get(
+                    "phases", parsed if isinstance(parsed, list) else None
+                )
 
                 if phases and len(phases) >= 3:
                     # Successfully parsed AI structure
@@ -98,9 +103,15 @@ Respond ONLY with valid JSON matching the structure.
                         provider="gemini",
                         feature="roadmap_generation",
                         model_name="gemini-1.5-flash",
-                        prompt_tokens=data.get("usageMetadata", {}).get("promptTokenCount", 0),
-                        completion_tokens=data.get("usageMetadata", {}).get("candidatesTokenCount", 0),
-                        total_tokens=data.get("usageMetadata", {}).get("totalTokenCount", 0),
+                        prompt_tokens=data.get("usageMetadata", {}).get(
+                            "promptTokenCount", 0
+                        ),
+                        completion_tokens=data.get("usageMetadata", {}).get(
+                            "candidatesTokenCount", 0
+                        ),
+                        total_tokens=data.get("usageMetadata", {}).get(
+                            "totalTokenCount", 0
+                        ),
                         status="success",
                         latency_ms=latency,
                     )
@@ -117,7 +128,9 @@ Respond ONLY with valid JSON matching the structure.
             )
         except Exception as exc:
             latency = int((time.time() - start_time) * 1000)
-            logger.warning("Gemini API call failed, using deterministic engine: %s", exc)
+            logger.warning(
+                "Gemini API call failed, using deterministic engine: %s", exc
+            )
             AIUsageRecord.objects.create(
                 user=user,
                 provider="gemini",

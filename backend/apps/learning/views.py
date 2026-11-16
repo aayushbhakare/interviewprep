@@ -28,7 +28,9 @@ from apps.learning.services.progress_service import (
 
 def _enforce_verified_student(user):
     if not user.is_verified:
-        raise PermissionDenied("Email verification is required to access the Learn module.")
+        raise PermissionDenied(
+            "Email verification is required to access the Learn module."
+        )
 
 
 class CatalogView(APIView):
@@ -83,21 +85,25 @@ class RoadmapStatusView(APIView):
         _enforce_verified_student(request.user)
         roadmap = Roadmap.objects.filter(user=request.user, is_active=True).first()
         if not roadmap:
-            return Response({
-                "status": "success",
-                "data": {"has_active_roadmap": False, "status": None},
-            })
+            return Response(
+                {
+                    "status": "success",
+                    "data": {"has_active_roadmap": False, "status": None},
+                }
+            )
 
-        return Response({
-            "status": "success",
-            "data": {
-                "has_active_roadmap": True,
-                "roadmap_id": str(roadmap.id),
-                "status": roadmap.status,
-                "is_ready": roadmap.status == Roadmap.STATUS_READY,
-                "generation_error": roadmap.generation_error,
-            },
-        })
+        return Response(
+            {
+                "status": "success",
+                "data": {
+                    "has_active_roadmap": True,
+                    "roadmap_id": str(roadmap.id),
+                    "status": roadmap.status,
+                    "is_ready": roadmap.status == Roadmap.STATUS_READY,
+                    "generation_error": roadmap.generation_error,
+                },
+            }
+        )
 
 
 class RoadmapCreateView(APIView):
@@ -195,10 +201,9 @@ class TopicContentView(APIView):
     def get(self, request, topic_id):
         _enforce_verified_student(request.user)
         try:
-            topic_ref = (
-                RoadmapTopicReference.objects.select_related("week__phase__roadmap")
-                .get(id=topic_id)
-            )
+            topic_ref = RoadmapTopicReference.objects.select_related(
+                "week__phase__roadmap"
+            ).get(id=topic_id)
         except (RoadmapTopicReference.DoesNotExist, ValueError):
             raise NotFound("Topic not found.")
 
@@ -257,7 +262,9 @@ class PracticeTaskDetailView(APIView):
         _enforce_verified_student(request.user)
         try:
             task = (
-                RoadmapPracticeTask.objects.select_related("week__phase__roadmap", "related_topic")
+                RoadmapPracticeTask.objects.select_related(
+                    "week__phase__roadmap", "related_topic"
+                )
                 .prefetch_related("progress_records")
                 .get(id=task_id)
             )

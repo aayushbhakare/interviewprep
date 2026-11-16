@@ -10,7 +10,9 @@ class RegisterSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if attrs["password"] != attrs["confirm_password"]:
-            raise serializers.ValidationError({"confirm_password": ["Passwords do not match."]})
+            raise serializers.ValidationError(
+                {"confirm_password": ["Passwords do not match."]}
+            )
         return attrs
 
 
@@ -40,19 +42,39 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if attrs["new_password"] != attrs["confirm_password"]:
-            raise serializers.ValidationError({"confirm_password": ["Passwords do not match."]})
+            raise serializers.ValidationError(
+                {"confirm_password": ["Passwords do not match."]}
+            )
         return attrs
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(read_only=True)
     full_name = serializers.CharField(max_length=255)
-    phone_number = serializers.CharField(source="profile.phone_number", allow_blank=True, allow_null=True, required=False)
-    target_role = serializers.CharField(source="profile.target_role", allow_blank=True, allow_null=True, required=False)
-    experience_level = serializers.CharField(source="profile.experience_level", allow_blank=True, allow_null=True, required=False)
-    target_salary = serializers.CharField(source="profile.target_salary", allow_blank=True, allow_null=True, required=False)
-    current_resume_path = serializers.CharField(source="profile.current_resume_path", read_only=True)
-    current_resume_version = serializers.IntegerField(source="profile.current_resume_version", read_only=True)
+    phone_number = serializers.CharField(
+        source="profile.phone_number", allow_blank=True, allow_null=True, required=False
+    )
+    target_role = serializers.CharField(
+        source="profile.target_role", allow_blank=True, allow_null=True, required=False
+    )
+    experience_level = serializers.CharField(
+        source="profile.experience_level",
+        allow_blank=True,
+        allow_null=True,
+        required=False,
+    )
+    target_salary = serializers.CharField(
+        source="profile.target_salary",
+        allow_blank=True,
+        allow_null=True,
+        required=False,
+    )
+    current_resume_path = serializers.CharField(
+        source="profile.current_resume_path", read_only=True
+    )
+    current_resume_version = serializers.IntegerField(
+        source="profile.current_resume_version", read_only=True
+    )
     created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
@@ -92,7 +114,9 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if attrs["new_password"] != attrs["confirm_password"]:
-            raise serializers.ValidationError({"confirm_password": ["Passwords do not match."]})
+            raise serializers.ValidationError(
+                {"confirm_password": ["Passwords do not match."]}
+            )
         return attrs
 
 
@@ -114,6 +138,7 @@ class AccountDeleteSerializer(serializers.Serializer):
 # -------------------------------------------------------------
 # Admin Serializers
 # -------------------------------------------------------------
+
 
 class AdminLoginSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
@@ -137,5 +162,7 @@ class AdminAcceptInviteSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         if attrs["password"] != attrs["confirm_password"]:
-            raise serializers.ValidationError({"confirm_password": ["Passwords do not match."]})
+            raise serializers.ValidationError(
+                {"confirm_password": ["Passwords do not match."]}
+            )
         return attrs

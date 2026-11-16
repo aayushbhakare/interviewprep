@@ -8,13 +8,40 @@ This log tracks granular progress across every feature, component, API, and mile
 
 - **Repository:** `https://github.com/aayushbhakare/interviewprep` (`main` branch)
 - **Total Phases:** 11 (Phases 0 through 10)
-- **Completed Phases:** 4 (Phase 0, Phase 1, Phase 2, Phase 3)
-- **Current Phase:** Phase 4 — Learning Content & Exercises
-- **Current Task:** Ready to begin Phase 4 after Phase 3 verification and merge.
+- **Completed Phases:** 5 (Phase 0, Phase 1, Phase 2, Phase 3, Phase 4)
+- **Current Phase:** Phase 4 — Shared Question Bank & Weekly Quiz System (Completed & Verified)
+- **Next Phase:** Phase 5 — Aptitude Practice
 
 ---
 
 ## Milestone Progress Log
+
+### Phase 4: Shared Question Bank & Weekly Quiz System (Completed & Verified)
+- [x] Defined models for shared question bank (`apps/questions/models.py`): `Question`, `QuestionVersion`, `QuestionReport`, and `QuestionValidationHistory`.
+- [x] Defined models for quiz lifecycle (`apps/quizzes/models.py`): `WeeklyQuizAssignment`, `AssignmentQuestion`, `QuizAttempt`, and `AttemptAnswer`.
+- [x] Applied migrations `questions.0002` and `quizzes.0002` cleanly.
+- [x] Implemented `seed_data.py` providing curated seed bank across all 5 non-MCQ categories (Output, Debugging, Coding, Scenario, Conceptual) and 3 difficulties (Easy, Medium, Hard).
+- [x] Implemented `question_generator.py` with structured schema validation, up to 3 AI revisions, offline deterministic fallback engine, and failure logging as `Suspended – Review Failed`.
+- [x] Implemented `question_bank_service.py` with duplicate grouping, threshold suspension, version snapshotting, and student report submission.
+- [x] Implemented `quiz_service.py` with exact 45-question distribution generation, start/resume session, 75-minute timer server enforcement, debounced answer autosave, abandonment handling, and submission validation.
+- [x] Implemented `evaluation_service.py` with strict binary grading (Correct / Incorrect), unanswered=incorrect rule, failure handling to `evaluation_pending` via `ProcessingJob(idempotency_key=...)`, and scorecard calculation `(correct / 45) * 100`.
+- [x] Integrated roadmap milestone incrementing: Submitting weekly quiz increments the week's completed milestones by exactly 1 in `progress_service.py` and `RoadmapWeekSerializer`.
+- [x] Built frontend components and views:
+  - `quizService.js`: Full Axios API client for student and admin endpoints.
+  - `QuizOverviewCard.jsx`: Weekly quiz status card on roadmap with score %, attempt count (X/5), Start, Resume, View Results, and Past Attempts buttons.
+  - `QuizInstructionsModal.jsx`: Instructions modal detailing 45 questions, 75-minute countdown timer, category distribution, and binary grading rules.
+  - `QuizTakingPage.jsx`: Live server-synced countdown timer, 45-button question palette (Answered, Unanswered, Current), question content and code editor, debounced autosave.
+  - `QuizLeaveModal.jsx`: Leave modal warning student of abandonment answer loss without consuming attempt allowance.
+  - `QuizSubmitModal.jsx`: Submit confirmation dialog reporting unanswered question count.
+  - `QuizResultsPage.jsx`: Score summary card, binary Correct/Incorrect breakdown, question-by-question review with expected answers and explanations.
+  - `QuizHistoryModal.jsx`: Chronological past attempts modal.
+  - `QuestionReportModal.jsx`: In-quiz question issue reporting modal.
+  - `AdminQuestionBankPage.jsx`: Admin search, filter tabs, question CRUD, version publisher, and student report resolver.
+- [x] Authored and executed 12 backend pytest tests (`test_question_bank.py` and `test_weekly_quizzes.py`), reaching 61/61 backend tests passing (100%).
+- [x] Authored and executed Playwright E2E spec (`weekly_quiz.spec.js`), reaching 15/15 total end-to-end tests passing (100%).
+- [x] Clean, professional code without AI decorative comments; zero new third-party dependencies introduced.
+
+---
 
 ### Phase 3: Learn Module & Personalized Roadmap (Completed & Verified)
 - [x] Defined models for salary-wise preparation: `RoadmapConfigurationSnapshot`, `RoadmapPhase`, `RoadmapWeek`, `RoadmapTopicReference`, `TopicProgress`, `RoadmapPracticeTask`, and `PracticeTaskProgress`.

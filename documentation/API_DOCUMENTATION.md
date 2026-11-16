@@ -85,10 +85,36 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Implemented Shared Question Bank & Weekly Quiz Endpoints (`apps/questions` & `apps/quizzes`)
+
+### Student Question Reporting (`/api/v1/questions/`)
+- `POST /api/v1/questions/reports/` — Report an issue with a question (reason, description). Deduplicates identical active reports and automatically suspends questions exceeding report threshold.
+- `GET /api/v1/questions/catalog/` — Retrieve public catalog statistics by technology, category, and difficulty.
+
+### Weekly Quiz Management (`/api/v1/quizzes/`)
+- `POST /api/v1/quizzes/assignments/prepare/` — Prepare or retrieve 45-question assignment for the active roadmap week.
+- `GET /api/v1/quizzes/assignments/{assignment_id}/` — Retrieve assignment metadata, question count, and submission status.
+- `POST /api/v1/quizzes/attempts/start/` — Start a new quiz attempt or resume active in-progress attempt. Computes server-side 75-minute timer remaining seconds. Enforces 5 submitted attempts limit and blocks retakes while an evaluation is pending.
+- `POST /api/v1/quizzes/attempts/{attempt_id}/autosave/` — Autosave student answer for a specific question. Validates timer cutoff with 60-second latency buffer.
+- `POST /api/v1/quizzes/attempts/{attempt_id}/abandon/` — Abandon in-progress attempt. Discards unsubmitted answers without consuming the 5-attempt limit.
+- `POST /api/v1/quizzes/attempts/{attempt_id}/submit/` — Submit quiz attempt. Triggers binary evaluation (Correct/Incorrect), awards +1 milestone to roadmap week, calculates score `(correct / 45) * 100`.
+- `GET /api/v1/quizzes/attempts/{attempt_id}/results/` — Retrieve completed attempt results (scorecard, binary Correct/Incorrect breakdown, expected answers, and technical explanations).
+- `GET /api/v1/quizzes/assignments/{assignment_id}/attempts/` — Retrieve chronological attempt history for an assignment.
+
+### Admin Question Bank Operations (`/api/v1/admin-panel/questions/`)
+- `GET /api/v1/admin-panel/questions/` — List and search questions with pagination and filters (technology, category, difficulty, status).
+- `POST /api/v1/admin-panel/questions/` — Create new question with initial version (prompt, code snippet, expected answer, explanation).
+- `GET /api/v1/admin-panel/questions/{id}/` — Retrieve question details, complete version history, and validation audit log.
+- `POST /api/v1/admin-panel/questions/{id}/version/` — Publish a new immutable version for an existing question.
+- `PATCH /api/v1/admin-panel/questions/{id}/status/` — Update question operational status (`active`, `suspended`, `deprecated`).
+- `GET /api/v1/admin-panel/questions/reports/` — View student question issue reports queue.
+- `POST /api/v1/admin-panel/questions/reports/{id}/resolve/` — Resolve or dismiss student report with resolution action and admin notes.
+
+---
+
 ## Planned Domain Endpoints
 
-- **Quizzes (`/api/v1/quizzes/`):** Assignment readiness, 45-question attempts, timer, autosave, submission, evaluation.
 - **Aptitude (`/api/v1/aptitude/`):** Standalone & Mixed sessions, question palette, scoring, daily limit.
 - **Interviews (`/api/v1/interviews/`):** Voice interview simulation, round progression, PASS/FAIL outcomes, cooling period.
 - **Experiences (`/api/v1/experiences/`):** Submission, draft saving, moderation, search, filtering.
-- **Admin Panel (`/api/v1/admin-panel/`):** Platform metrics, student management, moderation queues, activity logs.
+- **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, moderation queues, activity logs.

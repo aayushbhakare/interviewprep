@@ -12,16 +12,31 @@ This report records automated and manual test runs, pass/fail results, and verif
 | Authentication & User Management (Phase 1) | pytest-django | 29 | 29 | 0 | 0 | **PASSED** | 2026-11-15 |
 | Student Dashboard API Tests (Phase 2) | pytest-django | 3 | 3 | 0 | 0 | **PASSED** | 2026-11-16 |
 | Learn Module & Roadmap Tests (Phase 3) | pytest-django | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
-| **Total Backend Test Suite** | **pytest-django** | **49** | **49** | **0** | **0** | **PASSED** | **2026-11-16** |
-| Python Linting & Formatting | Ruff | 65 files | 65 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend ESLint Code Quality | ESLint | 26 files | 26 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Frontend Production Build | Vite | 1654 modules | 1654 | 0 | 0 | **PASSED** | 2026-11-16 |
-| Playwright E2E Tests (Phases 1, 2 & 3) | Playwright (Chrome) | 14 | 14 | 0 | 0 | **PASSED** | 2026-11-16 |
-| OpenAPI Schema Validation | drf-spectacular | 31 endpoints | 31 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Shared Question Bank & Weekly Quizzes (Phase 4) | pytest-django | 12 | 12 | 0 | 0 | **PASSED** | 2026-11-16 |
+| **Total Backend Test Suite** | **pytest-django** | **61** | **61** | **0** | **0** | **PASSED** | **2026-11-16** |
+| Python Linting & Formatting | Ruff | 76 files | 76 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend ESLint Code Quality | ESLint | 35 files | 35 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Frontend Production Build | Vite | 1664 modules | 1664 | 0 | 0 | **PASSED** | 2026-11-16 |
+| Playwright E2E Tests (Phases 1, 2, 3 & 4) | Playwright (Chrome) | 15 | 15 | 0 | 0 | **PASSED** | 2026-11-16 |
+| OpenAPI Schema Validation | drf-spectacular | 44 endpoints | 44 | 0 | 0 | **PASSED** | 2026-11-16 |
 
 ---
 
 ## Acceptance Criteria Verification Log
+
+### Phase 4: Shared Question Bank & Weekly Quiz System
+- [x] **Question Categories & Difficulty:** Implemented 5 non-MCQ categories (Output Prediction, Debugging, Coding, Scenario, Conceptual) across 3 difficulties (Easy, Medium, Hard). Multiple-choice questions prohibited.
+- [x] **Question Generation & Revision Loop:** Implemented schema validation, up to 3 AI revisions, deterministic offline fallback, and `QuestionValidationHistory` failure recording with `Suspended – Review Failed`.
+- [x] **45-Question Weekly Distribution:** Generates assignments with exact quotas: 10 Output, 10 Debugging, 10 Coding, 10 Scenario, 5 Conceptual.
+- [x] **75-Minute Countdown Timer:** Enforced server-side with client display, autotermination on expiry, and autosave tolerance.
+- [x] **45-Button Question Palette:** Interactive buttons (1-45) showing Answered, Unanswered, and Current states with instant jump navigation.
+- [x] **Binary Evaluation Engine:** Strict Correct / Incorrect grading (no partial credit). Score calculated as `(Correct / 45) * 100`. Question-by-question review with expected solution and explanation.
+- [x] **Attempt Quotas & Safe Abandonment:** Maximum 5 submitted attempts allowed. Abandonment cancels attempt and clears answers without consuming attempt limit. Retakes blocked while an attempt is in `Evaluation Pending`.
+- [x] **Roadmap Milestone Integration:** Submitting a weekly quiz dynamically increments the week's completed milestones by exactly 1.
+- [x] **Admin Question Bank Operations:** Question search, filtering by category and difficulty, question creation, version publishing, suspension/activation, and student report resolution.
+- [x] **Automated Tests:** 12 new backend pytest tests passed; 1 new Playwright E2E test passed. Total 61 backend and 15 E2E tests passed.
+
+---
 
 ### Phase 3: Learn Module & Personalized Roadmap
 - [x] **Setup Wizard (`/learn`):** 6-step roadmap creation flow covering Role (9 + Other custom), Experience (5 tiers), Target Salary (6 tiers + flexible skip), Language (14 options), Framework with dynamic compatibility filter, and Database (10 options).

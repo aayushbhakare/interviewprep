@@ -16,6 +16,7 @@ import {
 import TopicContentModal from './TopicContentModal';
 import PracticeTaskModal from './PracticeTaskModal';
 import RoadmapReplaceModal from './RoadmapReplaceModal';
+import QuizOverviewCard from '../quizzes/QuizOverviewCard';
 import api from '../../services/api';
 
 export default function RoadmapViewer({ roadmap, onRoadmapReplaced, onRefreshRoadmap }) {
@@ -535,25 +536,13 @@ export default function RoadmapViewer({ roadmap, onRoadmapReplaced, onRefreshRoa
                 </div>
               )}
 
-              {/* Weekly Diagnostic Quiz Item (Placeholder for Phase 4 & 5) */}
-              <div className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-5 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 text-brand-600 flex items-center justify-center font-bold">
-                    <Award className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900">
-                      Week {currentWeek.week_number} Diagnostic Quiz (45 Non-MCQ Questions)
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Output prediction, code debugging, and design scenarios. Unlocks in Phase 5.
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-semibold text-slate-400 bg-white border border-slate-200 px-3 py-1 rounded-md">
-                  Phase 5 Milestone
-                </span>
-              </div>
+              {/* Weekly Technical Assessment Card */}
+              <QuizOverviewCard
+                weekNumber={currentWeek.week_number}
+                weekTitle={currentWeek.title}
+                overview={currentWeek.quiz_overview}
+                onRefreshRoadmap={onRefreshRoadmap}
+              />
             </div>
           ) : (
             <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500">

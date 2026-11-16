@@ -52,7 +52,9 @@ def test_student_cannot_access_admin_endpoints():
         full_name="Student Intruder",
         is_verified=True,
     )
-    tokens = auth_service.login_user("student_intruder@example.com", "ValidPassword123!")
+    tokens = auth_service.login_user(
+        "student_intruder@example.com", "ValidPassword123!"
+    )
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {tokens['access']}")
 
     # Try to access admin invitation endpoint

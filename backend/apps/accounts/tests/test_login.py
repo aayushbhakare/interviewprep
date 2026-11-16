@@ -105,5 +105,7 @@ def test_logout_blacklists_refresh_token():
 
     # Try to use blacklisted refresh token
     refresh_url = reverse("auth-token-refresh")
-    res_refresh = client.post(refresh_url, {"refresh": tokens["refresh"]}, format="json")
+    res_refresh = client.post(
+        refresh_url, {"refresh": tokens["refresh"]}, format="json"
+    )
     assert res_refresh.status_code == 401

@@ -176,25 +176,31 @@ def test_roadmap_replacement_flow(verified_student):
     create_url = reverse("learning-roadmap-create")
     replace_url = reverse("learning-roadmap-replace")
 
-    res1 = client.post(create_url, {
-        "role": "Python Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res1 = client.post(
+        create_url,
+        {
+            "role": "Python Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     assert res1.status_code == 201
     old_id = res1.json()["data"]["id"]
 
     # Replace with Java roadmap
-    res2 = client.post(replace_url, {
-        "role": "Java Developer",
-        "experience_level": "1–3 years",
-        "target_salary": "₹10–15 LPA",
-        "language": "Java",
-        "framework": "Spring Boot",
-        "database": "MySQL",
-    })
+    res2 = client.post(
+        replace_url,
+        {
+            "role": "Java Developer",
+            "experience_level": "1–3 years",
+            "target_salary": "₹10–15 LPA",
+            "language": "Java",
+            "framework": "Spring Boot",
+            "database": "MySQL",
+        },
+    )
     assert res2.status_code == 201
     new_id = res2.json()["data"]["id"]
     assert new_id != old_id
@@ -214,13 +220,16 @@ def test_topic_progress_and_skip(verified_student, other_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "FastAPI",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "FastAPI",
+            "database": "PostgreSQL",
+        },
+    )
     assert res.status_code == 201
     roadmap_data = res.json()["data"]
     first_topic = roadmap_data["phases"][0]["weeks"][0]["topics"][0]
@@ -261,13 +270,16 @@ def test_topic_content_retrieval(verified_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     topic_id = res.json()["data"]["phases"][0]["weeks"][0]["topics"][0]["id"]
 
     content_url = reverse("learning-topic-content", kwargs={"topic_id": topic_id})
@@ -288,14 +300,17 @@ def test_practice_roadmap_generation_and_tasks(verified_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "target_salary": "₹5–7 LPA",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "target_salary": "₹5–7 LPA",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     assert res.status_code == 201
     data = res.json()["data"]
 
@@ -328,13 +343,16 @@ def test_practice_task_detail_endpoint(verified_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     task_id = res.json()["data"]["phases"][0]["weeks"][0]["practice_tasks"][0]["id"]
 
     detail_url = reverse("learning-practice-task-detail", kwargs={"task_id": task_id})
@@ -359,13 +377,16 @@ def test_independent_progress_tracking(verified_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     roadmap_data = res.json()["data"]
     topic_id = roadmap_data["phases"][0]["weeks"][0]["topics"][0]["id"]
     task_id = roadmap_data["phases"][0]["weeks"][0]["practice_tasks"][0]["id"]
@@ -381,8 +402,13 @@ def test_independent_progress_tracking(verified_student):
     assert topic_stats["practice_stats"]["completed_tasks"] == 0
 
     # 2. Update Practice Progress -> Mark task in_progress
-    task_prog_url = reverse("learning-practice-task-progress", kwargs={"task_id": task_id})
-    task_patch1 = client.patch(task_prog_url, {"status": "in_progress", "submission_notes": "Working on initial draft."})
+    task_prog_url = reverse(
+        "learning-practice-task-progress", kwargs={"task_id": task_id}
+    )
+    task_patch1 = client.patch(
+        task_prog_url,
+        {"status": "in_progress", "submission_notes": "Working on initial draft."},
+    )
     assert task_patch1.status_code == 200
     data1 = task_patch1.json()["data"]
     assert data1["status"] == "in_progress"
@@ -408,13 +434,16 @@ def test_practice_task_ownership_protection(verified_student, other_student):
     client.force_authenticate(user=verified_student)
     create_url = reverse("learning-roadmap-create")
 
-    res = client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    res = client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
     task_id = res.json()["data"]["phases"][0]["weeks"][0]["practice_tasks"][0]["id"]
 
     other_client = APIClient()
@@ -426,7 +455,10 @@ def test_practice_task_ownership_protection(verified_student, other_student):
 
     # Cannot update other student's practice task progress
     prog_url = reverse("learning-practice-task-progress", kwargs={"task_id": task_id})
-    assert other_client.patch(prog_url, {"status": "completed"}).status_code in [403, 404]
+    assert other_client.patch(prog_url, {"status": "completed"}).status_code in [
+        403,
+        404,
+    ]
 
 
 @pytest.mark.django_db
@@ -442,13 +474,16 @@ def test_roadmap_status_endpoint(verified_student):
 
     # Create roadmap
     create_url = reverse("learning-roadmap-create")
-    client.post(create_url, {
-        "role": "Backend Developer",
-        "experience_level": "Fresher",
-        "language": "Python",
-        "framework": "Django",
-        "database": "PostgreSQL",
-    })
+    client.post(
+        create_url,
+        {
+            "role": "Backend Developer",
+            "experience_level": "Fresher",
+            "language": "Python",
+            "framework": "Django",
+            "database": "PostgreSQL",
+        },
+    )
 
     # After creation
     res2 = client.get(status_url)

@@ -1,15 +1,48 @@
 from django.urls import path
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from drf_spectacular.utils import extend_schema
-
-
-class QuizPlaceholderView(APIView):
-    @extend_schema(responses={200: dict})
-    def get(self, request):
-        return Response({"status": "success", "data": {"quizzes": []}})
-
+from apps.quizzes.views import (
+    WeeklyQuizAssignmentOverviewView,
+    WeeklyQuizStartView,
+    QuizAutosaveView,
+    QuizAbandonView,
+    QuizSubmitView,
+    QuizResultsView,
+    WeeklyQuizHistoryView,
+)
 
 urlpatterns = [
-    path("history/", QuizPlaceholderView.as_view(), name="quizzes-history"),
+    path(
+        "weeks/<int:week_number>/assignment/",
+        WeeklyQuizAssignmentOverviewView.as_view(),
+        name="weekly-quiz-overview",
+    ),
+    path(
+        "weeks/<int:week_number>/start/",
+        WeeklyQuizStartView.as_view(),
+        name="weekly-quiz-start",
+    ),
+    path(
+        "weeks/<int:week_number>/history/",
+        WeeklyQuizHistoryView.as_view(),
+        name="weekly-quiz-history",
+    ),
+    path(
+        "attempts/<uuid:attempt_id>/answers/",
+        QuizAutosaveView.as_view(),
+        name="quiz-attempt-autosave",
+    ),
+    path(
+        "attempts/<uuid:attempt_id>/abandon/",
+        QuizAbandonView.as_view(),
+        name="quiz-attempt-abandon",
+    ),
+    path(
+        "attempts/<uuid:attempt_id>/submit/",
+        QuizSubmitView.as_view(),
+        name="quiz-attempt-submit",
+    ),
+    path(
+        "attempts/<uuid:attempt_id>/results/",
+        QuizResultsView.as_view(),
+        name="quiz-attempt-results",
+    ),
 ]

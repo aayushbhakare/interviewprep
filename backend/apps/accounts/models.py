@@ -117,7 +117,10 @@ class EmailChangeRequest(TimeStampedModel):
 class AdminInvitation(TimeStampedModel):
     email = models.EmailField(unique=True)
     invited_by = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name="sent_admin_invitations"
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="sent_admin_invitations",
     )
     token_hash = models.CharField(max_length=128)
     expires_at = models.DateTimeField()

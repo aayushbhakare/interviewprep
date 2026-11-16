@@ -45,7 +45,9 @@ def test_valid_password_reset_flow():
 
     # 4. Old sessions invalidated
     refresh_url = reverse("auth-token-refresh")
-    res_refresh = client.post(refresh_url, {"refresh": tokens_before["refresh"]}, format="json")
+    res_refresh = client.post(
+        refresh_url, {"refresh": tokens_before["refresh"]}, format="json"
+    )
     assert res_refresh.status_code == 401
 
 

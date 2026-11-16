@@ -18,7 +18,14 @@ from apps.learning.services.catalog_service import validate_roadmap_input
 from apps.ai_services.roadmap_ai_service import generate_roadmap_with_ai
 
 
-def _get_phase_templates(role: str, language: str, framework: str, database: str, salary_tier: str, custom_role: str | None = None) -> list[dict]:
+def _get_phase_templates(
+    role: str,
+    language: str,
+    framework: str,
+    database: str,
+    salary_tier: str,
+    custom_role: str | None = None,
+) -> list[dict]:
     effective_role = custom_role if role == "Other" and custom_role else role
     framework_name = framework or "Core Architecture"
     is_senior_tier = salary_tier in ["₹10–15 LPA", "₹15+ LPA"]
@@ -35,10 +42,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": "Syntax, Control Flow & Data Structures",
                     "goal": f"Gain fluency in {language} primitives, control flow, and collection types.",
                     "topics": [
-                        {"title": f"{language} Variables, Scopes & Memory Layout", "minutes": 45, "depth": "fundamental"},
-                        {"title": f"Collections & Complexity in {language}", "minutes": 60, "depth": "intermediate"},
-                        {"title": "Functions, Closures & Scope Chains", "minutes": 45, "depth": "intermediate"},
-                        {"title": "Exception Handling & Defensive Programming", "minutes": 40, "depth": "fundamental"},
+                        {
+                            "title": f"{language} Variables, Scopes & Memory Layout",
+                            "minutes": 45,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": f"Collections & Complexity in {language}",
+                            "minutes": 60,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Functions, Closures & Scope Chains",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Exception Handling & Defensive Programming",
+                            "minutes": 40,
+                            "depth": "fundamental",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -87,7 +110,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Isolate malformed records into a structured dead-letter collection.",
                                 "Log meaningful diagnostic context without exposing sensitive internal memory dumps.",
                             ],
-                            "constraints": ["Process at least 1,000 records under 50MB RAM."],
+                            "constraints": [
+                                "Process at least 1,000 records under 50MB RAM."
+                            ],
                             "sample_io": [
                                 {
                                     "input": "records.csv with 980 valid lines and 20 corrupted lines",
@@ -109,10 +134,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": f"Object-Oriented Design & Idiomatic {language}",
                     "goal": f"Write clean, modular, and maintainable {language} code adhering to SOLID principles.",
                     "topics": [
-                        {"title": f"Object Models, Inheritance & Interfaces in {language}", "minutes": 50, "depth": "intermediate"},
-                        {"title": "Memory Management & Garbage Collection Mechanics", "minutes": 60, "depth": "advanced"},
-                        {"title": "File I/O, Serialization & String Manipulation", "minutes": 45, "depth": "fundamental"},
-                        {"title": "Unit Testing & Mocking Foundations", "minutes": 50, "depth": "intermediate"},
+                        {
+                            "title": f"Object Models, Inheritance & Interfaces in {language}",
+                            "minutes": 50,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Memory Management & Garbage Collection Mechanics",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "File I/O, Serialization & String Manipulation",
+                            "minutes": 45,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": "Unit Testing & Mocking Foundations",
+                            "minutes": 50,
+                            "depth": "intermediate",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -129,7 +170,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Inject dependencies via constructor rather than hardcoded instantiation.",
                                 "Support adding new data sinks without editing transformer logic.",
                             ],
-                            "constraints": ["Maintain 100% functional parity with original script."],
+                            "constraints": [
+                                "Maintain 100% functional parity with original script."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Decoupled class directory with unit tests using mocked data sinks.",
                             "starter_code": "# Monolithic script to refactor into SOLID components",
@@ -156,7 +199,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             "sample_io": [],
                             "expected_deliverable": f"Test suite file achieving complete branch coverage of API client module in {language}.",
                             "starter_code": "# Test suite skeleton with mock fixtures",
-                            "hints": ["Use mock libraries or dependency injection to provide simulated HTTP responses."],
+                            "hints": [
+                                "Use mock libraries or dependency injection to provide simulated HTTP responses."
+                            ],
                         },
                     ],
                 },
@@ -172,10 +217,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": f"{framework_name} Core Lifecycle & Routing",
                     "goal": "Understand request-response flow, middleware pipeline, and controller patterns.",
                     "topics": [
-                        {"title": f"{framework_name} Request Dispatcher & URL Routing", "minutes": 50, "depth": "intermediate"},
-                        {"title": "Middleware Architecture & Request Interception", "minutes": 45, "depth": "intermediate"},
-                        {"title": "Request Validation & Serialization Schemes", "minutes": 55, "depth": "intermediate"},
-                        {"title": "Dependency Injection & Service Configuration", "minutes": 50, "depth": "advanced"},
+                        {
+                            "title": f"{framework_name} Request Dispatcher & URL Routing",
+                            "minutes": 50,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Middleware Architecture & Request Interception",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Request Validation & Serialization Schemes",
+                            "minutes": 55,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Dependency Injection & Service Configuration",
+                            "minutes": 50,
+                            "depth": "advanced",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -192,7 +253,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Return HTTP 429 Too Many Requests when rate threshold exceeded.",
                                 "Capture request duration in milliseconds for Prometheus metrics.",
                             ],
-                            "constraints": ["Middleware overhead must be < 2ms per request."],
+                            "constraints": [
+                                "Middleware overhead must be < 2ms per request."
+                            ],
                             "sample_io": [
                                 {
                                     "input": "11 requests within 60s (limit 10)",
@@ -202,7 +265,10 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             ],
                             "expected_deliverable": f"{framework_name} middleware module with automated test cases validating rejection and header injection.",
                             "starter_code": f"# {framework_name} Middleware Starter",
-                            "hints": ["Store token bucket timestamps in memory or Redis.", "Handle client IP extraction behind reverse proxies."],
+                            "hints": [
+                                "Store token bucket timestamps in memory or Redis.",
+                                "Handle client IP extraction behind reverse proxies.",
+                            ],
                         },
                         {
                             "title": "Strict Payload Validation & Custom Sanitizer Engine",
@@ -218,11 +284,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Validate and normalize email to lowercase.",
                                 "Sanitize HTML tags from user-provided bio string.",
                             ],
-                            "constraints": ["Produce standard error envelope on failure."],
+                            "constraints": [
+                                "Produce standard error envelope on failure."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Validation schema module and test suite.",
                             "starter_code": "# Validation schema",
-                            "hints": ["Look into framework schema options or serializers."],
+                            "hints": [
+                                "Look into framework schema options or serializers."
+                            ],
                         },
                     ],
                 },
@@ -231,10 +301,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": "REST API Standards, Authentication & Error Envelopes",
                     "goal": "Design predictable, standard-compliant RESTful APIs with secure authentication.",
                     "topics": [
-                        {"title": "REST API Architecture & HTTP Semantics", "minutes": 45, "depth": "fundamental"},
-                        {"title": "JWT Authentication, Refresh Cycles & Revocation", "minutes": 60, "depth": "advanced"},
-                        {"title": "Role-Based Access Control (RBAC) & Permissions", "minutes": 50, "depth": "intermediate"},
-                        {"title": "Centralized Error Handling & API Response Standardization", "minutes": 40, "depth": "intermediate"},
+                        {
+                            "title": "REST API Architecture & HTTP Semantics",
+                            "minutes": 45,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": "JWT Authentication, Refresh Cycles & Revocation",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "Role-Based Access Control (RBAC) & Permissions",
+                            "minutes": 50,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Centralized Error Handling & API Response Standardization",
+                            "minutes": 40,
+                            "depth": "intermediate",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -251,11 +337,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Refresh token rotated upon every use.",
                                 "Blacklisted refresh tokens stored and rejected on reuse.",
                             ],
-                            "constraints": ["Detect and revoke all tokens if a previously rotated refresh token is reused."],
+                            "constraints": [
+                                "Detect and revoke all tokens if a previously rotated refresh token is reused."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Authentication view controllers and test suite validating session invalidation.",
                             "starter_code": "# Auth views and token handlers",
-                            "hints": ["Store revoked token JTI (unique identifier) with remaining TTL."],
+                            "hints": [
+                                "Store revoked token JTI (unique identifier) with remaining TTL."
+                            ],
                         },
                         {
                             "title": "Production REST API CRUD Module with Standardized Response Envelope",
@@ -275,7 +365,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             "sample_io": [],
                             "expected_deliverable": "Controller, serializer, routing, and test suite.",
                             "starter_code": "# Resource controller",
-                            "hints": ["Use custom exception handler and response renderer."],
+                            "hints": [
+                                "Use custom exception handler and response renderer."
+                            ],
                         },
                     ],
                 },
@@ -291,10 +383,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": "Schema Design, Relationships & Normalization",
                     "goal": f"Design normalized entity structures and relational constraints in {database}.",
                     "topics": [
-                        {"title": f"{database} Table Constraints, Foreign Keys & Schema Normalization", "minutes": 55, "depth": "fundamental"},
-                        {"title": "Complex Queries, Joins, Aggregations & Window Functions", "minutes": 65, "depth": "intermediate"},
-                        {"title": "ACID Properties, Transactions & Isolation Levels", "minutes": 60, "depth": "advanced"},
-                        {"title": "ORM Integration & Overcoming the N+1 Query Problem", "minutes": 50, "depth": "intermediate"},
+                        {
+                            "title": f"{database} Table Constraints, Foreign Keys & Schema Normalization",
+                            "minutes": 55,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": "Complex Queries, Joins, Aggregations & Window Functions",
+                            "minutes": 65,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "ACID Properties, Transactions & Isolation Levels",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "ORM Integration & Overcoming the N+1 Query Problem",
+                            "minutes": 50,
+                            "depth": "intermediate",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -311,11 +419,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Use CTEs (Common Table Expressions) for readable query structure.",
                                 "Handle NULL balances gracefully using COALESCE.",
                             ],
-                            "constraints": ["Avoid correlated subqueries; ensure linear scan or indexed lookups."],
+                            "constraints": [
+                                "Avoid correlated subqueries; ensure linear scan or indexed lookups."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": f"A SQL script with schema, sample seed data, and verified {database} queries.",
                             "starter_code": f"-- {database} Schema and Query Skeleton",
-                            "hints": ["Use window functions with PARTITION BY and ORDER BY."],
+                            "hints": [
+                                "Use window functions with PARTITION BY and ORDER BY."
+                            ],
                         },
                         {
                             "title": "Diagnose and Eliminate ORM N+1 Query Bottlenecks",
@@ -331,11 +443,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Assert query count using database query log or test assertions.",
                                 "Measure and record latency reduction.",
                             ],
-                            "constraints": ["Query count must not scale with dataset size."],
+                            "constraints": [
+                                "Query count must not scale with dataset size."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Optimized ORM repository module and automated test asserting query count.",
                             "starter_code": "# Inefficient query snippet to optimize",
-                            "hints": ["Use prefetch_related for reverse foreign key relationships."],
+                            "hints": [
+                                "Use prefetch_related for reverse foreign key relationships."
+                            ],
                         },
                     ],
                 },
@@ -353,8 +469,16 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             "minutes": 60,
                             "depth": "advanced" if is_senior_tier else "intermediate",
                         },
-                        {"title": "Database Connection Pooling & Concurrency Controls", "minutes": 45, "depth": "intermediate"},
-                        {"title": "Migrations, Seeders & Backward Compatibility in Production", "minutes": 45, "depth": "fundamental"},
+                        {
+                            "title": "Database Connection Pooling & Concurrency Controls",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Migrations, Seeders & Backward Compatibility in Production",
+                            "minutes": 45,
+                            "depth": "fundamental",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -371,11 +495,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Create composite index adhering to equality-first rule (Equality, Range).",
                                 "Verify query execution drops under 10ms.",
                             ],
-                            "constraints": ["Do not create redundant indexes that degrade write throughput."],
+                            "constraints": [
+                                "Do not create redundant indexes that degrade write throughput."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "SQL migration creating index and markdown explaining execution plan before and after.",
                             "starter_code": "-- Write your CREATE INDEX statement here",
-                            "hints": ["Place equality filter columns first in composite index, then range/sort columns."],
+                            "hints": [
+                                "Place equality filter columns first in composite index, then range/sort columns."
+                            ],
                         },
                         {
                             "title": "Pessimistic vs Optimistic Locking Simulator",
@@ -391,11 +519,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Optimistic: Use version check with retry loop on conflict.",
                                 "Verify final inventory count is exactly 0 with zero oversold items.",
                             ],
-                            "constraints": ["Handle deadlock exceptions with retry backoff."],
+                            "constraints": [
+                                "Handle deadlock exceptions with retry backoff."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Backend test script running concurrent threads against test database.",
                             "starter_code": "# Concurrency test simulator",
-                            "hints": ["In optimistic locking, record updated rows; if 0, retry or abort."],
+                            "hints": [
+                                "In optimistic locking, record updated rows; if 0, retry or abort."
+                            ],
                         },
                     ],
                 },
@@ -411,10 +543,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": "Caching, Background Processing & Scalability",
                     "goal": "Apply caching strategies and decouple heavy tasks from request loops.",
                     "topics": [
-                        {"title": "Cache-Aside Patterns, TTL Strategies & Redis Invalidation", "minutes": 55, "depth": "intermediate"},
-                        {"title": "Asynchronous Task Processing & Queue Idempotency", "minutes": 60, "depth": "advanced"},
-                        {"title": "Containerization with Docker & Environment Isolation", "minutes": 50, "depth": "fundamental"},
-                        {"title": "Logging, Structured Tracing & Health Monitoring", "minutes": 45, "depth": "intermediate"},
+                        {
+                            "title": "Cache-Aside Patterns, TTL Strategies & Redis Invalidation",
+                            "minutes": 55,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Asynchronous Task Processing & Queue Idempotency",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "Containerization with Docker & Environment Isolation",
+                            "minutes": 50,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": "Logging, Structured Tracing & Health Monitoring",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -431,11 +579,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Check idempotency key before running side effects.",
                                 "Increment retry_count and transition to failed when max_retries reached.",
                             ],
-                            "constraints": ["Support multiple concurrent worker processes without double execution."],
+                            "constraints": [
+                                "Support multiple concurrent worker processes without double execution."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Worker daemon script and test suite simulating worker crashes.",
                             "starter_code": "# Worker loop starter",
-                            "hints": ["Use SKIP LOCKED to prevent workers blocking on locked rows."],
+                            "hints": [
+                                "Use SKIP LOCKED to prevent workers blocking on locked rows."
+                            ],
                         },
                         {
                             "title": "Two-Tier Distributed Cache with Stampede Protection",
@@ -455,7 +607,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             "sample_io": [],
                             "expected_deliverable": "Cache wrapper class with unit tests demonstrating stampede suppression.",
                             "starter_code": "# Cache client starter",
-                            "hints": ["Use a mutex lock on key computation so only one thread computes while others await."],
+                            "hints": [
+                                "Use a mutex lock on key computation so only one thread computes while others await."
+                            ],
                         },
                     ],
                 },
@@ -464,10 +618,26 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": "Security Hardening, Observability & Containerization",
                     "goal": "Harden backend endpoints against OWASP threats and build containerized artifacts.",
                     "topics": [
-                        {"title": "OWASP Top 10 Backend Vulnerability Mitigation", "minutes": 50, "depth": "advanced"},
-                        {"title": "Structured Logging, Metrics & Health Probes", "minutes": 45, "depth": "intermediate"},
-                        {"title": "Containerization with Multi-Stage Dockerfiles", "minutes": 45, "depth": "fundamental"},
-                        {"title": "CI/CD Automation, Linting & Secret Management", "minutes": 40, "depth": "fundamental"},
+                        {
+                            "title": "OWASP Top 10 Backend Vulnerability Mitigation",
+                            "minutes": 50,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "Structured Logging, Metrics & Health Probes",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
+                        {
+                            "title": "Containerization with Multi-Stage Dockerfiles",
+                            "minutes": 45,
+                            "depth": "fundamental",
+                        },
+                        {
+                            "title": "CI/CD Automation, Linting & Secret Management",
+                            "minutes": 40,
+                            "depth": "fundamental",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -484,11 +654,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Apply context-aware HTML escaping.",
                                 "Enforce authorization check that resource.user_id == current_user.id.",
                             ],
-                            "constraints": ["Zero regression of existing valid user workflows."],
+                            "constraints": [
+                                "Zero regression of existing valid user workflows."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Patched endpoint code and security regression test suite.",
                             "starter_code": "# Vulnerable endpoint code to patch",
-                            "hints": ["Always use ORM parameterization or bind variables."],
+                            "hints": [
+                                "Always use ORM parameterization or bind variables."
+                            ],
                         },
                         {
                             "title": "Multi-Stage Production Dockerfile Optimization",
@@ -504,11 +678,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Create and switch to non-root user.",
                                 "Include functional HEALTHCHECK instruction querying /api/v1/health/.",
                             ],
-                            "constraints": ["Final image must not contain package managers or development compilers."],
+                            "constraints": [
+                                "Final image must not contain package managers or development compilers."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "Dockerfile, .dockerignore, and verification notes.",
                             "starter_code": "# Dockerfile starter",
-                            "hints": ["Copy only the compiled dependencies into final base."],
+                            "hints": [
+                                "Copy only the compiled dependencies into final base."
+                            ],
                         },
                     ],
                 },
@@ -524,7 +702,11 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                     "title": f"{effective_role} Interview Focus & Scenario Dissection",
                     "goal": "Articulate technical trade-offs and solve realistic production debugging scenarios.",
                     "topics": [
-                        {"title": f"Core {language} & {framework_name} Interview Traps & Pitfalls", "minutes": 60, "depth": "advanced"},
+                        {
+                            "title": f"Core {language} & {framework_name} Interview Traps & Pitfalls",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
                         {
                             "title": (
                                 "Distributed System Design: Microservices, Eventual Consistency & CAP"
@@ -534,8 +716,16 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                             "minutes": 70,
                             "depth": "advanced",
                         },
-                        {"title": "Live Code Debugging: Diagnosing Deadlocks & Memory Leaks", "minutes": 60, "depth": "advanced"},
-                        {"title": "Behavioral Engineering: Trade-off Justification & Post-Mortems", "minutes": 45, "depth": "intermediate"},
+                        {
+                            "title": "Live Code Debugging: Diagnosing Deadlocks & Memory Leaks",
+                            "minutes": 60,
+                            "depth": "advanced",
+                        },
+                        {
+                            "title": "Behavioral Engineering: Trade-off Justification & Post-Mortems",
+                            "minutes": 45,
+                            "depth": "intermediate",
+                        },
                     ],
                     "practice_tasks": [
                         {
@@ -552,11 +742,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Compare Base62 counter generation vs MD5/SHA256 truncation.",
                                 "Design fallback strategy when cache layer fails.",
                             ],
-                            "constraints": ["Latency SLA: P99 < 50ms on redirect lookups."],
+                            "constraints": [
+                                "Latency SLA: P99 < 50ms on redirect lookups."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "System architecture document with schema definitions, cache topology, and failure analysis.",
                             "starter_code": "# Architectural diagram and calculation notes",
-                            "hints": ["Size cache based on 80/20 rule (20% of URLs generate 80% of traffic)."],
+                            "hints": [
+                                "Size cache based on 80/20 rule (20% of URLs generate 80% of traffic)."
+                            ],
                         },
                         {
                             "title": "Portfolio Project: Production-Grade Microservice Prototype",
@@ -572,11 +766,15 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
                                 "Database migrations with at least 3 relational entities.",
                                 "Automated unit and integration test suite passing with >80% coverage.",
                             ],
-                            "constraints": ["Fully deployable to any cloud container platform."],
+                            "constraints": [
+                                "Fully deployable to any cloud container platform."
+                            ],
                             "sample_io": [],
                             "expected_deliverable": "GitHub-ready repository structure with README and deployment guide.",
                             "starter_code": "# Portfolio project scaffold",
-                            "hints": ["Focus on code structure, clean commits, and comprehensive documentation."],
+                            "hints": [
+                                "Focus on code structure, clean commits, and comprehensive documentation."
+                            ],
                         },
                     ],
                 },
@@ -587,7 +785,9 @@ def _get_phase_templates(role: str, language: str, framework: str, database: str
     return phases
 
 
-def _seed_topic_content_if_missing(topic_slug: str, title: str, language: str, framework: str):
+def _seed_topic_content_if_missing(
+    topic_slug: str, title: str, language: str, framework: str
+):
     if TopicContent.objects.filter(slug=topic_slug).exists():
         return
 
@@ -667,9 +867,11 @@ def generate_student_roadmap(user, data: dict, replace: bool = False) -> Roadmap
 
     existing_active = Roadmap.objects.filter(user=user, is_active=True).first()
     if existing_active and not replace:
-        raise ValidationError({
-            "detail": "An active roadmap already exists for your account. Use the replacement workflow to create a new one."
-        })
+        raise ValidationError(
+            {
+                "detail": "An active roadmap already exists for your account. Use the replacement workflow to create a new one."
+            }
+        )
 
     # Create new Roadmap instance
     new_roadmap = Roadmap.objects.create(
@@ -751,12 +953,18 @@ def generate_student_roadmap(user, data: dict, replace: bool = False) -> Roadmap
                 )
 
                 # Seed content in apps.content if not already seeded
-                _seed_topic_content_if_missing(slug, t_data["title"], language, framework)
+                _seed_topic_content_if_missing(
+                    slug, t_data["title"], language, framework
+                )
 
             # Generate connected hands-on practice tasks for this week
             for task_data in w_data.get("practice_tasks", []):
                 related_idx = task_data.get("related_topic_idx", 0)
-                related_topic = created_topics[related_idx] if created_topics and related_idx < len(created_topics) else (created_topics[0] if created_topics else None)
+                related_topic = (
+                    created_topics[related_idx]
+                    if created_topics and related_idx < len(created_topics)
+                    else (created_topics[0] if created_topics else None)
+                )
 
                 task_obj = RoadmapPracticeTask.objects.create(
                     week=week,
@@ -766,12 +974,19 @@ def generate_student_roadmap(user, data: dict, replace: bool = False) -> Roadmap
                     difficulty=task_data.get("difficulty", "Medium"),
                     estimated_minutes=task_data.get("estimated_minutes", 45),
                     order=task_order_counter,
-                    objective=task_data.get("objective", f"Complete hands-on exercise: {task_data['title']}"),
-                    problem_statement=task_data.get("problem_statement", task_data.get("objective", "")),
+                    objective=task_data.get(
+                        "objective", f"Complete hands-on exercise: {task_data['title']}"
+                    ),
+                    problem_statement=task_data.get(
+                        "problem_statement", task_data.get("objective", "")
+                    ),
                     requirements=task_data.get("requirements", []),
                     constraints=task_data.get("constraints", []),
                     sample_io=task_data.get("sample_io", []),
-                    expected_deliverable=task_data.get("expected_deliverable", "Working implementation with verified tests"),
+                    expected_deliverable=task_data.get(
+                        "expected_deliverable",
+                        "Working implementation with verified tests",
+                    ),
                     starter_code=task_data.get("starter_code", ""),
                     hints=task_data.get("hints", []),
                 )
@@ -791,4 +1006,15 @@ def generate_student_roadmap(user, data: dict, replace: bool = False) -> Roadmap
 
     new_roadmap.status = Roadmap.STATUS_READY
     new_roadmap.save(update_fields=["status"])
+
+    # Prepare weekly quiz assignments for the new roadmap
+    try:
+        from apps.quizzes.services.quiz_service import (
+            prepare_all_quiz_assignments_for_roadmap,
+        )
+
+        prepare_all_quiz_assignments_for_roadmap(new_roadmap)
+    except Exception:
+        pass
+
     return new_roadmap
