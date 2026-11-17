@@ -144,6 +144,18 @@ export default function Navbar() {
                             <Bot className="w-3.5 h-3.5 mr-2 text-emerald-600 shrink-0" />
                             <span>Interview Admin</span>
                           </Link>
+                          <Link
+                            to="/admin/experiences"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/experiences'
+                                ? 'bg-amber-50 text-amber-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <Shield className="w-3.5 h-3.5 mr-2 text-amber-600 shrink-0" />
+                            <span>Experience Moderation</span>
+                          </Link>
                         </div>
                       )}
                     </div>
@@ -253,6 +265,14 @@ export default function Navbar() {
                     >
                       <Bot className="w-5 h-5 mr-3 text-emerald-600" />
                       Interview Practice Admin
+                    </Link>
+                    <Link
+                      to="/admin/experiences"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-amber-700 hover:bg-amber-50"
+                    >
+                      <Shield className="w-5 h-5 mr-3 text-amber-600" />
+                      Experience Moderation
                     </Link>
                   </>
                 )}

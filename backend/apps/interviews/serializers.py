@@ -40,7 +40,9 @@ class InterviewSessionCreateSerializer(serializers.Serializer):
 
 
 class InterviewTurnInputSerializer(serializers.Serializer):
-    speech_text = serializers.CharField(max_length=5000, required=True, allow_blank=False)
+    speech_text = serializers.CharField(
+        max_length=5000, required=True, allow_blank=False
+    )
 
 
 class InterviewTurnResponseSerializer(serializers.Serializer):
@@ -116,7 +118,9 @@ class InterviewHistoryItemSerializer(serializers.ModelSerializer):
             "rounds_summary",
         ]
 
-    @extend_schema_field(serializers.ListField(child=serializers.DictField(), allow_null=True))
+    @extend_schema_field(
+        serializers.ListField(child=serializers.DictField(), allow_null=True)
+    )
     def get_rounds_summary(self, obj):
         if obj.interview_type != InterviewSession.TYPE_MIXED:
             return None

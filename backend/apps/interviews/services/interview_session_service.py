@@ -26,7 +26,9 @@ def check_interview_eligibility(user) -> dict[str, Any]:
     Cooling periods are completely independent by type.
     """
     now = timezone.now()
-    cooling_records = InterviewCoolingPeriod.objects.filter(user=user, expires_at__gt=now)
+    cooling_records = InterviewCoolingPeriod.objects.filter(
+        user=user, expires_at__gt=now
+    )
     cooling_map = {rec.interview_type: rec for rec in cooling_records}
 
     def _type_status(itype: str) -> dict[str, Any]:
@@ -48,7 +50,11 @@ def check_interview_eligibility(user) -> dict[str, Any]:
     # Find active in-progress session if any
     active_session = (
         InterviewSession.objects.filter(
-            student=user, status__in=[InterviewSession.STATUS_IN_PROGRESS, InterviewSession.STATUS_CREATED]
+            student=user,
+            status__in=[
+                InterviewSession.STATUS_IN_PROGRESS,
+                InterviewSession.STATUS_CREATED,
+            ],
         )
         .order_by("-created_at")
         .first()
@@ -91,29 +97,23 @@ def get_prepopulated_setup_data(user) -> dict[str, Any]:
     ]
 
     role = (
-        (active_roadmap.role if active_roadmap else (profile.target_role if profile else None))
-        or "Backend Developer"
-    )
+        active_roadmap.role
+        if active_roadmap
+        else (profile.target_role if profile else None)
+    ) or "Backend Developer"
     experience_level = (
-        (active_roadmap.experience_level if active_roadmap else (profile.experience_level if profile else None))
-        or "Fresher"
-    )
+        active_roadmap.experience_level
+        if active_roadmap
+        else (profile.experience_level if profile else None)
+    ) or "Fresher"
     salary_range = (
-        (active_roadmap.target_salary if active_roadmap else (profile.target_salary if profile else None))
-        or "₹5–7 LPA"
-    )
-    language = (
-        (active_roadmap.language if active_roadmap else "")
-        or "Python"
-    )
-    framework = (
-        (active_roadmap.framework if active_roadmap else "")
-        or "Django"
-    )
-    database = (
-        (active_roadmap.database if active_roadmap else "")
-        or "PostgreSQL"
-    )
+        active_roadmap.target_salary
+        if active_roadmap
+        else (profile.target_salary if profile else None)
+    ) or "₹5–7 LPA"
+    language = (active_roadmap.language if active_roadmap else "") or "Python"
+    framework = (active_roadmap.framework if active_roadmap else "") or "Django"
+    database = (active_roadmap.database if active_roadmap else "") or "PostgreSQL"
 
     return {
         "has_active_roadmap": active_roadmap is not None,
@@ -175,7 +175,9 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
     resume_ver_num = data.get("resume_version_reference")
     resume_snapshot = {}
     if resume_ver_num:
-        resume_record = UserResumeVersion.objects.filter(user=user, version_number=resume_ver_num).first()
+        resume_record = UserResumeVersion.objects.filter(
+            user=user, version_number=resume_ver_num
+        ).first()
         if resume_record:
             resume_snapshot = {
                 "version_number": resume_record.version_number,
@@ -188,7 +190,9 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
         # Check if user already has an in-progress session of same type
         existing = (
             InterviewSession.objects.filter(
-                student=user, interview_type=interview_type, status=InterviewSession.STATUS_IN_PROGRESS
+                student=user,
+                interview_type=interview_type,
+                status=InterviewSession.STATUS_IN_PROGRESS,
             )
             .order_by("-created_at")
             .first()
@@ -214,7 +218,10 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
 
         ai_provider = get_interview_ai_provider()
 
-        if interview_type in [InterviewSession.TYPE_TECHNICAL, InterviewSession.TYPE_HR]:
+        if interview_type in [
+            InterviewSession.TYPE_TECHNICAL,
+            InterviewSession.TYPE_HR,
+        ]:
             questions = ai_provider.generate_questions(
                 interview_type=interview_type,
                 role=role,
@@ -225,7 +232,11 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
                 database=database,
                 resume_snapshot=resume_snapshot,
             )
-            first_q = questions[0]["question_text"] if questions else "Welcome. Please introduce your technical background."
+            first_q = (
+                questions[0]["question_text"]
+                if questions
+                else "Welcome. Please introduce your technical background."
+            )
             session.ai_conversation_state = {
                 "questions": questions,
                 "current_question_index": 0,
@@ -247,53 +258,71 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
 
             if is_fresher:
                 # Round 1: Cognitive Aptitude Screening (reusing Phase 5 engine)
-                round_definitions.append({
-                    "round_number": 1,
-                    "round_type": InterviewRound.ROUND_APTITUDE,
-                    "round_name": "Round 1: Cognitive Aptitude Screening",
-                    "round_description": "Standardized cognitive foundation test covering Quantitative Aptitude, Logical Reasoning, and Verbal Ability (60% qualifying threshold).",
-                })
-                round_definitions.append({
-                    "round_number": 2,
-                    "round_type": InterviewRound.ROUND_TECHNICAL_1,
-                    "round_name": "Round 2: Core Technical & Problem Solving",
-                    "round_description": f"Core {role} technical concepts, language runtime, and fundamental algorithmic trade-offs.",
-                })
-                round_definitions.append({
-                    "round_number": 3,
-                    "round_type": InterviewRound.ROUND_TECHNICAL_2,
-                    "round_name": "Round 3: Advanced Architecture & Systems",
-                    "round_description": f"Production scenarios, database concurrency, and system design tailored to {salary_range}.",
-                })
-                round_definitions.append({
-                    "round_number": 4,
-                    "round_type": InterviewRound.ROUND_HR,
-                    "round_name": "Round 4: Behavioral & Culture Fit",
-                    "round_description": "Professional communication, team collaboration, conflict handling, and career motivation.",
-                })
+                round_definitions.append(
+                    {
+                        "round_number": 1,
+                        "round_type": InterviewRound.ROUND_APTITUDE,
+                        "round_name": "Round 1: Cognitive Aptitude Screening",
+                        "round_description": "Standardized cognitive foundation test covering Quantitative Aptitude, Logical Reasoning, and Verbal Ability (60% qualifying threshold).",
+                    }
+                )
+                round_definitions.append(
+                    {
+                        "round_number": 2,
+                        "round_type": InterviewRound.ROUND_TECHNICAL_1,
+                        "round_name": "Round 2: Core Technical & Problem Solving",
+                        "round_description": f"Core {role} technical concepts, language runtime, and fundamental algorithmic trade-offs.",
+                    }
+                )
+                round_definitions.append(
+                    {
+                        "round_number": 3,
+                        "round_type": InterviewRound.ROUND_TECHNICAL_2,
+                        "round_name": "Round 3: Advanced Architecture & Systems",
+                        "round_description": f"Production scenarios, database concurrency, and system design tailored to {salary_range}.",
+                    }
+                )
+                round_definitions.append(
+                    {
+                        "round_number": 4,
+                        "round_type": InterviewRound.ROUND_HR,
+                        "round_name": "Round 4: Behavioral & Culture Fit",
+                        "round_description": "Professional communication, team collaboration, conflict handling, and career motivation.",
+                    }
+                )
             else:
                 # Experienced candidates skip aptitude
-                round_definitions.append({
-                    "round_number": 1,
-                    "round_type": InterviewRound.ROUND_TECHNICAL_1,
-                    "round_name": "Round 1: Core Technical & Architecture",
-                    "round_description": f"Core engineering depth, concurrency, and architecture patterns for {role}.",
-                })
-                round_definitions.append({
-                    "round_number": 2,
-                    "round_type": InterviewRound.ROUND_TECHNICAL_2,
-                    "round_name": "Round 2: System Scalability & Production Scenarios",
-                    "round_description": f"Distributed systems, debugging live incidents, and trade-offs expected for {salary_range}.",
-                })
-                round_definitions.append({
-                    "round_number": 3,
-                    "round_type": InterviewRound.ROUND_HR,
-                    "round_name": "Round 3: Behavioral & Executive Readiness",
-                    "round_description": "Leadership, cross-functional collaboration, mentorship, and career trajectory.",
-                })
+                round_definitions.append(
+                    {
+                        "round_number": 1,
+                        "round_type": InterviewRound.ROUND_TECHNICAL_1,
+                        "round_name": "Round 1: Core Technical & Architecture",
+                        "round_description": f"Core engineering depth, concurrency, and architecture patterns for {role}.",
+                    }
+                )
+                round_definitions.append(
+                    {
+                        "round_number": 2,
+                        "round_type": InterviewRound.ROUND_TECHNICAL_2,
+                        "round_name": "Round 2: System Scalability & Production Scenarios",
+                        "round_description": f"Distributed systems, debugging live incidents, and trade-offs expected for {salary_range}.",
+                    }
+                )
+                round_definitions.append(
+                    {
+                        "round_number": 3,
+                        "round_type": InterviewRound.ROUND_HR,
+                        "round_name": "Round 3: Behavioral & Executive Readiness",
+                        "round_description": "Leadership, cross-functional collaboration, mentorship, and career trajectory.",
+                    }
+                )
 
             for idx, r_def in enumerate(round_definitions):
-                r_status = InterviewRound.STATUS_IN_PROGRESS if idx == 0 else InterviewRound.STATUS_PENDING
+                r_status = (
+                    InterviewRound.STATUS_IN_PROGRESS
+                    if idx == 0
+                    else InterviewRound.STATUS_PENDING
+                )
                 apt_sess = None
 
                 # For Round 1 Aptitude, auto-instantiate an AptitudeSession (mixed_stage)
@@ -330,7 +359,11 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
                         resume_snapshot=resume_snapshot,
                         round_type="technical_1",
                     )
-                    first_text = q_list[0]["question_text"] if q_list else "Let's begin the technical assessment."
+                    first_text = (
+                        q_list[0]["question_text"]
+                        if q_list
+                        else "Let's begin the technical assessment."
+                    )
                     ir.ai_conversation_state = {
                         "questions": q_list,
                         "current_question_index": 0,
@@ -348,7 +381,9 @@ def create_interview_session(user, data: dict[str, Any]) -> InterviewSession:
     return session
 
 
-def process_interview_turn(session_id: str, user, student_speech: str) -> dict[str, Any]:
+def process_interview_turn(
+    session_id: str, user, student_speech: str
+) -> dict[str, Any]:
     """
     Executes a real-time conversational voice turn:
     records student speech, analyzes intent, handles follow-ups/clarifications/I-don't-knows,
@@ -364,17 +399,29 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
             raise NotFound({"detail": "Interview session not found."})
 
         if session.status != InterviewSession.STATUS_IN_PROGRESS:
-            raise ValidationError({"detail": f"Session is not active (current status: {session.status})."})
+            raise ValidationError(
+                {"detail": f"Session is not active (current status: {session.status})."}
+            )
 
         ai_provider = get_interview_ai_provider()
 
         # Handle Mixed Voice Round vs Standalone Session
         if session.interview_type == InterviewSession.TYPE_MIXED:
-            current_round = session.rounds.filter(status=InterviewRound.STATUS_IN_PROGRESS).first()
+            current_round = session.rounds.filter(
+                status=InterviewRound.STATUS_IN_PROGRESS
+            ).first()
             if not current_round:
-                raise ValidationError({"detail": "No active round found for this mixed interview session."})
+                raise ValidationError(
+                    {
+                        "detail": "No active round found for this mixed interview session."
+                    }
+                )
             if current_round.round_type == InterviewRound.ROUND_APTITUDE:
-                raise ValidationError({"detail": "Current round is Aptitude. Voice turns are disabled for aptitude stages."})
+                raise ValidationError(
+                    {
+                        "detail": "Current round is Aptitude. Voice turns are disabled for aptitude stages."
+                    }
+                )
 
             conv_state = current_round.ai_conversation_state or {}
             questions = conv_state.get("questions", [])
@@ -382,19 +429,25 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
             turns = conv_state.get("turns", [])
 
             # Record student turn
-            turns.append({
-                "role": "student",
-                "content": student_speech,
-                "question_index": current_idx,
-                "timestamp": timezone.now().isoformat(),
-            })
+            turns.append(
+                {
+                    "role": "student",
+                    "content": student_speech,
+                    "question_index": current_idx,
+                    "timestamp": timezone.now().isoformat(),
+                }
+            )
 
             res = ai_provider.process_turn(
                 interview_type=session.interview_type,
                 role=session.role,
                 experience_level=session.experience_level,
                 salary_range=session.salary_range,
-                tech_stack={"language": session.language, "framework": session.framework, "database": session.database},
+                tech_stack={
+                    "language": session.language,
+                    "framework": session.framework,
+                    "database": session.database,
+                },
                 questions=questions,
                 current_question_index=current_idx,
                 student_speech=student_speech,
@@ -403,13 +456,15 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
             )
 
             # Record interviewer turn
-            turns.append({
-                "role": "interviewer",
-                "content": res["interviewer_speech"],
-                "question_index": res["next_question_index"],
-                "status": res["status"],
-                "timestamp": timezone.now().isoformat(),
-            })
+            turns.append(
+                {
+                    "role": "interviewer",
+                    "content": res["interviewer_speech"],
+                    "question_index": res["next_question_index"],
+                    "status": res["status"],
+                    "timestamp": timezone.now().isoformat(),
+                }
+            )
 
             conv_state["turns"] = turns
             conv_state["current_question_index"] = res["next_question_index"]
@@ -418,18 +473,31 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
             if res.get("is_completed"):
                 # Round questions finished, trigger round evaluation & transition
                 eval_res = ai_provider.evaluate_session(
-                    interview_type="technical" if "technical" in current_round.round_type else "hr",
+                    interview_type="technical"
+                    if "technical" in current_round.round_type
+                    else "hr",
                     role=session.role,
                     experience_level=session.experience_level,
                     salary_range=session.salary_range,
-                    tech_stack={"language": session.language, "framework": session.framework, "database": session.database},
+                    tech_stack={
+                        "language": session.language,
+                        "framework": session.framework,
+                        "database": session.database,
+                    },
                     questions=questions,
                     turns_history=turns,
                     resume_snapshot=session.resume_snapshot,
                 )
-                _handle_round_result(session, current_round, eval_res["final_result"], eval_res["feedback"])
+                _handle_round_result(
+                    session,
+                    current_round,
+                    eval_res["final_result"],
+                    eval_res["feedback"],
+                )
             else:
-                current_round.save(update_fields=["ai_conversation_state", "updated_at"])
+                current_round.save(
+                    update_fields=["ai_conversation_state", "updated_at"]
+                )
 
             return {
                 "session_id": str(session.id),
@@ -448,19 +516,25 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
         current_idx = conv_state.get("current_question_index", 0)
         turns = conv_state.get("turns", [])
 
-        turns.append({
-            "role": "student",
-            "content": student_speech,
-            "question_index": current_idx,
-            "timestamp": timezone.now().isoformat(),
-        })
+        turns.append(
+            {
+                "role": "student",
+                "content": student_speech,
+                "question_index": current_idx,
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
 
         res = ai_provider.process_turn(
             interview_type=session.interview_type,
             role=session.role,
             experience_level=session.experience_level,
             salary_range=session.salary_range,
-            tech_stack={"language": session.language, "framework": session.framework, "database": session.database},
+            tech_stack={
+                "language": session.language,
+                "framework": session.framework,
+                "database": session.database,
+            },
             questions=questions,
             current_question_index=current_idx,
             student_speech=student_speech,
@@ -468,13 +542,15 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
             resume_snapshot=session.resume_snapshot,
         )
 
-        turns.append({
-            "role": "interviewer",
-            "content": res["interviewer_speech"],
-            "question_index": res["next_question_index"],
-            "status": res["status"],
-            "timestamp": timezone.now().isoformat(),
-        })
+        turns.append(
+            {
+                "role": "interviewer",
+                "content": res["interviewer_speech"],
+                "question_index": res["next_question_index"],
+                "status": res["status"],
+                "timestamp": timezone.now().isoformat(),
+            }
+        )
 
         conv_state["turns"] = turns
         conv_state["current_question_index"] = res["next_question_index"]
@@ -495,7 +571,9 @@ def process_interview_turn(session_id: str, user, student_speech: str) -> dict[s
         }
 
 
-def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, result: str, feedback: dict) -> None:
+def _handle_round_result(
+    session: InterviewSession, round_obj: InterviewRound, result: str, feedback: dict
+) -> None:
     """
     Handles sequential round results inside Mixed recruitment:
     - If passed: unlocks next round. If all rounds passed, session passes!
@@ -505,18 +583,26 @@ def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, r
     round_obj.result = result
     round_obj.feedback = feedback
     round_obj.completed_at = timezone.now()
-    round_obj.save(update_fields=["status", "result", "feedback", "completed_at", "updated_at"])
+    round_obj.save(
+        update_fields=["status", "result", "feedback", "completed_at", "updated_at"]
+    )
 
     if result == InterviewRound.RESULT_PASS:
         # Check if next round exists
-        next_round = session.rounds.filter(round_number=round_obj.round_number + 1).first()
+        next_round = session.rounds.filter(
+            round_number=round_obj.round_number + 1
+        ).first()
         if next_round:
             next_round.status = InterviewRound.STATUS_IN_PROGRESS
             next_round.started_at = timezone.now()
 
             # Initialize questions for next voice round
             ai_provider = get_interview_ai_provider()
-            q_type = "hr" if next_round.round_type == InterviewRound.ROUND_HR else "technical"
+            q_type = (
+                "hr"
+                if next_round.round_type == InterviewRound.ROUND_HR
+                else "technical"
+            )
             q_list = ai_provider.generate_questions(
                 interview_type=q_type,
                 role=session.role,
@@ -528,7 +614,9 @@ def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, r
                 resume_snapshot=session.resume_snapshot,
                 round_type=next_round.round_type,
             )
-            first_text = q_list[0]["question_text"] if q_list else "Welcome to this round."
+            first_text = (
+                q_list[0]["question_text"] if q_list else "Welcome to this round."
+            )
             next_round.ai_conversation_state = {
                 "questions": q_list,
                 "current_question_index": 0,
@@ -541,7 +629,14 @@ def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, r
                     }
                 ],
             }
-            next_round.save(update_fields=["status", "started_at", "ai_conversation_state", "updated_at"])
+            next_round.save(
+                update_fields=[
+                    "status",
+                    "started_at",
+                    "ai_conversation_state",
+                    "updated_at",
+                ]
+            )
         else:
             # All rounds successfully passed!
             session.status = InterviewSession.STATUS_COMPLETED
@@ -553,7 +648,16 @@ def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, r
                 "summary": f"Outstanding performance! Candidate successfully cleared all rounds of the {session.role} Mixed Recruitment Process for the {session.salary_range} tier.",
                 "rounds_completed": session.rounds.count(),
             }
-            session.save(update_fields=["status", "final_result", "evaluation_status", "completed_at", "overall_feedback", "updated_at"])
+            session.save(
+                update_fields=[
+                    "status",
+                    "final_result",
+                    "evaluation_status",
+                    "completed_at",
+                    "overall_feedback",
+                    "updated_at",
+                ]
+            )
     else:
         # Round FAILED: entire Mixed process terminates immediately as FAIL
         session.status = InterviewSession.STATUS_COMPLETED
@@ -585,7 +689,17 @@ def _handle_round_result(session: InterviewSession, round_obj: InterviewRound, r
             "failed_at_round": round_obj.round_name,
             "round_feedback": feedback,
         }
-        session.save(update_fields=["status", "final_result", "evaluation_status", "completed_at", "cooling_period_until", "overall_feedback", "updated_at"])
+        session.save(
+            update_fields=[
+                "status",
+                "final_result",
+                "evaluation_status",
+                "completed_at",
+                "cooling_period_until",
+                "overall_feedback",
+                "updated_at",
+            ]
+        )
 
 
 def complete_mixed_aptitude_stage(session_id: str, user) -> dict[str, Any]:
@@ -603,14 +717,17 @@ def complete_mixed_aptitude_stage(session_id: str, user) -> dict[str, Any]:
             raise NotFound({"detail": "Mixed interview session not found."})
 
         round_obj = session.rounds.filter(
-            round_type=InterviewRound.ROUND_APTITUDE, status=InterviewRound.STATUS_IN_PROGRESS
+            round_type=InterviewRound.ROUND_APTITUDE,
+            status=InterviewRound.STATUS_IN_PROGRESS,
         ).first()
         if not round_obj:
             raise ValidationError({"detail": "No active Aptitude round found."})
 
         apt_sess = round_obj.aptitude_session
         if not apt_sess or apt_sess.status != AptitudeSession.STATUS_SUBMITTED:
-            raise ValidationError({"detail": "Aptitude stage has not been submitted yet."})
+            raise ValidationError(
+                {"detail": "Aptitude stage has not been submitted yet."}
+            )
 
         cfg = AptitudeTestConfig.get_active_config()
         cutoff = cfg.mixed_qualifying_cutoff or 60.0
@@ -627,13 +744,27 @@ def complete_mixed_aptitude_stage(session_id: str, user) -> dict[str, Any]:
             "technical_knowledge": "Evaluated Quantitative Aptitude, Logical Reasoning, and Verbal Ability fundamentals.",
             "communication": "N/A for objective cognitive screening.",
             "problem_solving": f"Accuracy rate: {round((apt_sess.correct_count / max(1, apt_sess.total_questions)) * 100, 1)}%.",
-            "key_weaknesses": ["Speed math & time allocation" if not is_pass else "None critical in cognitive screening"],
-            "areas_for_improvement": ["Timed practice across weaker aptitude sections" if not is_pass else "Maintain speed"],
-            "improvement_suggestions": ["Focus on elimination strategies and mental arithmetic shortcuts."],
-            "better_approaches": ["Skip difficult questions initially to secure all easy marks within the 60-minute window."],
+            "key_weaknesses": [
+                "Speed math & time allocation"
+                if not is_pass
+                else "None critical in cognitive screening"
+            ],
+            "areas_for_improvement": [
+                "Timed practice across weaker aptitude sections"
+                if not is_pass
+                else "Maintain speed"
+            ],
+            "improvement_suggestions": [
+                "Focus on elimination strategies and mental arithmetic shortcuts."
+            ],
+            "better_approaches": [
+                "Skip difficult questions initially to secure all easy marks within the 60-minute window."
+            ],
         }
 
-        result_str = InterviewRound.RESULT_PASS if is_pass else InterviewRound.RESULT_FAIL
+        result_str = (
+            InterviewRound.RESULT_PASS if is_pass else InterviewRound.RESULT_FAIL
+        )
         _handle_round_result(session, round_obj, result_str, feedback)
 
         return {
@@ -663,7 +794,11 @@ def complete_and_evaluate_session(session: InterviewSession) -> InterviewSession
         role=session.role,
         experience_level=session.experience_level,
         salary_range=session.salary_range,
-        tech_stack={"language": session.language, "framework": session.framework, "database": session.database},
+        tech_stack={
+            "language": session.language,
+            "framework": session.framework,
+            "database": session.database,
+        },
         questions=questions,
         turns_history=turns,
         resume_snapshot=session.resume_snapshot,
@@ -680,7 +815,11 @@ def complete_and_evaluate_session(session: InterviewSession) -> InterviewSession
 
     if final_result == InterviewSession.RESULT_FAIL:
         cfg = InterviewConfig.get_active_config()
-        cooling_hours = cfg.technical_cooling_hours if session.interview_type == InterviewSession.TYPE_TECHNICAL else cfg.hr_cooling_hours
+        cooling_hours = (
+            cfg.technical_cooling_hours
+            if session.interview_type == InterviewSession.TYPE_TECHNICAL
+            else cfg.hr_cooling_hours
+        )
         expires = timezone.now() + timedelta(hours=cooling_hours or 24)
         session.cooling_period_until = expires
 
@@ -715,12 +854,16 @@ def abandon_interview_session(session_id: str, user) -> InterviewSession:
             raise NotFound({"detail": "Interview session not found."})
 
         if session.status != InterviewSession.STATUS_IN_PROGRESS:
-            raise ValidationError({"detail": f"Cannot abandon session with status '{session.status}'."})
+            raise ValidationError(
+                {"detail": f"Cannot abandon session with status '{session.status}'."}
+            )
 
         session.status = InterviewSession.STATUS_ABANDONED
         session.final_result = InterviewSession.RESULT_ABANDONED
         session.completed_at = timezone.now()
-        session.save(update_fields=["status", "final_result", "completed_at", "updated_at"])
+        session.save(
+            update_fields=["status", "final_result", "completed_at", "updated_at"]
+        )
 
         # Also abandon active rounds if Mixed
         session.rounds.filter(status=InterviewRound.STATUS_IN_PROGRESS).update(
@@ -738,19 +881,27 @@ def get_session_detail_dict(session: InterviewSession) -> dict[str, Any]:
     rounds_data = []
     if session.interview_type == InterviewSession.TYPE_MIXED:
         for r in session.rounds.all().order_by("round_number"):
-            rounds_data.append({
-                "round_id": str(r.id),
-                "round_number": r.round_number,
-                "round_type": r.round_type,
-                "round_name": r.round_name,
-                "round_description": r.round_description,
-                "status": r.status,
-                "result": r.result,
-                "aptitude_session_id": str(r.aptitude_session_id) if r.aptitude_session_id else None,
-                "feedback": r.feedback if r.status == InterviewRound.STATUS_COMPLETED else {},
-                "started_at": r.started_at.isoformat() if r.started_at else None,
-                "completed_at": r.completed_at.isoformat() if r.completed_at else None,
-            })
+            rounds_data.append(
+                {
+                    "round_id": str(r.id),
+                    "round_number": r.round_number,
+                    "round_type": r.round_type,
+                    "round_name": r.round_name,
+                    "round_description": r.round_description,
+                    "status": r.status,
+                    "result": r.result,
+                    "aptitude_session_id": str(r.aptitude_session_id)
+                    if r.aptitude_session_id
+                    else None,
+                    "feedback": r.feedback
+                    if r.status == InterviewRound.STATUS_COMPLETED
+                    else {},
+                    "started_at": r.started_at.isoformat() if r.started_at else None,
+                    "completed_at": r.completed_at.isoformat()
+                    if r.completed_at
+                    else None,
+                }
+            )
 
     conv = session.ai_conversation_state or {}
     questions = conv.get("questions", [])
@@ -760,7 +911,9 @@ def get_session_detail_dict(session: InterviewSession) -> dict[str, Any]:
     # Active round state for Mixed
     current_round_obj = None
     if session.interview_type == InterviewSession.TYPE_MIXED:
-        current_round_obj = session.rounds.filter(status=InterviewRound.STATUS_IN_PROGRESS).first()
+        current_round_obj = session.rounds.filter(
+            status=InterviewRound.STATUS_IN_PROGRESS
+        ).first()
         if current_round_obj:
             r_conv = current_round_obj.ai_conversation_state or {}
             questions = r_conv.get("questions", [])
@@ -770,12 +923,14 @@ def get_session_detail_dict(session: InterviewSession) -> dict[str, Any]:
     # Clean turns to avoid leaking sensitive internal keys
     sanitized_turns = []
     for t in turns:
-        sanitized_turns.append({
-            "role": t.get("role", "interviewer"),
-            "content": t.get("content", ""),
-            "timestamp": t.get("timestamp"),
-            "status": t.get("status"),
-        })
+        sanitized_turns.append(
+            {
+                "role": t.get("role", "interviewer"),
+                "content": t.get("content", ""),
+                "timestamp": t.get("timestamp"),
+                "status": t.get("status"),
+            }
+        )
 
     return {
         "session_id": str(session.id),
@@ -790,10 +945,16 @@ def get_session_detail_dict(session: InterviewSession) -> dict[str, Any]:
         "final_result": session.final_result,
         "evaluation_status": session.evaluation_status,
         "resume_version": session.resume_version_reference,
-        "resume_name": session.resume_snapshot.get("original_filename") if session.resume_snapshot else None,
-        "cooling_period_until": session.cooling_period_until.isoformat() if session.cooling_period_until else None,
+        "resume_name": session.resume_snapshot.get("original_filename")
+        if session.resume_snapshot
+        else None,
+        "cooling_period_until": session.cooling_period_until.isoformat()
+        if session.cooling_period_until
+        else None,
         "started_at": session.started_at.isoformat(),
-        "completed_at": session.completed_at.isoformat() if session.completed_at else None,
+        "completed_at": session.completed_at.isoformat()
+        if session.completed_at
+        else None,
         "current_question_index": current_q_idx,
         "total_questions": len(questions),
         "turns": sanitized_turns,
@@ -803,9 +964,13 @@ def get_session_detail_dict(session: InterviewSession) -> dict[str, Any]:
             "round_number": current_round_obj.round_number,
             "round_type": current_round_obj.round_type,
             "round_name": current_round_obj.round_name,
-            "aptitude_session_id": str(current_round_obj.aptitude_session_id) if current_round_obj.aptitude_session_id else None,
+            "aptitude_session_id": str(current_round_obj.aptitude_session_id)
+            if current_round_obj.aptitude_session_id
+            else None,
         }
         if current_round_obj
         else None,
-        "overall_feedback": session.overall_feedback if session.status == InterviewSession.STATUS_COMPLETED else {},
+        "overall_feedback": session.overall_feedback
+        if session.status == InterviewSession.STATUS_COMPLETED
+        else {},
     }

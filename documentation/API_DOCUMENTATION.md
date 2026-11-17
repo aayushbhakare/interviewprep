@@ -160,7 +160,30 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
+## Implemented Share Interview Experience Endpoints (`apps/experiences`) (Phase 7 Verified)
+
+### Public Discovery & Student Endpoints (`/api/v1/experiences/`)
+- `GET /api/v1/experiences/` — Public feed of published interview experiences. Supports keyword search (`search`), multi-faceted filtering (`role`, `company`, `salary_range`, `experience_level`, `outcome`, `mode`, `difficulty`, `year`), sorting (`ordering=recent` or `ordering=helpful`), and pagination.
+- `GET /api/v1/experiences/taxonomy/` — Retrieve distinct filter criteria (companies, roles, salary tiers, experience levels, outcomes, modes, difficulties).
+- `GET /api/v1/experiences/{id}/` — Retrieve full experience details with chronological recruitment stages, questions, follow-ups, and student responses. Anonymizes author if `is_anonymous` is true.
+- `GET /api/v1/experiences/my/` — List authenticated candidate's own submissions with tab filter support (`draft`, `pending_review`, `published`, `rejected`).
+- `POST /api/v1/experiences/drafts/` — Create a new private draft submission.
+- `PUT /api/v1/experiences/drafts/{id}/` — Update an existing private draft submission.
+- `POST /api/v1/experiences/{id}/publish/` — Submit experience for publication. Runs automated risk-based policy moderation. Low-risk auto-publishes; high-risk queues for review; structural errors reject.
+- `PUT /api/v1/experiences/{id}/edit-published/` — Submit updates to an already-published experience. Keeps approved live version visible on discovery while moderation reviews the new revision.
+- `DELETE /api/v1/experiences/{id}/delete/` — Delete candidate's own experience and safely deactivates extracted questions in the Learn module.
+- `POST /api/v1/experiences/{id}/helpful/` — Toggle helpful vote on a published experience.
+- `POST /api/v1/experiences/{id}/report/` — Submit a community issue report against an experience across 7 reason categories.
+
+### Admin Experience Operations (`/api/v1/admin-panel/experiences/`)
+- `GET /api/v1/admin-panel/experiences/` — List experience moderation queue with filters for status (`pending_review`, `published`, `rejected`, `all`), search, and active reports flag.
+- `GET /api/v1/admin-panel/experiences/{id}/` — Retrieve full submission details including all stages, automated policy scanner findings, author real email/name, and version history.
+- `POST /api/v1/admin-panel/experiences/{id}/action/` — Execute moderation decision (`approve`, `reject`, `suspend`, `restore`) with required justification notes.
+- `GET /api/v1/admin-panel/experiences/reports/` — List community reports filed against interview experiences with status filtering.
+- `POST /api/v1/admin-panel/experiences/reports/{report_id}/resolve/` — Resolve or dismiss community report (`dismiss`, `resolve_suspend`, `resolve_restore`) with admin notes.
+
+---
+
 ## Planned Domain Endpoints
 
-- **Experiences (`/api/v1/experiences/`):** Submission, draft saving, moderation, search, filtering.
-- **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, moderation queues, activity logs.
+- **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, activity logs.

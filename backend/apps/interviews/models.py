@@ -56,7 +56,9 @@ class InterviewSession(TimeStampedModel):
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="interviews"
     )
-    interview_type = models.CharField(max_length=20, choices=TYPE_CHOICES, db_index=True)
+    interview_type = models.CharField(
+        max_length=20, choices=TYPE_CHOICES, db_index=True
+    )
     role = models.CharField(max_length=100)
     experience_level = models.CharField(max_length=50)
     salary_range = models.CharField(max_length=50)

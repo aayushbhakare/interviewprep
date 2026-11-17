@@ -12,6 +12,10 @@ import ProfilePage from '../../features/profile/ProfilePage';
 import LearnPage from '../../features/learn/LearnPage';
 import PracticePage from '../../features/practice/PracticePage';
 import ExperiencesPage from '../../features/experiences/ExperiencesPage';
+import ExperienceDetailPage from '../../features/experiences/ExperienceDetailPage';
+import ExperienceEditorPage from '../../features/experiences/ExperienceEditorPage';
+import MyExperiencesPage from '../../features/experiences/MyExperiencesPage';
+import AdminExperiencesPage from '../../features/admin/AdminExperiencesPage';
 import QuizTakingPage from '../../features/quizzes/QuizTakingPage';
 import QuizResultsPage from '../../features/quizzes/QuizResultsPage';
 import AdminQuestionBankPage from '../../features/admin/AdminQuestionBankPage';
@@ -94,6 +98,14 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/experiences"
+        element={
+          <ProtectedRoute requireAdmin={true}>
+            <AdminExperiencesPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Practice Module, Interviews & Aptitude Routes */}
       <Route path="/practice" element={<PracticePage />} />
@@ -163,6 +175,31 @@ export default function AppRouter() {
       />
 
       <Route path="/experiences" element={<ExperiencesPage />} />
+      <Route
+        path="/experiences/new"
+        element={
+          <ProtectedRoute>
+            <ExperienceEditorPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/experiences/:id" element={<ExperienceDetailPage />} />
+      <Route
+        path="/experiences/:id/edit"
+        element={
+          <ProtectedRoute>
+            <ExperienceEditorPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-experiences"
+        element={
+          <ProtectedRoute>
+            <MyExperiencesPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Catch-all Fallback */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />

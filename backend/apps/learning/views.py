@@ -9,7 +9,9 @@ from apps.learning.models import (
     RoadmapTopicReference,
     RoadmapPracticeTask,
 )
+from django.db.models import Q
 from apps.content.models import TopicContent
+from apps.experiences.models import StudentReportedQuestion
 from apps.learning.serializers import (
     RoadmapCreateSerializer,
     RoadmapDetailSerializer,
@@ -217,6 +219,31 @@ class TopicContentView(APIView):
             .first()
         )
 
+        reported_qs = (
+            StudentReportedQuestion.objects.filter(is_active=True)
+            .filter(
+                Q(topic_slug=topic_ref.topic_slug)
+                | Q(technology__iexact=roadmap.language)
+                | Q(technology__icontains=topic_ref.title[:15])
+            )
+            .order_by("-report_count", "-created_at")[:10]
+        )
+
+        student_questions_data = [
+            {
+                "id": str(q.id),
+                "question_text": q.question_text,
+                "follow_up_text": q.follow_up_text,
+                "role": q.role,
+                "company_name": q.company_name,
+                "salary_range": q.salary_range,
+                "stage_type": q.stage_type,
+                "report_count": q.report_count,
+                "provenance_label": "Student Reported Interview Question",
+            }
+            for q in reported_qs
+        ]
+
         if not content:
             data = {
                 "id": str(topic_ref.id),
@@ -243,11 +270,13 @@ class TopicContentView(APIView):
                     "Solidify the fundamentals before writing production code.",
                     "Always measure execution time and resource utilization.",
                 ],
+                "student_reported_questions": student_questions_data,
             }
             return Response({"status": "success", "data": data})
 
-        serializer = TopicContentSerializer(content)
-        return Response({"status": "success", "data": serializer.data})
+        res_data = dict(TopicContentSerializer(content).data)
+        res_data["student_reported_questions"] = student_questions_data
+        return Response({"status": "success", "data": res_data})
 
 
 class PracticeTaskDetailView(APIView):

@@ -47,6 +47,7 @@ cp ../.env.example .env
 python manage.py migrate
 python manage.py shell -c "from apps.aptitude.services.seed_data import seed_initial_aptitude_bank; seed_initial_aptitude_bank()"
 python manage.py shell -c "from apps.questions.services.seed_data import seed_initial_question_bank; seed_initial_question_bank()"
+python manage.py shell -c "from apps.experiences.services.seed_sample_experiences import seed_phase7_experiences; seed_phase7_experiences()"
 ```
 
 ### Initial Administrator Bootstrap
@@ -71,11 +72,11 @@ Access API Documentation:
 
 ### Run Backend Tests
 ```bash
-# Run all 88 unit & API tests
+# Run all 96 unit & API tests
 pytest
 
-# Or run interviews module tests specifically
-pytest apps/interviews/tests/
+# Or run experiences module tests specifically
+pytest apps/experiences/tests/
 ```
 
 ---
@@ -99,9 +100,9 @@ npm run build
 
 ### Run End-to-End Playwright Tests
 ```bash
-# Run all 19 Playwright tests (with backend server running)
+# Run all 20 Playwright tests (with backend server running)
 npx playwright test
 
-# Or run interview tests specifically
-npx playwright test e2e/interviews.spec.js
+# Or run experience tests specifically
+npx playwright test e2e/experiences.spec.js
 ```

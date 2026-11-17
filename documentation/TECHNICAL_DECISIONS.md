@@ -85,3 +85,23 @@ This log records architecture and technical decisions made during implementation
 ### TD-020: Mixed Recruitment Gated Round Advancement
 - **Decision:** Mixed recruitment multi-round processes gate round progression: scoring $\ge 60\%$ in Round 1 Cognitive Aptitude automatically unlocks Round 2; scoring $< 60\%$ immediately halts the pipeline with an objective `FAIL` verdict.
 - **Rationale:** Replicates the actual corporate recruitment funnel where aptitude screening is a prerequisite for technical and managerial interview evaluation.
+
+### TD-021: Permitted Company Attribution Strictly Isolated to Share Experience
+- **Decision:** Company names are permitted and collected solely within the Share Interview Experience module to provide authentic real-world peer discovery context. All other preparation curricula (Learning, Practice, Quizzes, Aptitude, Voice Mock Interviews) strictly remain generic, role-wise, and salary-wise.
+- **Rationale:** Gives students transparent insight into actual hiring processes without transforming the platform into a company-specific question crammer.
+
+### TD-022: Flexible Multi-Stage Journey Data Model
+- **Decision:** Model recruitment stages using a flexible parent-child relation (`ExperienceStage` ordered by an integer `order`) rather than a fixed column set or rigid enum sequence.
+- **Rationale:** Allows authentic documentation of diverse real-world hiring processes (e.g. 1-round startups vs 5-round enterprises) with custom reordering and ad-hoc round types.
+
+### TD-023: Deterministic Zero-Cost Risk-Based Moderation Engine
+- **Decision:** Implement content moderation through a deterministic regex and keyword engine (`experiences_moderation_service.py`) running synchronously on submission, classifying risk into low (auto-publish), medium/high (admin queue), and structural (reject).
+- **Rationale:** Guarantees instantaneous low-risk publication, ₹0 external API costs, and reliable protection against PII leakage, promotional spam, and abusive language.
+
+### TD-024: Safe Dual-State Versioning for Published Experience Edits
+- **Decision:** When a student edits an already-published experience, the approved live version remains published and discoverable to peers while the new revision is stored in `ExperienceVersion` and queued for review.
+- **Rationale:** Prevents denial-of-service or sudden disappearance of high-value community stories during re-review of minor updates.
+
+### TD-025: Student-Reported Question Extraction & Learn Provenance Attribution
+- **Decision:** Automatically index eligible questions from published experiences into `StudentReportedQuestion`, categorizing by technology and rendering them inside relevant topic learning views stamped with `provenance_label: "Student Reported Interview Question"`.
+- **Rationale:** Connects peer intelligence directly into candidate study roadmaps while clearly differentiating peer-reported questions from verified platform quiz items.

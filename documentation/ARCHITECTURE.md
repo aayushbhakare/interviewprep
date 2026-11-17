@@ -91,6 +91,43 @@ graph TD
 - **Hardware Diagnostics PoC:** Built-in `VoicePoCModal` verifies microphone hardware, live STT recognition, and TTS playback prior to starting an interview session.
 - **Resume Snapshotting:** Preserves an immutable snapshot reference to the candidate's active `UserResumeVersion` at session creation time.
 
+## Share Interview Experience Architecture (Phase 7)
+
+### Permitted Company Attribution Policy (`apps/experiences`)
+- **Single Permitted Company Space:** While Learn, Practice, Weekly Quizzes, Aptitude Tests, and AI Mock Interviews remain strictly salary-wise and role-wise, the Share Interview Experience module is the only module where company names are collected and displayed.
+- **Transparent Peer Insights:** Permits students to document and discover authentic recruitment pipelines with company context without converting the platform into a company-specific prep tool.
+
+### Flexible Recruitment Journey Builder
+- **Non-Rigid Sequence:** Candidates structure their journeys across any arbitrary combination of stages: Application & Resume Screening, Online Aptitude Test, Technical Rounds 1/2/3, Managerial Round, HR & Culture Discussion, Offer Negotiation, or Custom stages.
+- **Granular Question & Strategy Documenter:** Captures exact interviewer prompts, follow-up twists, interviewer expectations, and candidate response logic.
+- **Anonymous vs Named Identity:** Toggleable anonymous publishing masks the author's public profile as "Anonymous Candidate" while retaining verified ownership internally.
+
+### Deterministic Risk-Based Moderation Engine (`experiences_moderation_service.py`)
+- **Automated Content Scanning:** Evaluates submissions for:
+  - PII (phone numbers, email addresses, Aadhaar numbers, credentials/tokens).
+  - Promotional spam and suspicious URLs (Telegram channels, WhatsApp groups, bit.ly links).
+  - Profanity and defamatory attacks.
+  - Structural completeness (company, role, outcome, minimum 1 stage).
+- **Three-Tier Policy Enforcement:**
+  - `Low Risk`: Auto-published immediately to public discovery (`published_version` increments).
+  - `Medium / High Risk`: Flagged and queued for administrator review (`status = pending_review`).
+  - `Structural Failure`: Rejected with specific corrective feedback (`status = rejected`).
+
+### Safe Versioning for Published Experience Edits
+- When updating an already-published experience, the approved live version remains visible on discovery to peers.
+- The new revision is captured in an `ExperienceVersion` snapshot and evaluated. If approved by moderators, it replaces the canonical record; if rejected, the original version remains published.
+
+### Question Extraction & Learn Module Integration (`question_extractor_service.py`)
+- Automatically detects technologies (Python, Django, React, SQL, Java, DSA, System Design, HR) from questions in published experiences.
+- Indexes active questions into `StudentReportedQuestion` and enriches `/api/v1/learning/topics/<id>/content/` with candidate-reported questions stamped with the mandatory label:
+  `provenance_label: "Student Reported Interview Question"`
+- Safe orphan protection ensures that deleting or suspending an experience automatically deactivates all associated questions across the platform.
+
+### Staff Moderation & Community Reporting Console (`/admin/experiences`)
+- Review queue with status filters, automated policy scanner findings, and full author identity reveal.
+- Community reports tracking across 7 standardized reason categories with auto-hide trigger at 3+ distinct reports.
+- Comprehensive audit trail logged to `AdminActivityLog`.
+
 ## Coding Standards & Review Architecture
 
 ### Permanent Engineering Standards

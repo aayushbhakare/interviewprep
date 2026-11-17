@@ -88,12 +88,18 @@ This document defines the sequential execution plan across all phases of the Int
 8. Staff administration portal for cooling hours, AI provider selection (Gemini vs Deterministic), cutoff adjustment, and token telemetry.
 9. Comprehensive automated test suite: 15 backend tests (88 total pytest passing) and 2 Playwright e2e tests (19 total Playwright passing).
 
-### Phase 7: Share Interview Experience
-1. Structured recruitment journey submission (Application, Screening, Aptitude, Technical Rounds, HR, Outcome).
-2. Anonymous vs. Public author options; draft saving, editing, and deletion.
-3. Automated risk-based moderation workflow and admin review queue.
-4. Discovery with search, sorting (Recent, Helpful), and filtering (Salary, Role, Experience, Company, Outcome, Round).
-5. Community helpful votes and reporting mechanisms.
+### Phase 7: Share Interview Experience (Completed & Verified)
+1. Permitted company attribution policy: the only platform module allowing company names to provide real-world peer discovery without compromising salary/role-based curricula.
+2. Structured flexible recruitment journey builder with custom order (Application, Aptitude, Tech 1/2/3, Managerial, HR, Offer, Other).
+3. Question and candidate response documenter capturing exact interviewer prompts, follow-ups, expectations, and candidate thought process.
+4. Anonymous vs. Public author options; draft saving, preview, publishing, and deletion.
+5. Automated deterministic risk-based moderation workflow scanning PII, spam/scam invite links, profanity/abuse, and structural validation.
+6. Safe versioning on edits: previous published version stays live while new revisions undergo moderation.
+7. Discovery feed with search, sorting (Recent, Helpful), and filtering (Salary, Role, Experience, Company, Outcome, Mode, Difficulty).
+8. Community helpful votes and reporting mechanisms (auto-hide on 3+ distinct reports).
+9. Automated extraction and Learn module integration: indexing student-reported questions into topic content views stamped with provenance attribution.
+10. Staff Moderation Console (`/admin/experiences`): moderation queue, scan findings, author real identity view, one-click Approve/Reject/Suspend/Restore, and reports resolution with activity logging.
+11. Comprehensive automated testing: 8 new pytest backend tests (96/96 total passing) and full Playwright e2e test (20/20 total passing).
 
 ### Phase 8: Admin Panel & Platform Operations
 1. Comprehensive admin dashboard across all 11 blueprint sections.

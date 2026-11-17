@@ -30,6 +30,13 @@ from apps.interviews.views import (
     AdminInterviewConfigView,
     AdminInterviewAnalyticsView,
 )
+from apps.administration.views_experiences import (
+    AdminExperienceModerationQueueView,
+    AdminExperienceModerationDetailView,
+    AdminExperienceModerationActionView,
+    AdminExperienceReportsListView,
+    AdminExperienceReportResolveView,
+)
 
 
 class AdminPlaceholderView(APIView):
@@ -125,5 +132,31 @@ urlpatterns = [
         "interviews/analytics/",
         AdminInterviewAnalyticsView.as_view(),
         name="admin-interviews-analytics",
+    ),
+    # Admin Experience Moderation
+    path(
+        "experiences/",
+        AdminExperienceModerationQueueView.as_view(),
+        name="admin-experiences-queue",
+    ),
+    path(
+        "experiences/reports/",
+        AdminExperienceReportsListView.as_view(),
+        name="admin-experiences-reports-list",
+    ),
+    path(
+        "experiences/reports/<uuid:report_id>/resolve/",
+        AdminExperienceReportResolveView.as_view(),
+        name="admin-experiences-report-resolve",
+    ),
+    path(
+        "experiences/<uuid:experience_id>/",
+        AdminExperienceModerationDetailView.as_view(),
+        name="admin-experience-detail",
+    ),
+    path(
+        "experiences/<uuid:experience_id>/action/",
+        AdminExperienceModerationActionView.as_view(),
+        name="admin-experience-action",
     ),
 ]

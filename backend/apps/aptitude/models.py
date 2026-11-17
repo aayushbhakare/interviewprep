@@ -181,7 +181,9 @@ class AptitudeValidationHistory(TimeStampedModel):
 
 class AptitudeTestConfig(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, default="Standard Cognitive Foundation Assessment")
+    name = models.CharField(
+        max_length=100, default="Standard Cognitive Foundation Assessment"
+    )
     total_questions = models.PositiveIntegerField(default=45)
     duration_minutes = models.PositiveIntegerField(default=60)
     distribution = models.JSONField(

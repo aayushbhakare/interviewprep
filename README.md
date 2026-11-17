@@ -1,7 +1,7 @@
 # Interview Preparation Platform (InterviewPrep)
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-88%2F88%20passing-brightgreen)](backend/apps/accounts/tests/)
-[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-19%2F19%20passing-brightgreen)](frontend/e2e/)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-96%2F96%20passing-brightgreen)](backend/apps/accounts/tests/)
+[![Frontend Tests](https://img.shields.io/badge/e2e%20tests-20%2F20%20passing-brightgreen)](frontend/e2e/)
 [![Python](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-5.1%2B-darkgreen)](https://www.djangoproject.com/)
 [![React](https://img.shields.io/badge/react-18.3-61dafb)](https://react.dev/)
@@ -78,8 +78,8 @@ Technical recruitment preparation in higher education faces three systemic probl
 - **Personalized Learning Roadmaps (Phase 3 Planned):** Role, stack, and salary-tier tailored learning paths with weekly milestones.
 - **Diagnostic Weekly Quizzes (Phase 4):** 45 non-MCQ questions (10 output prediction, 10 debugging, 10 coding, 10 scenario, 5 conceptual) with a strict 75-minute timer and asynchronous grading.
 - **Generic Aptitude Practice (Phase 5):** Fresher cognitive foundation assessments (45 MCQs: 15 Quantitative, 15 Logical, 15 Verbal) in 60 minutes with 5 sessions/day limit and step-by-step mathematical reasoning.
-- **AI-Powered Voice Interview Simulator (Phase 6 Planned):** Voice-to-voice interview rounds with adaptive follow-ups and comprehensive rubric scorecards.
-- **Crowdsourced Recruitment Experiences (Phase 8 Planned):** Stage-by-stage interview reports, verified compensation reporting, and question extraction.
+- **AI-Powered Voice Interview Simulator (Phase 6):** Voice-to-voice interview rounds with adaptive follow-ups, silence detection, binary PASS/FAIL verdicts, and independent 24-hour cooling periods.
+- **Share Interview Experience Module (Phase 7):** Stage-by-stage peer recruitment journeys, flexible journey builder, anonymous publishing, risk-based policy auto-moderation, community helpful votes/reports, and extraction of questions into the Learn module.
 
 ---
 
@@ -322,7 +322,7 @@ cd backend
 source .venv/bin/activate
 pytest -v
 ```
-*Current test suite: **88 / 88 passed**.*
+*Current test suite: **96 / 96 passed**.*
 
 ### Backend Linter & System Check
 ```bash
@@ -343,7 +343,7 @@ npm run build
 cd frontend
 npx playwright test
 ```
-*Current test suite: **19 / 19 passed**.*
+*Current test suite: **20 / 20 passed**.*
 
 ---
 
@@ -368,7 +368,7 @@ When the backend is running, visit:
 | **4** | **Shared Question Bank & Weekly Quizzes** | 45-Q non-MCQ engine, 75-min timer, offline grading, admin catalog | **Completed & Verified** |
 | **5** | **Generic Aptitude Practice** | Cognitive foundation (45 MCQs: Quant, Logical, Verbal), 60m timer, 5/day limit | **Completed & Verified** |
 | **6** | **AI Voice Interviews** | Technical, HR, Mixed sequential rounds, Web Speech STT/TTS, cooling periods, binary PASS/FAIL | **Completed & Verified** |
-| **7** | **Share Experience** | Recruitment stories, stage breakdowns, automated risk moderation | *Planned* |
+| **7** | **Share Experience** | Recruitment stories, stage breakdowns, automated risk moderation, learn integration | **Completed & Verified** |
 | **8** | **Administration Panel** | 11 administrative panels, audit logs, student management | *Planned* |
 | **9** | **Hardening & Release** | Full E2E regression, security audit, deployment checklist | *Planned* |
 

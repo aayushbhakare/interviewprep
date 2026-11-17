@@ -42,3 +42,11 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 9. Voice Simulation Budget & Deterministic Provider
 - **Detail:** Real-time conversational audio with external multimodal LLMs incurs token and audio streaming bandwidth expenses.
 - **Resolution:** `DeterministicVoiceProvider` operates 100% offline at ₹0 cost with dynamic follow-ups, clarification handling, and binary PASS/FAIL rubrics tailored to compensation tiers, guaranteeing zero cloud expenditure. Staff administrators can toggle between Gemini and Deterministic providers via the admin console.
+
+### 10. Automated Risk-Based Content Moderation Scope
+- **Detail:** Deterministic keyword and regex scanning (`experiences_moderation_service.py`) reliably catches clear PII (phone, email, Aadhaar, tokens), spam/scam invite links, and profanity, but cannot detect subtly falsified corporate anecdotes or nuanced non-obvious claims without human context.
+- **Resolution:** A high-visibility disclaimer confirms that moderation approval signifies compliance with content and policy safety standards, not corporate verification of authentic recruitment. Community issue reporting and staff moderation tools allow rapid investigation and one-click suspension if inaccurate content is surfaced.
+
+### 11. Safe Versioning & Live Discoverability During Re-Review
+- **Detail:** When an author edits a published experience, the previous approved version remains live to peers while the revision undergoes review.
+- **Resolution:** Prevents sudden discovery feed churn or broken peer bookmarks. Upon moderator approval, the newer revision atomically replaces the canonical record; if rejected, the previous live version remains intact with moderator notes sent to the author.

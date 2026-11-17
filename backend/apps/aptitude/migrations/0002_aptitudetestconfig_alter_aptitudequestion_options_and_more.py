@@ -31,7 +31,8 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        default="Standard Cognitive Foundation Assessment", max_length=100
+                        default="Standard Cognitive Foundation Assessment",
+                        max_length=100,
                     ),
                 ),
                 ("total_questions", models.PositiveIntegerField(default=45)),

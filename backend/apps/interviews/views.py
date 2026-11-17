@@ -73,7 +73,9 @@ class InterviewStartSessionView(APIView):
         serializer.is_valid(raise_exception=True)
         session = create_interview_session(request.user, serializer.validated_data)
         detail = get_session_detail_dict(session)
-        return Response({"status": "success", "data": detail}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"status": "success", "data": detail}, status=status.HTTP_201_CREATED
+        )
 
 
 class InterviewSessionDetailView(APIView):
@@ -85,7 +87,9 @@ class InterviewSessionDetailView(APIView):
         summary="Get active interview session state and conversation",
     )
     def get(self, request, session_id):
-        session = get_object_or_404(InterviewSession, id=session_id, student=request.user)
+        session = get_object_or_404(
+            InterviewSession, id=session_id, student=request.user
+        )
         detail = get_session_detail_dict(session)
         return Response({"status": "success", "data": detail})
 
@@ -131,7 +135,9 @@ class InterviewEvaluateView(APIView):
         summary="Evaluate completed interview session and compile feedback",
     )
     def post(self, request, session_id):
-        session = get_object_or_404(InterviewSession, id=session_id, student=request.user)
+        session = get_object_or_404(
+            InterviewSession, id=session_id, student=request.user
+        )
         if session.status == InterviewSession.STATUS_IN_PROGRESS:
             complete_and_evaluate_session(session)
         detail = get_session_detail_dict(session)
@@ -147,7 +153,9 @@ class InterviewResultsView(APIView):
         summary="Get final PASS/FAIL result and structured feedback",
     )
     def get(self, request, session_id):
-        session = get_object_or_404(InterviewSession, id=session_id, student=request.user)
+        session = get_object_or_404(
+            InterviewSession, id=session_id, student=request.user
+        )
         detail = get_session_detail_dict(session)
         return Response(
             {
@@ -197,7 +205,9 @@ class InterviewHistoryListView(APIView):
         summary="List student's historical interview sessions",
     )
     def get(self, request):
-        qs = InterviewSession.objects.filter(student=request.user).order_by("-created_at")
+        qs = InterviewSession.objects.filter(student=request.user).order_by(
+            "-created_at"
+        )
         itype = request.query_params.get("type")
         if itype:
             qs = qs.filter(interview_type=itype)
@@ -214,7 +224,9 @@ class InterviewHistoryDetailView(APIView):
         summary="Retrieve complete details of a historical interview session",
     )
     def get(self, request, session_id):
-        session = get_object_or_404(InterviewSession, id=session_id, student=request.user)
+        session = get_object_or_404(
+            InterviewSession, id=session_id, student=request.user
+        )
         detail = get_session_detail_dict(session)
         return Response({"status": "success", "data": detail})
 
@@ -243,7 +255,9 @@ class AdminInterviewConfigView(APIView):
     )
     def patch(self, request):
         config = InterviewConfig.get_active_config()
-        serializer = AdminInterviewConfigSerializer(config, data=request.data, partial=True)
+        serializer = AdminInterviewConfigSerializer(
+            config, data=request.data, partial=True
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -270,10 +284,18 @@ class AdminInterviewAnalyticsView(APIView):
     )
     def get(self, request):
         total_sessions = InterviewSession.objects.count()
-        completed_sessions = InterviewSession.objects.filter(status=InterviewSession.STATUS_COMPLETED).count()
-        pass_count = InterviewSession.objects.filter(final_result=InterviewSession.RESULT_PASS).count()
-        fail_count = InterviewSession.objects.filter(final_result=InterviewSession.RESULT_FAIL).count()
-        abandoned_count = InterviewSession.objects.filter(status=InterviewSession.STATUS_ABANDONED).count()
+        completed_sessions = InterviewSession.objects.filter(
+            status=InterviewSession.STATUS_COMPLETED
+        ).count()
+        pass_count = InterviewSession.objects.filter(
+            final_result=InterviewSession.RESULT_PASS
+        ).count()
+        fail_count = InterviewSession.objects.filter(
+            final_result=InterviewSession.RESULT_FAIL
+        ).count()
+        abandoned_count = InterviewSession.objects.filter(
+            status=InterviewSession.STATUS_ABANDONED
+        ).count()
 
         by_type = (
             InterviewSession.objects.values("interview_type")
@@ -299,7 +321,9 @@ class AdminInterviewAnalyticsView(APIView):
                     "pass_count": pass_count,
                     "fail_count": fail_count,
                     "abandoned_count": abandoned_count,
-                    "overall_pass_rate": round((pass_count / max(1, completed_sessions)) * 100, 1),
+                    "overall_pass_rate": round(
+                        (pass_count / max(1, completed_sessions)) * 100, 1
+                    ),
                     "distribution_by_type": list(by_type),
                     "ai_telemetry": {
                         "total_tokens": total_ai_tokens,

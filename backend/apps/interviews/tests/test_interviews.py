@@ -89,7 +89,11 @@ def test_technical_interview_creation_and_questions(student_user, api_client):
     assert data["total_questions"] >= 3
     assert len(data["turns"]) == 1
     assert data["turns"][0]["role"] == "interviewer"
-    assert "Python" in data["turns"][0]["content"] or "Django" in data["turns"][0]["content"] or "API" in data["turns"][0]["content"]
+    assert (
+        "Python" in data["turns"][0]["content"]
+        or "Django" in data["turns"][0]["content"]
+        or "API" in data["turns"][0]["content"]
+    )
 
 
 @pytest.mark.django_db
@@ -158,16 +162,24 @@ def test_conversational_turn_progression(student_user, api_client):
     )
 
     # 1. Student answers question 1 with partial concept
-    payload = {"speech_text": "In Django we use select_related for foreign keys to prevent N+1 queries."}
-    res = api_client.post(f"/api/v1/interviews/sessions/{session.id}/turns/", payload, format="json")
+    payload = {
+        "speech_text": "In Django we use select_related for foreign keys to prevent N+1 queries."
+    }
+    res = api_client.post(
+        f"/api/v1/interviews/sessions/{session.id}/turns/", payload, format="json"
+    )
     assert res.status_code == 200
     turn_data = res.json()["data"]
     assert "interviewer_speech" in turn_data
     assert turn_data["status"] in ["follow_up", "next_question"]
 
     # 2. Student clarifies deeper aspect
-    payload2 = {"speech_text": "select_related performs a SQL JOIN while prefetch_related executes a separate query with an IN clause."}
-    res2 = api_client.post(f"/api/v1/interviews/sessions/{session.id}/turns/", payload2, format="json")
+    payload2 = {
+        "speech_text": "select_related performs a SQL JOIN while prefetch_related executes a separate query with an IN clause."
+    }
+    res2 = api_client.post(
+        f"/api/v1/interviews/sessions/{session.id}/turns/", payload2, format="json"
+    )
     assert res2.status_code == 200
     assert res2.json()["data"]["next_question_index"] >= 1
 
@@ -183,9 +195,16 @@ def test_verbal_clarification_and_repeat_handling(student_user):
             "salary_range": "₹5–7 LPA",
         },
     )
-    res = process_interview_turn(str(session.id), student_user, "Could you please clarify and repeat the question?")
+    res = process_interview_turn(
+        str(session.id),
+        student_user,
+        "Could you please clarify and repeat the question?",
+    )
     assert res["status"] == "clarification"
-    assert "clarify" in res["interviewer_speech"].lower() or "repeat" in res["interviewer_speech"].lower()
+    assert (
+        "clarify" in res["interviewer_speech"].lower()
+        or "repeat" in res["interviewer_speech"].lower()
+    )
     assert res["next_question_index"] == 0
 
 
@@ -201,10 +220,15 @@ def test_i_dont_know_verbal_handling(student_user):
         },
     )
     # Student states they do not know
-    res = process_interview_turn(str(session.id), student_user, "I honestly don't know this concept, pass.")
+    res = process_interview_turn(
+        str(session.id), student_user, "I honestly don't know this concept, pass."
+    )
     assert res["status"] == "next_question"
     assert res["next_question_index"] == 1
-    assert "no problem" in res["interviewer_speech"].lower() or "move on" in res["interviewer_speech"].lower()
+    assert (
+        "no problem" in res["interviewer_speech"].lower()
+        or "move on" in res["interviewer_speech"].lower()
+    )
 
 
 @pytest.mark.django_db
@@ -281,7 +305,9 @@ def test_mixed_aptitude_stage_passing_advances_to_round_2(student_user, api_clie
     apt_sess.total_questions = 45
     apt_sess.save()
 
-    res = api_client.post(f"/api/v1/interviews/sessions/{session.id}/rounds/complete-aptitude/")
+    res = api_client.post(
+        f"/api/v1/interviews/sessions/{session.id}/rounds/complete-aptitude/"
+    )
     assert res.status_code == 200
     data = res.json()["data"]
     assert data["result"] == "pass"
@@ -296,7 +322,9 @@ def test_mixed_aptitude_stage_passing_advances_to_round_2(student_user, api_clie
 
 
 @pytest.mark.django_db
-def test_mixed_aptitude_stage_failing_aborts_entire_mixed_process(student_user, api_client):
+def test_mixed_aptitude_stage_failing_aborts_entire_mixed_process(
+    student_user, api_client
+):
     api_client.force_authenticate(user=student_user)
     seed_initial_aptitude_bank()
     session = create_interview_session(
@@ -319,7 +347,9 @@ def test_mixed_aptitude_stage_failing_aborts_entire_mixed_process(student_user, 
     apt_sess.total_questions = 45
     apt_sess.save()
 
-    res = api_client.post(f"/api/v1/interviews/sessions/{session.id}/rounds/complete-aptitude/")
+    res = api_client.post(
+        f"/api/v1/interviews/sessions/{session.id}/rounds/complete-aptitude/"
+    )
     assert res.status_code == 200
     data = res.json()["data"]
     assert data["result"] == "fail"
@@ -334,7 +364,9 @@ def test_mixed_aptitude_stage_failing_aborts_entire_mixed_process(student_user, 
         assert r.status == InterviewRound.STATUS_NOT_ATTEMPTED
 
     # 24-hour cooling period created for Mixed
-    cooling = InterviewCoolingPeriod.objects.filter(user=student_user, interview_type="mixed").first()
+    cooling = InterviewCoolingPeriod.objects.filter(
+        user=student_user, interview_type="mixed"
+    ).first()
     assert cooling is not None
     assert cooling.is_active is True
 
@@ -434,12 +466,16 @@ def test_admin_interview_config_and_activity_logging(admin_user, api_client):
 
     # 2. Update cooling hours to 12
     payload = {"technical_cooling_hours": 12, "mixed_cooling_hours": 36}
-    res_patch = api_client.patch("/api/v1/admin-panel/interviews/config/", payload, format="json")
+    res_patch = api_client.patch(
+        "/api/v1/admin-panel/interviews/config/", payload, format="json"
+    )
     assert res_patch.status_code == 200
     assert res_patch.json()["data"]["technical_cooling_hours"] == 12
 
     # 3. Verify AdminActivityLog audit entry
-    log_entry = AdminActivityLog.objects.filter(action="update_interview_config").first()
+    log_entry = AdminActivityLog.objects.filter(
+        action="update_interview_config"
+    ).first()
     assert log_entry is not None
     assert log_entry.actor == admin_user
 
