@@ -100,9 +100,27 @@ npm run build
 
 ### Run End-to-End Playwright Tests
 ```bash
-# Run all 20 Playwright tests (with backend server running)
+# Run all 22 Playwright tests (with backend server running)
 npx playwright test
 
-# Or run experience tests specifically
-npx playwright test e2e/experiences.spec.js
+# Or run complete student journey test specifically
+npx playwright test e2e/e2e_student_journey.spec.js
+```
+
+---
+
+## 4. Production Docker Compose Deployment
+
+To build and run the entire platform locally or on a remote server in containerized production mode:
+
+```bash
+# Build and run containers in background
+docker compose -f docker-compose.prod.yml up -d --build
+
+# Run database migrations
+docker compose -f docker-compose.prod.yml exec backend python manage.py migrate
+
+# Check health
+curl -f http://localhost:8000/api/v1/health/
+curl -f http://localhost/
 ```

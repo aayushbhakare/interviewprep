@@ -191,17 +191,64 @@ class MyExperiencesListView(APIView):
         return Response({"status": "success", "data": serializer.data})
 
 
-class ExperienceDraftSaveView(APIView):
+class ExperienceDraftCreateView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ExperienceDraftInputSerializer
 
     @extend_schema(
-        summary="Save or Update Draft Experience",
-        description="Saves a private draft. Drafts are not moderated and not visible publicly.",
+        operation_id="experiences_draft_create",
+        summary="Create Draft Experience",
+        description="Saves a new private draft. Drafts are not moderated and not visible publicly.",
+        request=ExperienceDraftInputSerializer,
+        responses={201: ExperienceDetailSerializer},
+    )
+    def post(self, request):
+        serializer = ExperienceDraftInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        exp = ExperienceService.save_draft(
+            user=request.user,
+            data=serializer.validated_data,
+            experience_id=None,
+        )
+        detail_serializer = ExperienceDetailSerializer(
+            exp, context={"user": request.user}
+        )
+        return Response(
+            {
+                "status": "success",
+                "message": "Draft saved successfully.",
+                "data": detail_serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class ExperienceDraftUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ExperienceDraftInputSerializer
+
+    @extend_schema(
+        operation_id="experiences_draft_update_post",
+        summary="Save or Update Existing Draft Experience",
+        description="Updates an existing private draft.",
         request=ExperienceDraftInputSerializer,
         responses={200: ExperienceDetailSerializer},
     )
-    def post(self, request, experience_id=None):
+    def post(self, request, experience_id):
+        return self._save(request, experience_id)
+
+    @extend_schema(
+        operation_id="experiences_draft_update_put",
+        summary="Update Existing Draft Experience",
+        description="Updates an existing draft before submission.",
+        request=ExperienceDraftInputSerializer,
+        responses={200: ExperienceDetailSerializer},
+    )
+    def put(self, request, experience_id):
+        return self._save(request, experience_id)
+
+    def _save(self, request, experience_id):
         serializer = ExperienceDraftInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -219,17 +266,11 @@ class ExperienceDraftSaveView(APIView):
                 "message": "Draft saved successfully.",
                 "data": detail_serializer.data,
             },
-            status=status.HTTP_200_OK if experience_id else status.HTTP_201_CREATED,
+            status=status.HTTP_200_OK,
         )
 
-    @extend_schema(
-        summary="Update Existing Draft Experience",
-        description="Updates an existing draft before submission.",
-        request=ExperienceDraftInputSerializer,
-        responses={200: ExperienceDetailSerializer},
-    )
-    def put(self, request, experience_id):
-        return self.post(request, experience_id=experience_id)
+
+ExperienceDraftSaveView = ExperienceDraftCreateView
 
 
 class ExperiencePublishView(APIView):

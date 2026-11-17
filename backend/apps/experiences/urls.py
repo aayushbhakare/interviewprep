@@ -3,7 +3,8 @@ from apps.experiences.views import (
     ExperiencePublicListView,
     ExperiencePublicDetailView,
     MyExperiencesListView,
-    ExperienceDraftSaveView,
+    ExperienceDraftCreateView,
+    ExperienceDraftUpdateView,
     ExperiencePublishView,
     ExperienceEditPublishedView,
     ExperienceDeleteView,
@@ -18,10 +19,10 @@ urlpatterns = [
     path("", ExperiencePublicListView.as_view(), name="experience-list"),
     path("taxonomy/", ExperienceTaxonomyView.as_view(), name="experience-taxonomy"),
     path("my/", MyExperiencesListView.as_view(), name="my-experiences"),
-    path("drafts/", ExperienceDraftSaveView.as_view(), name="experience-draft-create"),
+    path("drafts/", ExperienceDraftCreateView.as_view(), name="experience-draft-create"),
     path(
         "drafts/<uuid:experience_id>/",
-        ExperienceDraftSaveView.as_view(),
+        ExperienceDraftUpdateView.as_view(),
         name="experience-draft-update",
     ),
     path(

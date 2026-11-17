@@ -125,3 +125,15 @@ This log records architecture and technical decisions made during implementation
 ### TD-030: Telemetry Cost Accounting Exclusively in Indian Rupees (INR)
 - **Decision:** Format and track all platform AI usage, token telemetry, and estimated costs strictly in Indian Rupees (`₹0.00`) adhering to the ₹0 budget mandate.
 - **Rationale:** Consistent with platform localization and budget compliance requirements, avoiding confusing dollar currency formatting.
+
+### TD-031: Migration State Synchronization via `SeparateDatabaseAndState`
+- **Decision:** Use `SeparateDatabaseAndState` in migration operations when replacing legacy database columns with newly typed ForeignKeys.
+- **Rationale:** Keeps Django's in-memory model state and PostgreSQL's physical schema in 100% synchronization, eliminating spurious `makemigrations` differences across clean staging environments.
+
+### TD-032: Explicit OpenAPI Operation Identifiers (`operation_id`)
+- **Decision:** Explicitly decorate REST API views with unique `operation_id` values and specify `ENUM_NAME_OVERRIDES` in `SPECTACULAR_SETTINGS`.
+- **Rationale:** Completely resolves schema operation ID collisions and enum naming warnings in `drf-spectacular`, guaranteeing clean Swagger and Redoc documentation.
+
+### TD-033: Multi-Stage Containerization & Production Readiness Assets
+- **Decision:** Package the platform using multi-stage Docker builds (Python 3.14-slim backend and Node 20 build with Nginx Alpine frontend) alongside automated PostgreSQL backup/restore runbooks with 14-day retention rotation.
+- **Rationale:** Enables zero-drift production deployment across any standard container cloud (Docker Compose, Render, Railway, AWS ECS) while maintaining ₹0 infrastructure overhead.

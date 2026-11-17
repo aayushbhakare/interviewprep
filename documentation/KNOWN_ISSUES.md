@@ -54,3 +54,7 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 12. Staff User Exemption in Maintenance Mode
 - **Detail:** When global or module-level maintenance mode is activated, standard student sessions return HTTP 503 with custom notification messages.
 - **Resolution:** `MaintenanceModeMiddleware` explicitly checks whether the authenticated request originates from a user with `is_staff=True`. Staff accounts bypass maintenance restrictions completely, enabling ongoing platform verification, health checks, and parameter adjustments without interruption.
+
+### 13. Single Worker Playwright Execution for Test Isolation
+- **Detail:** When running multi-module Playwright tests in parallel against a single PostgreSQL database instance, concurrent state changes (such as creating/resetting student roadmaps) could cause race conditions.
+- **Resolution:** The Playwright test configuration enforces a single worker (`workers: 1`) to ensure fully deterministic, isolated, and idempotent end-to-end execution across all 22 test scenarios.

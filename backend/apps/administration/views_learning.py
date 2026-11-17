@@ -21,6 +21,7 @@ class AdminLearningTopicListView(APIView):
     permission_classes = [IsPlatformAdmin]
 
     @extend_schema(
+        operation_id="admin_learning_topic_list",
         summary="Browse Learning Content Topics",
         description="Filter by technology, publication status, or search topic names.",
         responses={200: dict},
@@ -80,6 +81,7 @@ class AdminLearningTopicDetailView(APIView):
     permission_classes = [IsPlatformAdmin]
 
     @extend_schema(
+        operation_id="admin_learning_topic_detail",
         summary="Topic Content Deep-Dive & Version History",
         description="Inspect complete multi-section curriculum content and all historical versions.",
         responses={200: dict},

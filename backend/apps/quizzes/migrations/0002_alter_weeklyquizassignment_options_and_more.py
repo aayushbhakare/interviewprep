@@ -43,9 +43,19 @@ class Migration(migrations.Migration):
             name="preparation_job_id",
             field=models.UUIDField(blank=True, null=True),
         ),
-        migrations.RunSQL(
-            "ALTER TABLE quizzes_weeklyquizassignment DROP COLUMN IF EXISTS roadmap_id CASCADE;",
-            reverse_sql="",
+        migrations.SeparateDatabaseAndState(
+            state_operations=[
+                migrations.RemoveField(
+                    model_name="weeklyquizassignment",
+                    name="roadmap_id",
+                ),
+            ],
+            database_operations=[
+                migrations.RunSQL(
+                    "ALTER TABLE quizzes_weeklyquizassignment DROP COLUMN IF EXISTS roadmap_id CASCADE;",
+                    reverse_sql="",
+                ),
+            ],
         ),
         migrations.AddField(
             model_name="weeklyquizassignment",

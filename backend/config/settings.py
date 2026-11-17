@@ -179,6 +179,11 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Salary-wise, multi-module interview preparation platform REST APIs.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "ENUM_NAME_OVERRIDES": {
+        "ExperienceReportReasonEnum": "apps.experiences.models.ExperienceReport.REASON_CHOICES",
+        "AptitudeReportReasonEnum": "apps.aptitude.models.AptitudeQuestionReport.REASON_CHOICES",
+        "QuestionReportReasonEnum": "apps.questions.models.QuestionReport.REASON_CHOICES",
+    },
 }
 
 # Gemini AI Configuration

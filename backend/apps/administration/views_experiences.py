@@ -34,6 +34,7 @@ class AdminExperienceModerationQueueView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
+        operation_id="admin_experience_moderation_queue_list",
         summary="Admin - Experience Moderation Queue",
         description="Filter experience submissions for moderation by status, reports count, or keyword search.",
         parameters=[
@@ -122,6 +123,7 @@ class AdminExperienceModerationDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
+        operation_id="admin_experience_moderation_detail_retrieve",
         summary="Admin - Get Experience Moderation Detail",
         description="Returns complete experience structure, questions, stages, author identity, and version history.",
         responses={200: dict},

@@ -25,6 +25,7 @@ class AdminStudentListView(APIView):
     permission_classes = [IsPlatformAdmin]
 
     @extend_schema(
+        operation_id="admin_student_list",
         summary="List Students",
         description="Search, filter, and paginate through registered student accounts.",
         responses={200: dict},
@@ -83,6 +84,7 @@ class AdminStudentDetailView(APIView):
     permission_classes = [IsPlatformAdmin]
 
     @extend_schema(
+        operation_id="admin_student_detail",
         summary="Student Profile & Activity Deep-Dive",
         description="Retrieves a complete non-sensitive operational overview of a student's learning, quiz, aptitude, interview, and experience activities.",
         responses={200: dict},
