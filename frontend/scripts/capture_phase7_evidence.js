@@ -38,12 +38,17 @@ async function capture() {
 
   // 3. Experience Editor - Stages Builder
   console.log('Capturing 03_experience_editor_journey_stages.png...');
-  await page.evaluate(() => window.scrollTo(0, 600));
+  await page.evaluate(() => window.scrollTo(0, 520));
   await page.waitForTimeout(300);
   await page.fill('input[placeholder*="Coding Assessment, System Architecture"]', 'Machine Coding & Concurrency');
   await page.fill('textarea[placeholder*="What was the format?"]', '90-minute live coding session implementing an asynchronous rate limiter.');
-  await page.fill('input[placeholder="Exact question asked by interviewer..."]', 'Implement leaky bucket rate limiter in Python with atomic sliding window.');
-  await page.fill('input[placeholder="Follow-up question or twist (optional)..."]', 'How do you coordinate limits across 50 containerized instances without a centralized lock bottleneck?');
+  await page.fill('textarea[placeholder*="Exact question asked by interviewer"]', 'Implement leaky bucket rate limiter in Python with atomic sliding window.');
+  await page.fill('textarea[placeholder*="Follow-up question or twist"]', 'How do you coordinate limits across 50 containerized instances without a centralized lock bottleneck?');
+  await page.fill('textarea[placeholder*="What was the interviewer looking for?"]', 'Concurrency safety, Redis atomicity, handling burst traffic without thundering herd.');
+  await page.fill('textarea[placeholder*="Your response, algorithm, or thought process"]', 'Designed a sliding window counter using Redis Lua script for atomic score evaluation.');
+  // Defocus active element so no input has an ugly focus outline in screenshot
+  await page.evaluate(() => { if (document.activeElement) document.activeElement.blur(); });
+  await page.waitForTimeout(200);
   await page.screenshot({ path: path.join(EVIDENCE_DIR, '03_experience_editor_journey_stages.png'), fullPage: false });
 
   // 4. Experience Detail Journey Breakdown

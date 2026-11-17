@@ -64,11 +64,11 @@ test.describe('Phase 7 — Share Interview Experience Module', () => {
 
     // Fill Stage 1 Question
     await page.fill(
-      'input[placeholder="Exact question asked by interviewer..."]',
+      'textarea[placeholder*="Exact question asked by interviewer"]',
       'Explain cache stampede prevention strategies and Redis mutex locks.'
     );
     await page.fill(
-      'input[placeholder="Follow-up question or twist (optional)..."]',
+      'textarea[placeholder*="Follow-up question or twist"]',
       'How does probabilistic early expiration (XFetch) compare to distributed locks?'
     );
     await page.fill(
@@ -76,7 +76,7 @@ test.describe('Phase 7 — Share Interview Experience Module', () => {
       'Deep understanding of thundering herd mitigation under 10k RPS load.'
     );
     await page.fill(
-      'textarea[placeholder*="Your response, algorithm, or thought process..."]',
+      'textarea[placeholder*="Your response, algorithm, or thought process"]',
       'Discussed mutex lock with TTL, background cron refresh, and optimal cache stampede beta algorithm.'
     );
 
