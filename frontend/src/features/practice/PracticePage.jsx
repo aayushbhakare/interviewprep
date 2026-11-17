@@ -23,34 +23,36 @@ export default function PracticePage() {
       </div>
 
       {/* Module Implementation Status Banner */}
-      <div className="mb-8 bg-indigo-50/70 border border-indigo-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-start space-x-3">
+      <div className="mb-8 bg-indigo-50/70 border border-indigo-200 rounded-xl p-4 sm:p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div className="flex items-start space-x-3 min-w-0 pr-2">
           <Award className="w-5 h-5 text-indigo-600 mt-0.5 shrink-0" />
-          <div>
+          <div className="min-w-0">
             <h3 className="text-sm font-semibold text-indigo-950">
               Aptitude Practice Module is Active (Module Status: Scheduled for Phases 6 & 7)
             </h3>
-            <p className="text-xs sm:text-sm text-indigo-800 mt-0.5">
+            <p className="text-xs sm:text-sm text-indigo-800 mt-0.5 leading-relaxed">
               Practice real-time Technical, HR, and Mixed recruitment rounds with adaptive voice dialogue alongside standardized cognitive aptitude tests.
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Link
-            to="/practice/aptitude"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs shrink-0"
-          >
-            Start Aptitude Test
-          </Link>
+        <div className="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
           <Link
             to="/practice/interviews/history"
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs whitespace-nowrap shrink-0"
           >
+            <Clock className="w-3.5 h-3.5 text-indigo-600" />
             Past Sessions
           </Link>
           <Link
+            to="/practice/aptitude"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs whitespace-nowrap shrink-0"
+          >
+            <FileText className="w-3.5 h-3.5 text-indigo-600" />
+            Start Aptitude Test
+          </Link>
+          <Link
             to="/practice/interviews/setup"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap shrink-0"
           >
             <Play className="w-3.5 h-3.5" />
             Start Voice Interview

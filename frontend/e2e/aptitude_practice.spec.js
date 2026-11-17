@@ -128,7 +128,11 @@ test.describe('Phase 5 — Aptitude Practice Module', () => {
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL(/\/dashboard$/);
 
-    // 2. Navigate to Aptitude Admin via Navbar
+    // 2. Navigate to Aptitude Admin via Navbar (Admin Console dropdown)
+    const adminConsoleBtn = page.locator('nav').getByRole('button', { name: /Admin Console/i });
+    if (await adminConsoleBtn.isVisible()) {
+      await adminConsoleBtn.click();
+    }
     await page.locator('nav').getByRole('link', { name: 'Aptitude Admin' }).click();
     await expect(page).toHaveURL(/\/admin\/aptitude$/);
 

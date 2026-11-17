@@ -172,7 +172,7 @@ export default function AdminInterviewsPage() {
               Estimated AI Cost
             </span>
             <span className="text-2xl font-black text-slate-900 mt-1 block">
-              ${analytics.ai_telemetry?.total_cost_usd || '0.0000'}
+              ₹{((Number(analytics.ai_telemetry?.total_cost_usd) || 0) * 85).toFixed(2)}
             </span>
             <span className="text-[11px] text-emerald-600 font-semibold mt-1 block">
               Within ₹0 target budget

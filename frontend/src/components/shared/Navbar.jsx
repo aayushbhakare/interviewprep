@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { BookOpen, Target, Share2, User, LogOut, Menu, X, LayoutDashboard, Database, Settings, Bot } from 'lucide-react';
+import {
+  BookOpen,
+  Target,
+  Share2,
+  User,
+  LogOut,
+  Menu,
+  X,
+  LayoutDashboard,
+  Database,
+  Settings,
+  Bot,
+  Shield,
+  ChevronDown,
+} from 'lucide-react';
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [adminMenuOpen, setAdminMenuOpen] = useState(false);
+  const adminDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (adminDropdownRef.current && !adminDropdownRef.current.contains(event.target)) {
+        setAdminMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -56,60 +82,85 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Right Actions */}
-          <div className="hidden md:flex items-center space-x-3">
-            {isAuthenticated ? (
-              <>
-                {user?.is_staff && (
-                  <div className="flex items-center space-x-2">
-                    <Link
-                      to="/admin/question-bank"
-                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
-                        location.pathname === '/admin/question-bank'
-                          ? 'bg-purple-50 text-purple-700 border-purple-300'
-                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                      }`}
-                    >
-                      <Database className="w-3.5 h-3.5 mr-1 text-purple-600" />
-                      Tech Bank
-                    </Link>
-                    <Link
-                      to="/admin/aptitude"
-                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
-                        location.pathname === '/admin/aptitude'
-                          ? 'bg-indigo-50 text-indigo-700 border-indigo-300'
-                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                      }`}
-                    >
-                      <Settings className="w-3.5 h-3.5 mr-1 text-indigo-600" />
-                      Aptitude Admin
-                    </Link>
-                    <Link
-                      to="/admin/interviews"
-                      className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-xs font-semibold border transition-colors ${
-                        location.pathname === '/admin/interviews'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                      }`}
-                    >
-                      <Bot className="w-3.5 h-3.5 mr-1 text-emerald-600" />
-                      Interview Admin
-                    </Link>
-                  </div>
-                )}
-                <Link
-                  to="/profile"
-                  className={`inline-flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    location.pathname === '/profile'
-                      ? 'text-brand-700 bg-brand-50'
-                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-semibold text-xs">
-                    {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
-                  </div>
-                  <span className="max-w-[120px] truncate">{user?.full_name || 'Profile'}</span>
-                </Link>
+            {/* Desktop Right Actions */}
+            <div className="hidden md:flex items-center space-x-3">
+              {isAuthenticated ? (
+                <>
+                  {user?.is_staff && (
+                    <div className="relative" ref={adminDropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => setAdminMenuOpen((prev) => !prev)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+                          location.pathname.startsWith('/admin')
+                            ? 'bg-brand-50 text-brand-700 border-brand-300'
+                            : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                        }`}
+                        aria-expanded={adminMenuOpen}
+                      >
+                        <Shield className="w-3.5 h-3.5 text-brand-600" />
+                        <span>Admin Console</span>
+                        <ChevronDown className="w-3 h-3 text-slate-400" />
+                      </button>
+
+                      {adminMenuOpen && (
+                        <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 animate-in fade-in-50 zoom-in-95 duration-100">
+                          <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                            Staff Operations
+                          </div>
+                          <Link
+                            to="/admin/question-bank"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/question-bank'
+                                ? 'bg-purple-50 text-purple-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <Database className="w-3.5 h-3.5 mr-2 text-purple-600 shrink-0" />
+                            <span>Tech Question Bank</span>
+                          </Link>
+                          <Link
+                            to="/admin/aptitude"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/aptitude'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <Settings className="w-3.5 h-3.5 mr-2 text-indigo-600 shrink-0" />
+                            <span>Aptitude Admin</span>
+                          </Link>
+                          <Link
+                            to="/admin/interviews"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/interviews'
+                                ? 'bg-emerald-50 text-emerald-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <Bot className="w-3.5 h-3.5 mr-2 text-emerald-600 shrink-0" />
+                            <span>Interview Admin</span>
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <Link
+                    to="/profile"
+                    className={`inline-flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      location.pathname === '/profile'
+                        ? 'text-brand-700 bg-brand-50'
+                        : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-semibold text-xs">
+                      {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
+                    </div>
+                    <span className="max-w-[170px] truncate">{user?.full_name || 'Profile'}</span>
+                  </Link>
                 <button
                   onClick={logout}
                   className="inline-flex items-center text-slate-500 hover:text-red-600 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors"

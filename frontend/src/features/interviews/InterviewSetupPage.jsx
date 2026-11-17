@@ -410,18 +410,53 @@ export default function InterviewSetupPage() {
             Selecting a resume version allows the AI interviewer to probe real projects and experiences highlighted on your CV.
           </p>
 
-          <select
-            value={selectedResumeVersion}
-            onChange={(e) => setSelectedResumeVersion(e.target.value)}
-            className="w-full text-xs p-2.5 rounded-lg border border-slate-300 bg-white text-slate-800 font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none"
-          >
-            <option value="">Do not use resume (Proceed with standard role questions)</option>
-            {availableResumes.map((r) => (
-              <option key={r.version_number} value={r.version_number}>
-                Version {r.version_number}: {r.original_filename} ({Math.round(r.file_size_bytes / 1024)} KB)
-              </option>
-            ))}
-          </select>
+          {availableResumes.length === 0 ? (
+            <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <FileText className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-slate-900">Standard Role-Based Questioning</h5>
+                    <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                      Interviews will focus on your selected target role ({role}), tech stack, and compensation standard ({salaryRange}).
+                    </p>
+                  </div>
+                </div>
+                <span className="text-[10.5px] font-bold text-emerald-700 bg-emerald-100/70 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
+                  Active
+                </span>
+              </div>
+              <div className="mt-3 pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
+                <span className="text-slate-500">No resumes uploaded to your account yet.</span>
+                <Link
+                  to="/profile"
+                  className="inline-flex items-center gap-1 font-semibold text-brand-600 hover:text-brand-700 hover:underline"
+                >
+                  Upload resume in Profile <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <select
+                value={selectedResumeVersion}
+                onChange={(e) => setSelectedResumeVersion(e.target.value)}
+                className="w-full text-xs p-3 rounded-xl border border-slate-300 bg-white text-slate-800 font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none shadow-xs"
+              >
+                <option value="">Do not use resume (Proceed with standard role questions)</option>
+                {availableResumes.map((r) => (
+                  <option key={r.version_number} value={r.version_number}>
+                    Resume v{r.version_number}: {r.original_filename} ({Math.round(r.file_size_bytes / 1024)} KB)
+                  </option>
+                ))}
+              </select>
+              <p className="text-[11px] text-slate-400">
+                A read-only snapshot of your selected resume will be attached to this interview for question generation.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Simulation Rules Briefing Card */}
