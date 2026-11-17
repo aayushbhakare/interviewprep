@@ -102,7 +102,7 @@ export default function AptitudePracticePage() {
 
         <button
           onClick={() => setHistoryOpen(true)}
-          className="inline-flex items-center px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-50 shadow-sm transition shrink-0"
+          className="inline-flex items-center px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-50 shadow-sm transition shrink-0 whitespace-nowrap"
         >
           <History className="w-4 h-4 mr-2 text-slate-500" />
           Past Sessions
