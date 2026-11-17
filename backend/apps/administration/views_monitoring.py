@@ -93,8 +93,10 @@ class AdminMonitoringView(APIView):
                     "ai_telemetry": {
                         "total_interviews_monitored": total_sessions,
                         "total_provider_turns": total_turns,
+                        "total_calls": total_turns,
                         "prompt_tokens": total_prompt_tokens,
                         "candidate_tokens": total_candidate_tokens,
+                        "completion_tokens": total_candidate_tokens,
                         "total_tokens": total_prompt_tokens + total_candidate_tokens,
                         "estimated_cost_inr": f"₹{cost_inr:.2f}",
                         "budget_compliance": "Within ₹0 target budget",

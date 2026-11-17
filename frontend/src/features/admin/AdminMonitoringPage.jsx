@@ -175,7 +175,9 @@ export default function AdminMonitoringPage() {
             </span>
           </div>
           <span className="text-2xl font-black text-slate-900 block font-mono">
-            ₹{Number(ai_telemetry.estimated_cost_inr || 0).toFixed(2)}
+            {typeof ai_telemetry.estimated_cost_inr === 'string' && ai_telemetry.estimated_cost_inr.includes('₹')
+              ? ai_telemetry.estimated_cost_inr
+              : `₹${Number(ai_telemetry.estimated_cost_inr || 0).toFixed(2)}`}
           </span>
           <span className="text-xs font-semibold text-slate-500 block mt-0.5">
             Estimated Total AI Spend (INR)
@@ -199,7 +201,7 @@ export default function AdminMonitoringPage() {
             </p>
           </div>
           <span className="text-xs font-semibold text-slate-400">
-            Total Invocations: {ai_telemetry.total_calls || 0}
+            Total Invocations: {ai_telemetry.total_provider_turns ?? ai_telemetry.total_calls ?? 0}
           </span>
         </div>
 
@@ -220,7 +222,7 @@ export default function AdminMonitoringPage() {
 
           <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
             <span className="text-lg font-black text-slate-900 block font-mono">
-              {Number(ai_telemetry.completion_tokens || 0).toLocaleString()}
+              {Number(ai_telemetry.completion_tokens ?? ai_telemetry.candidate_tokens ?? 0).toLocaleString()}
             </span>
             <span className="text-[11px] font-semibold text-slate-500">Completion Tokens</span>
           </div>
