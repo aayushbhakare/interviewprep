@@ -72,11 +72,11 @@ Access API Documentation:
 
 ### Run Backend Tests
 ```bash
-# Run all 96 unit & API tests
+# Run all 108 unit & API tests
 pytest
 
-# Or run experiences module tests specifically
-pytest apps/experiences/tests/
+# Or run administration module tests specifically
+pytest apps/administration/tests/
 ```
 
 ---

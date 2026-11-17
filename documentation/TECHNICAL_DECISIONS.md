@@ -105,3 +105,23 @@ This log records architecture and technical decisions made during implementation
 ### TD-025: Student-Reported Question Extraction & Learn Provenance Attribution
 - **Decision:** Automatically index eligible questions from published experiences into `StudentReportedQuestion`, categorizing by technology and rendering them inside relevant topic learning views stamped with `provenance_label: "Student Reported Interview Question"`.
 - **Rationale:** Connects peer intelligence directly into candidate study roadmaps while clearly differentiating peer-reported questions from verified platform quiz items.
+
+### TD-026: Centralized Single Admin Console Layout (`AdminLayout`)
+- **Decision:** Consolidate all 12 platform operational views into a unified responsive layout with sidebar navigation, replacing separate loose admin buttons in the top navbar with a single `Admin Console` entrypoint.
+- **Rationale:** Resolves navbar clutter, unifies administrative workflows, and gives staff an integrated control center.
+
+### TD-027: Last Active Admin Self-Lockout Prevention Guard
+- **Decision:** Enforce both frontend button disabled state and backend transactional check preventing deactivation or privilege revocation of the last remaining active administrator account.
+- **Rationale:** Guarantees platform operational continuity by eliminating catastrophic accidental lockouts.
+
+### TD-028: Non-Destructive Maintenance Middleware with Staff Exemption
+- **Decision:** Implement `MaintenanceModeMiddleware` inspecting global and per-module maintenance toggles. Halts candidate session creation with HTTP 503 while strictly exempting authenticated staff members.
+- **Rationale:** Enables staff administrators to test and verify platform features during scheduled maintenance without locking themselves out.
+
+### TD-029: Topic Content Versioning Independent of Topic Completion Identity
+- **Decision:** Topic completions in `StudentTopicProgress` associate with the permanent canonical `Topic` identity rather than a specific content version snapshot (`TopicContent`).
+- **Rationale:** Enables administrators to continuously improve and publish updated multi-section topic guides without invalidating candidates' earned progress or disrupting ongoing practice roadmaps.
+
+### TD-030: Telemetry Cost Accounting Exclusively in Indian Rupees (INR)
+- **Decision:** Format and track all platform AI usage, token telemetry, and estimated costs strictly in Indian Rupees (`₹0.00`) adhering to the ₹0 budget mandate.
+- **Rationale:** Consistent with platform localization and budget compliance requirements, avoiding confusing dollar currency formatting.

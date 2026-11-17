@@ -128,6 +128,36 @@ graph TD
 - Community reports tracking across 7 standardized reason categories with auto-hide trigger at 3+ distinct reports.
 - Comprehensive audit trail logged to `AdminActivityLog`.
 
+## Administration & Platform Operations Architecture (`apps/administration`)
+
+### Security, Roles & Invitation Lifecycle
+- **Permission Governance:** `IsPlatformAdmin` verifies standard Django staff identity (`is_staff=True`), active state (`is_active=True`), and absence of suspension (`is_suspended=False`). Rejects unauthenticated and student requests with HTTP 403.
+- **Invitation Token Flow:** Trusted administrators create invitations with 7-day cryptographic single-use tokens. Onboarding links require token validation and 2FA setup.
+- **Lockout Prevention Invariant:** Both backend transactional hooks and UI state disable deactivation when only one active administrator remains in the database.
+
+### Centralized Admin Console Architecture
+- **Single Layout Component (`AdminLayout.jsx`):** Employs responsive sidebar navigation organizing 12 administrative operational domains:
+  1. *Dashboard Overview* (`/admin/dashboard`)
+  2. *Student Management* (`/admin/students`)
+  3. *Learning Content Versioning* (`/admin/learning`)
+  4. *Technical Question Bank* (`/admin/question-bank`)
+  5. *Aptitude Question Bank* (`/admin/aptitude`)
+  6. *Interview Simulations* (`/admin/interviews`)
+  7. *Experience Moderation* (`/admin/experiences`)
+  8. *Platform Settings* (`/admin/settings`)
+  9. *AI Models & Routing* (`/admin/ai-models`)
+  10. *System Health & Telemetry* (`/admin/monitoring`)
+  11. *Activity Audit Logs* (`/admin/activity-logs`)
+  12. *Admin Security & Invitations* (`/admin/security`)
+
+### Content Versioning & Progress Preservation
+- When updating topic markdown, staff author new versions (`v = latest + 1`).
+- Topic completions in `StudentTopicProgress` link to canonical `Topic` identity rather than version snapshot, ensuring candidate milestone progress remains intact across content revisions.
+
+### Middleware & Maintenance Controls
+- **`MaintenanceModeMiddleware`:** Inspects `maintenance_config` from `PlatformSetting`. Returns HTTP 503 with custom notification messages on candidate traffic. Authenticated staff users are strictly exempt from maintenance blocks to enable ongoing verification.
+- **`AccountSuspensionMiddleware`:** Enforces instant access termination on suspended students across all candidate endpoints while allowing logout.
+
 ## Coding Standards & Review Architecture
 
 ### Permanent Engineering Standards

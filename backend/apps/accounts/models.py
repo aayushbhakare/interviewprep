@@ -49,6 +49,10 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     is_admin_2fa_enabled = models.BooleanField(default=False)
     admin_2fa_secret = models.CharField(max_length=128, blank=True, null=True)
 
+    # Account suspension controls (managed by Admins)
+    is_suspended = models.BooleanField(default=False)
+    suspension_reason = models.TextField(blank=True, default="")
+
     objects = UserManager()
 
     USERNAME_FIELD = "email"
@@ -125,6 +129,7 @@ class AdminInvitation(TimeStampedModel):
     token_hash = models.CharField(max_length=128)
     expires_at = models.DateTimeField()
     is_accepted = models.BooleanField(default=False)
+    is_revoked = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_at"]

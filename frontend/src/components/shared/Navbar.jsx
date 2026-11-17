@@ -104,57 +104,108 @@ export default function Navbar() {
                       </button>
 
                       {adminMenuOpen && (
-                        <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 animate-in fade-in-50 zoom-in-95 duration-100">
-                          <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                            Staff Operations
+                        <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in-50 zoom-in-95 duration-100">
+                          <div className="px-3 py-1.5 border-b border-slate-100 mb-1">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                              Platform Administration
+                            </span>
+                            <Link
+                              to="/admin/dashboard"
+                              onClick={() => setAdminMenuOpen(false)}
+                              className="mt-1 flex items-center justify-between text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100/80 px-2.5 py-1.5 rounded-lg transition"
+                            >
+                              <span>Admin Dashboard</span>
+                              <span className="text-[10px] font-semibold text-brand-600">→</span>
+                            </Link>
                           </div>
+                          <Link
+                            to="/admin/students"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/students'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <span>Student Management</span>
+                          </Link>
+                          <Link
+                            to="/admin/learning"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/learning'
+                                ? 'bg-indigo-50 text-indigo-700'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                          >
+                            <span>Learning Content</span>
+                          </Link>
                           <Link
                             to="/admin/question-bank"
                             onClick={() => setAdminMenuOpen(false)}
-                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
                               location.pathname === '/admin/question-bank'
                                 ? 'bg-purple-50 text-purple-700'
                                 : 'text-slate-700 hover:bg-slate-50'
                             }`}
                           >
-                            <Database className="w-3.5 h-3.5 mr-2 text-purple-600 shrink-0" />
                             <span>Tech Question Bank</span>
                           </Link>
                           <Link
                             to="/admin/aptitude"
                             onClick={() => setAdminMenuOpen(false)}
-                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
                               location.pathname === '/admin/aptitude'
                                 ? 'bg-indigo-50 text-indigo-700'
                                 : 'text-slate-700 hover:bg-slate-50'
                             }`}
                           >
-                            <Settings className="w-3.5 h-3.5 mr-2 text-indigo-600 shrink-0" />
                             <span>Aptitude Admin</span>
                           </Link>
                           <Link
                             to="/admin/interviews"
                             onClick={() => setAdminMenuOpen(false)}
-                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
                               location.pathname === '/admin/interviews'
                                 ? 'bg-emerald-50 text-emerald-700'
                                 : 'text-slate-700 hover:bg-slate-50'
                             }`}
                           >
-                            <Bot className="w-3.5 h-3.5 mr-2 text-emerald-600 shrink-0" />
-                            <span>Interview Admin</span>
+                            <span>Interview Simulations</span>
                           </Link>
                           <Link
                             to="/admin/experiences"
                             onClick={() => setAdminMenuOpen(false)}
-                            className={`flex items-center px-3 py-2 text-xs font-medium transition-colors ${
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
                               location.pathname === '/admin/experiences'
                                 ? 'bg-amber-50 text-amber-700'
                                 : 'text-slate-700 hover:bg-slate-50'
                             }`}
                           >
-                            <Shield className="w-3.5 h-3.5 mr-2 text-amber-600 shrink-0" />
                             <span>Experience Moderation</span>
+                          </Link>
+                          <div className="my-1 border-t border-slate-100" />
+                          <Link
+                            to="/admin/settings"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/settings'
+                                ? 'bg-slate-100 text-slate-900 font-bold'
+                                : 'text-slate-600 hover:bg-slate-50'
+                            }`}
+                          >
+                            <span>Platform Settings</span>
+                          </Link>
+                          <Link
+                            to="/admin/monitoring"
+                            onClick={() => setAdminMenuOpen(false)}
+                            className={`flex items-center px-3 py-1.5 text-xs font-medium transition-colors ${
+                              location.pathname === '/admin/monitoring'
+                                ? 'bg-slate-100 text-slate-900 font-bold'
+                                : 'text-slate-600 hover:bg-slate-50'
+                            }`}
+                          >
+                            <span>Health & Telemetry</span>
                           </Link>
                         </div>
                       )}
@@ -242,6 +293,25 @@ export default function Navbar() {
               <>
                 {user?.is_staff && (
                   <>
+                    <div className="pt-2 pb-1 px-3 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                      Administration
+                    </div>
+                    <Link
+                      to="/admin/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-bold text-brand-700 bg-brand-50"
+                    >
+                      <Shield className="w-5 h-5 mr-3 text-brand-600" />
+                      Admin Dashboard
+                    </Link>
+                    <Link
+                      to="/admin/students"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      <User className="w-5 h-5 mr-3 text-slate-500" />
+                      Student Management
+                    </Link>
                     <Link
                       to="/admin/question-bank"
                       onClick={() => setMobileMenuOpen(false)}
@@ -256,7 +326,7 @@ export default function Navbar() {
                       className="flex items-center px-3 py-2 rounded-md text-base font-medium text-indigo-700 hover:bg-indigo-50"
                     >
                       <Settings className="w-5 h-5 mr-3 text-indigo-600" />
-                      Aptitude Administration
+                      Aptitude Bank
                     </Link>
                     <Link
                       to="/admin/interviews"
@@ -264,7 +334,7 @@ export default function Navbar() {
                       className="flex items-center px-3 py-2 rounded-md text-base font-medium text-emerald-700 hover:bg-emerald-50"
                     >
                       <Bot className="w-5 h-5 mr-3 text-emerald-600" />
-                      Interview Practice Admin
+                      Interview Simulations
                     </Link>
                     <Link
                       to="/admin/experiences"

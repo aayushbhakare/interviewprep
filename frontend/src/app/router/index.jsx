@@ -29,6 +29,16 @@ import MixedProcessPage from '../../features/interviews/MixedProcessPage';
 import InterviewResultsPage from '../../features/interviews/InterviewResultsPage';
 import InterviewHistoryPage from '../../features/interviews/InterviewHistoryPage';
 import AdminInterviewsPage from '../../features/admin/AdminInterviewsPage';
+import AdminLayout from '../../features/admin/AdminLayout';
+import AdminDashboardPage from '../../features/admin/AdminDashboardPage';
+import AdminStudentsPage from '../../features/admin/AdminStudentsPage';
+import AdminLearningContentPage from '../../features/admin/AdminLearningContentPage';
+import AdminSettingsPage from '../../features/admin/AdminSettingsPage';
+import AdminAIModelsPage from '../../features/admin/AdminAIModelsPage';
+import AdminMonitoringPage from '../../features/admin/AdminMonitoringPage';
+import AdminActivityLogsPage from '../../features/admin/AdminActivityLogsPage';
+import AdminMaintenancePage from '../../features/admin/AdminMaintenancePage';
+import AdminSecurityPage from '../../features/admin/AdminSecurityPage';
 
 export default function AppRouter() {
   return (
@@ -73,39 +83,30 @@ export default function AppRouter() {
         }
       />
 
-      {/* Admin Management Routes */}
+      {/* Centralized Platform Administrative Console */}
       <Route
-        path="/admin/question-bank"
+        path="/admin"
         element={
           <ProtectedRoute requireAdmin={true}>
-            <AdminQuestionBankPage />
+            <AdminLayout />
           </ProtectedRoute>
         }
-      />
-      <Route
-        path="/admin/aptitude"
-        element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminAptitudePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/interviews"
-        element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminInterviewsPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/experiences"
-        element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminExperiencesPage />
-          </ProtectedRoute>
-        }
-      />
+      >
+        <Route index element={<AdminDashboardPage />} />
+        <Route path="dashboard" element={<AdminDashboardPage />} />
+        <Route path="students" element={<AdminStudentsPage />} />
+        <Route path="learning" element={<AdminLearningContentPage />} />
+        <Route path="question-bank" element={<AdminQuestionBankPage />} />
+        <Route path="aptitude" element={<AdminAptitudePage />} />
+        <Route path="interviews" element={<AdminInterviewsPage />} />
+        <Route path="experiences" element={<AdminExperiencesPage />} />
+        <Route path="settings" element={<AdminSettingsPage />} />
+        <Route path="ai-models" element={<AdminAIModelsPage />} />
+        <Route path="monitoring" element={<AdminMonitoringPage />} />
+        <Route path="activity-logs" element={<AdminActivityLogsPage />} />
+        <Route path="maintenance" element={<AdminMaintenancePage />} />
+        <Route path="security" element={<AdminSecurityPage />} />
+      </Route>
 
       {/* Practice Module, Interviews & Aptitude Routes */}
       <Route path="/practice" element={<PracticePage />} />

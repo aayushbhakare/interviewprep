@@ -184,6 +184,48 @@ Interactive OpenAPI documentation is hosted at:
 
 ---
 
-## Planned Domain Endpoints
+## Implemented Platform Administration & Management Endpoints (`apps/administration`) (Phase 8 Verified)
 
-- **Admin Panel Operations (`/api/v1/admin-panel/`):** Platform metrics, student management, activity logs.
+All administrative endpoints require `IsPlatformAdmin` authorization (`is_authenticated`, `is_staff`, `is_active`, and non-suspended status).
+
+### Platform Dashboard Overview
+- `GET /api/v1/admin-panel/dashboard/` — Platform overview metrics (Students, Roadmaps, Quizzes, Aptitude, Mock Interviews, Experiences) and actionable "Attention Required" counts.
+
+### Student Management
+- `GET /api/v1/admin-panel/students/` — Paginated student accounts list with search (`search`), verification (`is_verified`), and suspension (`is_suspended`) filters.
+- `GET /api/v1/admin-panel/students/{id}/` — Full student profile with aggregated module activity dossier.
+- `POST /api/v1/admin-panel/students/{id}/suspend/` — Suspend student account with mandatory `suspension_reason` and immutable audit logging.
+- `POST /api/v1/admin-panel/students/{id}/reactivate/` — Restore suspended student account.
+
+### Learning Content Versioning
+- `GET /api/v1/admin-panel/learning/topics/` — List topics by technology taxonomy (`technology_id`) and search query.
+- `GET /api/v1/admin-panel/learning/topics/{id}/` — Inspect multi-section topic content and latest version number.
+- `POST /api/v1/admin-panel/learning/topics/{id}/version/` — Release new version (`v = latest + 1`) of topic sections without affecting student progress.
+- `POST /api/v1/admin-panel/learning/topics/{id}/toggle-status/` — Toggle topic public draft vs published visibility.
+
+### Centralized Platform Settings
+- `GET /api/v1/admin-panel/settings/` — Retrieve all platform configuration parameters across Aptitude, Quizzes, Interviews, and Security.
+- `PATCH /api/v1/admin-panel/settings/{key}/` — Update specific setting parameter with validation and audit logging.
+
+### AI Model & Provider Routing
+- `GET /api/v1/admin-panel/ai-models/` — List provider routing and models for all 10 platform AI services.
+- `PATCH /api/v1/admin-panel/ai-models/{service_name}/` — Update AI provider (`gemini` vs `deterministic`), model name, or fallback configuration.
+
+### System Health, Latency & Telemetry
+- `GET /api/v1/admin-panel/monitoring/` — PostgreSQL query latency in ms, backend status, AI usage spend in INR (`₹0.00`), and background processing job queue.
+- `POST /api/v1/admin-panel/jobs/{id}/retry/` — Reset failed async processing job to queued status for safe retry.
+
+### Administrative Audit Logs
+- `GET /api/v1/admin-panel/activity-logs/` — Paginated immutable audit trail with filtering by action, resource type, and search.
+
+### Maintenance Mode Controls
+- `GET /api/v1/admin-panel/maintenance/` — Retrieve platform maintenance status and module lockdown flags.
+- `POST /api/v1/admin-panel/maintenance/` — Update global and per-module maintenance toggles with custom student notification messages.
+
+### Admin Accounts & Security
+- `GET /api/v1/admin-panel/admins/` — List platform administrators and active privileges.
+- `POST /api/v1/admin-panel/admins/{id}/deactivate/` — Deactivate admin account (enforces guard against deactivating the last active administrator).
+- `POST /api/v1/admin-panel/admins/{id}/reactivate/` — Reactivate deactivated administrator account.
+- `GET /api/v1/admin-panel/invitations/` — List sent staff invitations.
+- `POST /api/v1/admin-panel/invitations/` — Generate 7-day single-use invitation token for staff onboarding.
+- `POST /api/v1/admin-panel/invitations/{id}/revoke/` — Revoke pending staff invitation.

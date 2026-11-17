@@ -105,12 +105,9 @@ export default function AdminQuestionBankPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-brand-600 mb-1">
               <Database className="w-4 h-4" />
@@ -402,7 +399,6 @@ export default function AdminQuestionBankPage() {
             )}
           </div>
         )}
-      </main>
 
       {/* Add Question Modal */}
       {addModalOpen && (

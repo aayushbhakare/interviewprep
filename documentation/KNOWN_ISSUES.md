@@ -50,3 +50,7 @@ This document tracks known limitations, pending provider verifications, and temp
 ### 11. Safe Versioning & Live Discoverability During Re-Review
 - **Detail:** When an author edits a published experience, the previous approved version remains live to peers while the revision undergoes review.
 - **Resolution:** Prevents sudden discovery feed churn or broken peer bookmarks. Upon moderator approval, the newer revision atomically replaces the canonical record; if rejected, the previous live version remains intact with moderator notes sent to the author.
+
+### 12. Staff User Exemption in Maintenance Mode
+- **Detail:** When global or module-level maintenance mode is activated, standard student sessions return HTTP 503 with custom notification messages.
+- **Resolution:** `MaintenanceModeMiddleware` explicitly checks whether the authenticated request originates from a user with `is_staff=True`. Staff accounts bypass maintenance restrictions completely, enabling ongoing platform verification, health checks, and parameter adjustments without interruption.

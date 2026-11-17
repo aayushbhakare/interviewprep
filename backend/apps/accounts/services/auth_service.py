@@ -169,6 +169,11 @@ def login_user(email: str, password: str) -> dict:
     if not user.is_active:
         raise AuthenticationFailed("Account is deactivated. Please contact support.")
 
+    if getattr(user, "is_suspended", False):
+        raise AuthenticationFailed(
+            f"Account has been suspended: {user.suspension_reason or 'Please contact administration.'}"
+        )
+
     if not user.is_verified:
         raise AuthenticationFailed(
             "Email not verified. Please verify your email before logging in."
@@ -487,7 +492,7 @@ def invite_admin(invited_by: User, email: str) -> AdminInvitation:
 
 def accept_admin_invitation(invite_token: str, full_name: str, password: str) -> User:
     matched_invitation = None
-    for inv in AdminInvitation.objects.filter(is_accepted=False):
+    for inv in AdminInvitation.objects.filter(is_accepted=False, is_revoked=False):
         expected = _hash_value(invite_token.strip(), salt=inv.email)
         if inv.token_hash == expected:
             matched_invitation = inv

@@ -35,27 +35,27 @@ export default function PracticePage() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
           <Link
             to="/practice/interviews/history"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs whitespace-nowrap shrink-0"
+            className="inline-flex items-center justify-center gap-2 px-4 h-10 rounded-xl text-xs font-semibold bg-white border border-indigo-200 text-indigo-900 hover:bg-indigo-50/80 hover:border-indigo-300 transition-all shadow-xs whitespace-nowrap shrink-0"
           >
-            <Clock className="w-3.5 h-3.5 text-indigo-600" />
-            Past Sessions
+            <Clock className="w-4 h-4 text-indigo-600 shrink-0" />
+            <span>Past Sessions</span>
           </Link>
           <Link
             to="/practice/aptitude"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-50 transition-colors shadow-xs whitespace-nowrap shrink-0"
+            className="inline-flex items-center justify-center gap-2 px-4 h-10 rounded-xl text-xs font-semibold bg-white border border-indigo-200 text-indigo-900 hover:bg-indigo-50/80 hover:border-indigo-300 transition-all shadow-xs whitespace-nowrap shrink-0"
           >
-            <FileText className="w-3.5 h-3.5 text-indigo-600" />
-            Start Aptitude Test
+            <FileText className="w-4 h-4 text-indigo-600 shrink-0" />
+            <span>Start Aptitude Test</span>
           </Link>
           <Link
             to="/practice/interviews/setup"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap shrink-0"
+            className="inline-flex items-center justify-center gap-2 px-4 h-10 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-all shadow-sm hover:shadow whitespace-nowrap shrink-0"
           >
-            <Play className="w-3.5 h-3.5" />
-            Start Voice Interview
+            <Play className="w-4 h-4 shrink-0 fill-current" />
+            <span>Start Voice Interview</span>
           </Link>
         </div>
       </div>

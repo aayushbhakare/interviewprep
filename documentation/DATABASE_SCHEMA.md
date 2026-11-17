@@ -6,13 +6,13 @@ PostgreSQL is the permanent source of truth for the platform. Schema changes are
 
 ## Implemented & Active Domain Models
 
-### 1. `accounts` (Phase 1 Verified)
-- `User`: Primary custom user model. Uses `email` as unique login identifier, `id` (UUIDField), `full_name`, `is_active`, `is_staff`, `is_superuser`, `is_verified`, `is_admin_2fa_enabled`, `admin_2fa_secret`, `created_at`, `updated_at`.
+### 1. `accounts` (Phase 1 & 8 Verified)
+- `User`: Primary custom user model. Uses `email` as unique login identifier, `id` (UUIDField), `full_name`, `is_active`, `is_staff`, `is_superuser`, `is_verified`, `is_admin_2fa_enabled`, `admin_2fa_secret`, `is_suspended` (bool, default=False), `suspension_reason` (TextField, blank=True), `created_at`, `updated_at`.
 - `UserProfile`: `user` (OneToOne), `phone_number`, `target_role`, `experience_level`, `target_salary`, `current_resume_path`, `current_resume_version`.
 - `EmailVerificationCode`: `user` (ForeignKey), `code_hash` (SHA-256), `expires_at`, `is_used`, `attempts_count` (locks at 5).
 - `PasswordResetToken`: `user` (ForeignKey), `token_hash` (SHA-256), `expires_at`, `is_used`, `attempts_count`.
 - `EmailChangeRequest`: `user` (ForeignKey), `new_email`, `code_hash`, `expires_at`, `is_used`, `attempts_count`.
-- `AdminInvitation`: `email` (unique), `invited_by` (ForeignKey to User, null=True), `token_hash`, `expires_at` (48h), `is_accepted`.
+- `AdminInvitation`: `email` (unique), `invited_by` (ForeignKey to User, null=True), `token_hash`, `expires_at` (7 days), `is_accepted`, `is_revoked` (bool, default=False).
 - `TwoFactorCode`: `user` (ForeignKey), `code_hash`, `temp_token` (unique), `expires_at` (5m), `is_used`, `attempts_count`.
 - `UserResumeVersion`: `user` (ForeignKey), `version_number`, `storage_path`, `original_filename`, `file_size_bytes`, `uploaded_at`.
 
@@ -68,7 +68,7 @@ PostgreSQL is the permanent source of truth for the platform. Schema changes are
 - `ExperienceReport`: Community reporting entity. Fields: `id` (UUID), `reporter` (ForeignKey to User, `related_name="submitted_experience_reports"`), `experience` (ForeignKey to `InterviewExperience`, `related_name="reports"`), `reason` (`fake`, `spam`, `inappropriate`, `pii`, `duplicate`, `incorrect`, `other`), `explanation` (TextField), `status` (`pending`, `reviewed`, `resolved`, `dismissed`), `admin_notes` (TextField), `created_at`. Unique on `(reporter, experience)`.
 - `StudentReportedQuestion`: Extracted high-signal interview questions integrated into the Learn Module. Fields: `id` (UUID), `source_experience` (ForeignKey to `InterviewExperience`, `related_name="reported_questions"`), `source_stage` (ForeignKey to `ExperienceStage`, null=True), `source_question` (ForeignKey to `StageQuestion`, null=True), `question_text` (TextField), `follow_up_text` (TextField), `role` (CharField), `technology` (CharField, indexed), `topic_slug` (CharField, indexed), `stage_type` (CharField), `salary_range` (CharField), `company_name` (CharField), `report_count` (int, default=1), `is_active` (bool, default=True, indexed), `created_at`, `updated_at`.
 
-### 8. `administration` & `common` (Initial Schema)
-- `PlatformSetting`: `key` (unique), `value` (JSONField), `description`, `updated_by`.
-- `AdminActivityLog`: `actor` (ForeignKey), `action`, `resource_type`, `resource_id`, `details`, `ip_address`, `created_at`.
-- `ProcessingJob`: `id` (UUID), `job_type`, `status` (queued, running, succeeded, failed), `payload`, `result`, `error_message`, `retry_count`, `max_retries`, `lease_expires_at`, `completed_at`.
+### 8. `administration` & `common` (Phase 8 Verified)
+- `PlatformSetting`: Centralized platform configuration. Fields: `id` (UUID), `key` (CharField, max_length=100, unique=True), `value` (JSONField, default=dict), `description` (TextField, blank=True), `updated_by` (ForeignKey to User, null=True, blank=True), `created_at`, `updated_at`.
+- `AdminActivityLog`: Append-only audit trail. Fields: `id` (UUID, primary_key=True), `actor` (ForeignKey to User, on_delete=SET_NULL, null=True), `action` (CharField, max_length=100, indexed), `resource_type` (CharField, max_length=100, indexed), `resource_id` (CharField, max_length=100, blank=True), `details` (JSONField, default=dict), `ip_address` (GenericIPAddressField, null=True, blank=True), `created_at` (DateTimeField, auto_now_add=True, indexed). Ordered by `"-created_at"`.
+- `ProcessingJob`: Asynchronous task execution queue. Fields: `id` (UUID), `job_type`, `status` (queued, running, succeeded, failed), `payload`, `result`, `error_message`, `retry_count`, `max_retries`, `lease_expires_at`, `completed_at`.

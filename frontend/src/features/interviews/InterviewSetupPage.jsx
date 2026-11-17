@@ -439,20 +439,78 @@ export default function InterviewSetupPage() {
               </div>
             </div>
           ) : (
-            <div className="space-y-3">
-              <select
-                value={selectedResumeVersion}
-                onChange={(e) => setSelectedResumeVersion(e.target.value)}
-                className="w-full text-xs p-3 rounded-xl border border-slate-300 bg-white text-slate-800 font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none shadow-xs"
+            <div className="space-y-2.5">
+              <div
+                onClick={() => setSelectedResumeVersion('')}
+                className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                  selectedResumeVersion === ''
+                    ? 'border-indigo-600 bg-indigo-50/40 ring-1 ring-indigo-500/20 shadow-xs'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
               >
-                <option value="">Do not use resume (Proceed with standard role questions)</option>
-                {availableResumes.map((r) => (
-                  <option key={r.version_number} value={r.version_number}>
-                    Resume v{r.version_number}: {r.original_filename} ({Math.round(r.file_size_bytes / 1024)} KB)
-                  </option>
-                ))}
-              </select>
-              <p className="text-[11px] text-slate-400">
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                    selectedResumeVersion === '' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'
+                  }`}>
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-900 block">
+                      Do not use resume (Proceed with standard role questions)
+                    </span>
+                    <span className="text-[11px] text-slate-500 block">
+                      AI probes core fundamentals, system design, and salary-tier expectations.
+                    </span>
+                  </div>
+                </div>
+                <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                  selectedResumeVersion === '' ? 'border-indigo-600 bg-indigo-600' : 'border-slate-300'
+                }`}>
+                  {selectedResumeVersion === '' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </div>
+              </div>
+
+              {availableResumes.map((r) => {
+                const isSelected = String(selectedResumeVersion) === String(r.version_number);
+                return (
+                  <div
+                    key={r.version_number}
+                    onClick={() => setSelectedResumeVersion(String(r.version_number))}
+                    className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                      isSelected
+                        ? 'border-indigo-600 bg-indigo-50/40 ring-1 ring-indigo-500/20 shadow-xs'
+                        : 'border-slate-200 hover:border-slate-300 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                        isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'
+                      }`}>
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-slate-900">
+                            Resume v{r.version_number}: {r.original_filename}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">
+                            {Math.round(r.file_size_bytes / 1024)} KB
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500 block mt-0.5">
+                          AI will probe real projects and tech stack referenced in this CV snapshot.
+                        </span>
+                      </div>
+                    </div>
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                      isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-slate-300'
+                    }`}>
+                      {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                    </div>
+                  </div>
+                );
+              })}
+              <p className="text-[11px] text-slate-400 pt-1">
                 A read-only snapshot of your selected resume will be attached to this interview for question generation.
               </p>
             </div>

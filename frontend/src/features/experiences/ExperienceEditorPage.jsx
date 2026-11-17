@@ -779,14 +779,14 @@ export default function ExperienceEditorPage() {
                           </div>
 
                           {/* Primary Question / Problem Statement */}
-                          <div>
-                            <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center justify-between">
+                          <div className="bg-slate-50/60 p-4 rounded-xl border border-slate-200">
+                            <label className="block text-xs font-bold text-slate-800 mb-2 flex items-center justify-between">
                               <span className="flex items-center gap-1.5">
-                                <HelpCircle className="w-3.5 h-3.5 text-brand-600" />
+                                <HelpCircle className="w-4 h-4 text-brand-600" />
                                 <span>Interview Question / Problem Statement <span className="text-rose-500">*</span></span>
                               </span>
-                              <span className="text-[10px] font-semibold text-slate-400">
-                                Multi-line text supported
+                              <span className="text-[10px] font-semibold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded-full">
+                                Free text • Markdown & multi-line supported
                               </span>
                             </label>
                             <textarea
@@ -794,23 +794,24 @@ export default function ExperienceEditorPage() {
                               onChange={(e) =>
                                 handleUpdateQuestion(sIdx, qIdx, 'question_text', e.target.value)
                               }
-                              rows={3}
-                              placeholder="Exact question asked by interviewer (e.g. Implement a leaky bucket rate limiter in Python with atomic sliding window. Discuss time and space complexity under high concurrency)..."
-                              className="w-full text-xs sm:text-sm p-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition leading-relaxed shadow-xs resize-y font-normal"
+                              rows={4}
+                              placeholder="Exact question asked by interviewer (e.g. Implement a distributed leaky bucket rate limiter in Python with atomic sliding window. Discuss trade-offs and edge cases under high concurrency)..."
+                              className="w-full text-sm p-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition leading-relaxed shadow-xs font-normal"
                             />
-                            <p className="text-[11px] text-slate-400 mt-1">
-                              Provide the exact question, algorithmic challenge, or scenario prompt given by the interviewer.
-                            </p>
+                            <div className="flex items-center justify-between mt-2 text-[11px] text-slate-400">
+                              <span>Enter the question accurately as asked during your session.</span>
+                              <span>{q.question_text ? q.question_text.length : 0} characters</span>
+                            </div>
                           </div>
 
                           {/* Follow-up question or twist */}
-                          <div>
-                            <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
+                          <div className="bg-purple-50/40 p-4 rounded-xl border border-purple-200/80">
+                            <label className="block text-xs font-semibold text-slate-700 mb-2 flex items-center justify-between">
                               <span className="flex items-center gap-1.5 text-purple-900 font-bold">
-                                <CornerDownRight className="w-3.5 h-3.5 text-purple-600" />
+                                <CornerDownRight className="w-4 h-4 text-purple-600" />
                                 <span>Follow-Up Question or Twist</span>
                               </span>
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-100/70 border border-purple-200 px-2 py-0.5 rounded-full">
                                 Optional
                               </span>
                             </label>
@@ -819,12 +820,12 @@ export default function ExperienceEditorPage() {
                               onChange={(e) =>
                                 handleUpdateQuestion(sIdx, qIdx, 'follow_up_text', e.target.value)
                               }
-                              rows={2}
-                              placeholder="Follow-up question or twist (optional, e.g. How do you coordinate limits across 50 containerized instances without a centralized lock bottleneck?)..."
-                              className="w-full text-xs sm:text-sm p-3 rounded-xl border border-purple-200 bg-purple-50/20 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition leading-relaxed shadow-xs resize-y"
+                              rows={3}
+                              placeholder="Follow-up question or twist (e.g. How would you coordinate rate limits across 50 containerized instances without a centralized lock bottleneck?)..."
+                              className="w-full text-sm p-3.5 rounded-xl border border-purple-200 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition leading-relaxed shadow-xs"
                             />
-                            <p className="text-[11px] text-slate-400 mt-1">
-                              Any counter-question, constraints change, or deep-dive the interviewer asked after your initial response.
+                            <p className="text-[11px] text-purple-700/70 mt-1.5">
+                              Any counter-question, edge-case challenge, or scaling constraint introduced after your initial response.
                             </p>
                           </div>
 
